@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nestlé Joloda Lean Hub - HTTP Sync</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a; --card: #161616; --green: #00ff88; --blue: #00d4ff; --red: #ff4444; --orange: #ffaa00; --text: #ffffff;
+        }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; text-align: center; overflow-x: hidden; }
+        
+        /* HEADER */
+        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding: 15px 20px; margin-bottom: 30px; }
+        .clock-box { background: #111; padding: 10px 20px; border-radius: 10px; border: 1px solid var(--blue); }
+        #remote-ind { font-size: 0.75rem; color: var(--red); display: block; margin-top: 5px; font-weight: bold; text-transform: uppercase; transition: 0.3s;}
+        #remote-ind.online { color: var(--green); }
+        #remote-ind.reconnect { color: var(--orange); }
+
+        /* GRID PRINCIPAL */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        
+        .card { 
+            background: var(--card); border: 1px solid #222; border-radius: 20px; padding: 30px; 
+            text-align: center; cursor: pointer; transition: 0.3s; min-height: 200px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .card:hover, .card:active { border-color: var(--blue); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,212,255,0.15); }
+
+        /* FOTOS Y MINIGRÁFICOS */
+        .preview-top { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .preview-top img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--green); object-fit: cover; }
+        
+        .tower-dash { width: 100%; background: #000; border-radius: 10px; padding: 10px; border: 1px solid #333; margin-bottom: 15px; box-sizing: border-box; text-align: left;}
+        .kpi-row { display: flex; justify-content: space-between; margin: 5px 0; font-size: 0.9rem; font-weight: bold;}
+        .alert-active { color: var(--red); font-weight: bold; animation: alertBlink 1s infinite; }
+
+        /* VISTAS Y ANIMACIONES */
+        .view { display: none; animation: fadeIn 0.4s; } 
+        .view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        @keyframes alertBlink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        
+        .btn-back { background: #222; color: #fff; padding: 15px 30px; border-radius: 50px; cursor: pointer; margin-bottom: 30px; display: inline-block; border: 1px solid #444; font-weight: bold; transition: 0.3s; }
+        .btn-back:hover, .btn-back:active { background: var(--blue); color: #000; border-color: var(--blue); }
+        .btn-view-doc { margin-top:15px; background:var(--orange); color:#000; padding:10px 20px; border:none; border-radius:20px; font-weight:bold; cursor:pointer; width: 80%; transition: 0.2s;}
+
+        /* PANTALLA COMPLETA INMERSIVA */
+        #towerFullscreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; background: #0b1116; display: none; }
+        #towerFullscreen.active { display: block; animation: slideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        
+        .btn-close-monitor { position: absolute; top: 15px; right: 25px; background: rgba(20,20,20,0.8); color: var(--red); padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; z-index: 10000; border: 1px solid var(--red); transition: 0.2s; backdrop-filter: blur(5px); }
+
+        /* ADAPTACIÓN CELULAR (TRUE MIRROR) */
+        @media only screen and (max-width: 768px) {
+            header { flex-direction: column; text-align: center; gap: 15px; }
+            .dashboard-grid { grid-template-columns: 1fr; padding: 0 10px; }
+            .card { min-height: 150px; padding: 20px; }
+            h1 { font-size: 1.5rem; }
+            .kpi-container { flex-direction: column; align-items: center; }
+            .kpi-container > div { width: 80% !important; margin-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1 style="color: var(--green); margin:0; letter-spacing: 2px;">CONTINUOUS EXCELLENCE JOLODA HUB</h1>
+            <small style="color: #888;">NESTLÉ CD BARCENAS | GUATEMALA</small>
+        </div>
+        <div class="clock-box" onclick="window.location.reload();" title="Toca para refrescar conexión">
+            <div id="clock" style="font-size: 1.5rem; color: var(--green);">00:00:00</div>
+            <div id="remote-ind">● INICIANDO NUBE WEB...</div>
+        </div>
+    </header>
+
+    <div id="homeView" class="view active">
+        <div class="dashboard-grid">
+            <div class="card" onclick="sendAction('CMD_GENTE')">
+                <div class="preview-top" id="p-dots"></div>
+                <h3 style="color: var(--green); margin:0;">People</h3><span style="color:#aaa; font-size:0.8rem;">TEAM CERTIFIED</span>
+            </div>
+            
+            <div class="card" onclick="sendAction('CMD_ESTANDARES')" style="border-color: #ffaa00;">
+                <i class="fas fa-file-contract" style="font-size:3.5rem;color:#ffaa00;"></i>
+                <h3 style="margin-top:20px; color:#ffaa00; margin-bottom:0;">Estándares</h3>
+            </div>
+            
+            <div class="card" onclick="sendAction('CMD_TORRE_LAUNCH')">
+                <div class="tower-dash">
+                    <div class="kpi-row"><span style="color:#aaa;">OEE Joloda</span><span style="color:var(--green)">98%</span></div>
+                    <div class="kpi-row"><span style="color:#aaa;">T. Ciclo</span><span style="color:var(--blue)">19m</span></div>
+                    <div class="kpi-row"><span style="color:#aaa;">Alertas</span><span class="alert-active">2 DETECTED</span></div>
+                </div>
+                <h3 style="color:var(--blue); font-size:1.5rem; margin:0;">KPI's</h3>
+                <span style="color:#aaa; font-size:0.8rem; margin-top:5px;">SALA DE ACCESO</span>
+            </div>
+            
+            <div class="card"><i class="fas fa-award" style="font-size:3.5rem;color:#fff;"></i><h3 style="margin-top:20px;">Competencias</h3></div>
+            <div class="card" onclick="sendAction('CMD_AYUDA')"><i class="fas fa-bullhorn" style="font-size:3.5rem;color:var(--red);"></i><h3 style="margin-top:20px; color:var(--red)">Cadena Ayuda</h3></div>
+            <div class="card"><i class="fas fa-tasks" style="font-size:3.5rem;color:#fff;"></i><h3 style="margin-top:20px;">Planes Acción</h3></div>
+            <div class="card"><i class="fas fa-seedling" style="font-size:3.5rem;color:#fff;"></i><h3 style="margin-top:20px;">Plan Desarrollo</h3></div>
+            <div class="card"><i class="fas fa-clock" style="font-size:3.5rem;color:var(--green);"></i><h3 style="margin-top:20px; color:var(--green);">Ventana Horaria</h3></div>
+            <div class="card" style="border-color: var(--orange);"><i class="fas fa-chart-line" style="font-size:3.5rem;color:var(--orange);"></i><h3 style="margin-top:20px; color:var(--orange);">Impacto TDC (VDE)</h3></div>
+        </div>
+    </div>
+
+    <div id="peopleView" class="view">
+        <div class="btn-back" onclick="sendAction('CMD_HOME')">← VOLVER AL HUB</div>
+        <h2 style="color:var(--green); font-size: 2.5rem; margin-top: 10px;">JOLODA TEAM</h2>
+        <div class="dashboard-grid" id="op-list" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); margin-top: 20px;"></div>
+    </div>
+
+    <div id="standardsView" class="view">
+        <div class="btn-back" onclick="sendAction('CMD_HOME')">← VOLVER AL HUB</div>
+        <h2 style="color:var(--orange); font-size: 2.5rem; margin-top: 10px;">ESTÁNDARES OPERATIVOS</h2>
+        <div class="dashboard-grid" style="margin-top: 30px;">
+            <div class="card" style="border-color: #ffaa00;">
+                <i class="fas fa-pallet" style="font-size:3rem; color:#ffaa00; margin-bottom:15px;"></i>
+                <h3 style="margin: 5px 0;">Estiba y Palletizado</h3><span style="color:#aaa; font-size: 0.9rem; margin-bottom: 15px;">Condiciones de madera y amarre.</span><button class="btn-view-doc">VER ESTÁNDAR</button>
+            </div>
+            <div class="card" style="border-color: #ffaa00;">
+                <i class="fas fa-door-open" style="font-size:3rem; color:#ffaa00; margin-bottom:15px;"></i>
+                <h3 style="margin: 5px 0;">Equipos Industriales</h3><span style="color:#aaa; font-size: 0.9rem; margin-bottom: 15px;">Guías para Rampas y Puertas.</span><button class="btn-view-doc">VER PROCEDIMIENTOS</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="towerLaunchView" class="view">
+        <div class="btn-back" onclick="sendAction('CMD_HOME')" style="margin-bottom: 20px;">← VOLVER AL HUB</div>
+        <div>
+            <i class="fas fa-chart-bar" style="font-size: 5rem; color: var(--blue); margin-bottom: 20px;"></i>
+            <h2 style="font-size: 2.5rem; color: var(--text); letter-spacing: 2px; margin: 0;">DASHBOARD KPI's JOLODA</h2>
+            <p style="color: #888; font-size: 1.2rem; margin-bottom: 40px;">Portal de Monitoreo y Estatus de Muelles</p>
+
+            <div class="kpi-container" style="display: flex; justify-content: center; gap: 30px; margin-bottom: 50px;">
+                <div style="background: #111; border: 1px solid #333; border-radius: 15px; padding: 30px; width: 200px;">
+                    <h3 style="color: var(--green); font-size: 3rem; margin: 0;">98%</h3><span style="color: #aaa; font-weight: bold;">OEE Joloda</span>
+                </div>
+                <div style="background: #111; border: 1px solid #333; border-radius: 15px; padding: 30px; width: 200px;">
+                    <h3 style="color: var(--blue); font-size: 3rem; margin: 0;">19m</h3><span style="color: #aaa; font-weight: bold;">T. Ciclo Promedio</span>
+                </div>
+            </div>
+
+            <button onclick="sendAction('CMD_OPEN_TOWER')" style="background: var(--blue); color: #000; font-size: 1.2rem; padding: 20px 40px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; text-transform: uppercase; box-shadow: 0 0 30px rgba(0, 212, 255, 0.4); transition: 0.3s; width: 80%; max-width: 400px;">
+                🚀 INICIAR DASHBOARD
+            </button>
+        </div>
+    </div>
+
+    <div id="towerFullscreen">
+        <div class="btn-close-monitor" onclick="sendAction('CMD_CLOSE_TOWER')">✖ CERRAR Y VOLVER</div>
+        <iframe src="Monitor_Joloda.html" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+
+    <div id="helpView" class="view">
+        <div class="btn-back" onclick="sendAction('CMD_HOME')">← VOLVER AL HUB</div>
+        <h2 style="color:var(--red); font-size: 2rem; margin-top: 50px;">HELP CHAIN - ASISTENCIA TÉCNICA ACTIVA</h2>
+    </div>
+
+    <script>
+        const ops = [
+            {n: 'Juan Carlos Damian Sunun', img: 'img/Juan Carlos Damian Sunun.png'},
+            {n: 'Marbel Augusto Rivera Marroquin', img: 'img/Marbel Augusto Rivera Marroquin.png'},
+            {n: 'Joel David Ajuchan Puac', img: 'img/oel David Ajuchan Puac.png'},
+            {n: 'Rene Vidal Ramirez Bran', img: 'img/Rene Vidal Ramirez Bran.png'},
+            {n: 'Williams Cesar Marroquin Ovalle', img: 'img/Williams Cesar Rolando Marroquin Ovalle.png'},
+            {n: 'Yendi Lorena Rueda Carrera', img: 'img/Yendi Lorena Rueda Carrera.png'}
+        ];
+
+        // LÓGICA HTTP NATIVA (Imposible de bloquear por el Firewall)
+        const SYNC_CHANNEL = "nestle_joloda_barcenas_master_v12";
+        const MY_ID = Math.random().toString(36).substring(2, 9);
+        let eventSource;
+
+        function initRemoteControl() {
+            // Iniciar escucha pasiva nativa (SSE)
+            eventSource = new EventSource(`https://ntfy.sh/${SYNC_CHANNEL}/sse`);
+
+            eventSource.onopen = () => {
+                document.getElementById('remote-ind').innerText = '● RED WEB SINCRONIZADA';
+                document.getElementById('remote-ind').className = 'online';
+            };
+
+            eventSource.onmessage = (e) => {
+                try {
+                    const data = JSON.parse(e.data);
+                    if (data.event === 'message') {
+                        // El mensaje llega como "COMANDO|ID_DEL_QUE_ENVIA"
+                        const parts = data.message.split('|');
+                        const cmd = parts[0];
+                        const senderId = parts[1];
+
+                        // Si el mensaje viene de otro equipo, lo ejecutamos
+                        if (senderId !== MY_ID) {
+                            executeCmd(cmd);
+                        }
+                    }
+                } catch(err) {
+                    console.log("Ignorando ping del servidor");
+                }
+            };
+
+            eventSource.onerror = () => {
+                document.getElementById('remote-ind').innerText = '● BUSCANDO RED...';
+                document.getElementById('remote-ind').className = 'reconnect';
+            };
+        }
+
+        function sendAction(cmd) {
+            // 1. Ejecutar inmediatamente en la pantalla local
+            executeCmd(cmd);
+            
+            // 2. Disparar petición silenciosa a la nube (Se ve como tráfico web normal)
+            fetch(`https://ntfy.sh/${SYNC_CHANNEL}`, {
+                method: 'POST',
+                body: `${cmd}|${MY_ID}`
+            }).catch(e => console.log("Error enviando acción", e));
+        }
+
+        function executeCmd(cmd) {
+            switch(cmd) {
+                case 'CMD_GENTE': showView('peopleView'); break;
+                case 'CMD_ESTANDARES': showView('standardsView'); break;
+                case 'CMD_TORRE_LAUNCH': showView('towerLaunchView'); break;
+                case 'CMD_OPEN_TOWER': document.getElementById('towerFullscreen').classList.add('active'); break;
+                case 'CMD_CLOSE_TOWER': document.getElementById('towerFullscreen').classList.remove('active'); break;
+                case 'CMD_AYUDA': showView('helpView'); break;
+                case 'CMD_HOME': 
+                    document.getElementById('towerFullscreen').classList.remove('active');
+                    showView('homeView'); 
+                    break;
+            }
+            window.scrollTo(0, 0);
+        }
+
+        function showView(id) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function initData() {
+            const pre = document.getElementById('p-dots');
+            const list = document.getElementById('op-list');
+            ops.forEach(o => {
+                pre.innerHTML += `<img src="${o.img}">`;
+                list.innerHTML += `<div class="card"><img src="${o.img}" style="width:110px;height:110px;border-radius:50%;border:3px solid var(--green);margin-bottom:15px;object-fit:cover;"><h3>${o.n}</h3></div>`;
+            });
+            initRemoteControl();
+        }
+
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
+        window.onload = initData;
+    </script>
+</body>
+</html>

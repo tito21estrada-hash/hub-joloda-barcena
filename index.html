@@ -53,6 +53,95 @@
         
         .btn-close-monitor { position: absolute; top: 15px; right: 25px; background: rgba(20,20,20,0.8); color: var(--red); padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; z-index: 10000; border: 1px solid var(--red); transition: 0.2s; backdrop-filter: blur(5px); }
 
+        /* --- ESTILOS PARA MODALES Y TARJETAS JOLODA --- */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 10000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.8); 
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: 5% auto; 
+            padding: 30px;
+            border: 1px solid #00f0ff;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 900px;
+            color: white;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover, .close:focus {
+            color: #00f0ff;
+            text-decoration: none;
+        }
+
+        .pdf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .pdf-btn {
+            background-color: #333;
+            color: #00f0ff;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid #00f0ff;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .pdf-btn:hover {
+            background-color: #00f0ff;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #00f0ff;
+            margin-bottom: 10px;
+        }
+        .team-member p {
+            font-size: 14px;
+            margin: 0;
+        }
+
         /* ADAPTACIÓN CELULAR (TRUE MIRROR) */
         @media only screen and (max-width: 768px) {
             header { flex-direction: column; text-align: center; gap: 15px; }
@@ -84,9 +173,9 @@
                 <h3 style="color: var(--green); margin:0;">People</h3><span style="color:#aaa; font-size:0.8rem;">TEAM CERTIFIED</span>
             </div>
             
-            <div class="card" onclick="sendAction('CMD_ESTANDARES')" style="border-color: #ffaa00;">
+            <div class="card" onclick="abrirModal('modalStandards')" style="border-color: #ffaa00;">
                 <i class="fas fa-file-contract" style="font-size:3.5rem;color:#ffaa00;"></i>
-                <h3 style="margin-top:20px; color:#ffaa00; margin-bottom:0;">Estándares</h3>
+                <h3 style="margin-top:20px; color:#ffaa00; margin-bottom:0;">Standards</h3>
             </div>
             
             <div class="card" onclick="sendAction('CMD_TORRE_LAUNCH')">
@@ -100,9 +189,21 @@
             </div>
             
             <div class="card"><i class="fas fa-award" style="font-size:3.5rem;color:#fff;"></i><h3 style="margin-top:20px;">Competencias</h3></div>
-            <div class="card" onclick="sendAction('CMD_AYUDA')"><i class="fas fa-bullhorn" style="font-size:3.5rem;color:var(--red);"></i><h3 style="margin-top:20px; color:var(--red)">Cadena Ayuda</h3></div>
+            
+            <a href="./Cadena de Ayuda/Cadena de Ayuda para eventos de Ramapa Joloda.pdf" target="_blank" style="text-decoration: none; color: inherit; display: contents;">
+                <div class="card" style="border-color: var(--red);">
+                    <i class="fas fa-bullhorn" style="font-size:3.5rem;color:var(--red);"></i>
+                    <h3 style="margin-top:20px; color:var(--red); margin-bottom:0;">Help Chain</h3>
+                </div>
+            </a>
+            
             <div class="card"><i class="fas fa-tasks" style="font-size:3.5rem;color:#fff;"></i><h3 style="margin-top:20px;">Planes Acción</h3></div>
-            <div class="card"><i class="fas fa-seedling" style="font-size:3.5rem;color:#fff;"></i><h3 style="margin-top:20px;">Plan Desarrollo</h3></div>
+            
+            <div class="card" onclick="abrirModal('modalDevelopment')" style="border-color: var(--green);">
+                <i class="fas fa-seedling" style="font-size:3.5rem;color:var(--green);"></i>
+                <h3 style="margin-top:20px; color:var(--green); margin-bottom:0;">Development Plan</h3>
+            </div>
+
             <div class="card"><i class="fas fa-clock" style="font-size:3.5rem;color:var(--green);"></i><h3 style="margin-top:20px; color:var(--green);">Ventana Horaria</h3></div>
             <div class="card" style="border-color: var(--orange);"><i class="fas fa-chart-line" style="font-size:3.5rem;color:var(--orange);"></i><h3 style="margin-top:20px; color:var(--orange);">Impacto TDC (VDE)</h3></div>
         </div>
@@ -161,6 +262,62 @@
         <h2 style="color:var(--red); font-size: 2rem; margin-top: 50px;">HELP CHAIN - ASISTENCIA TÉCNICA ACTIVA</h2>
     </div>
 
+    <div id="modalStandards" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal('modalStandards')">&times;</span>
+            <h2 style="color: #00f0ff; border-bottom: 1px solid #333; padding-bottom: 10px;">Standard Operating Procedures (SOP & LUP)</h2>
+            <div class="pdf-grid">
+                <a href="./Estandar/LUP-MH-Carga y Descarga del Joloda (Operador).pdf" target="_blank" class="pdf-btn">LUP - Carga y Descarga</a>
+                <a href="./Estandar/LUP-MH-Conexion del Furgon Personal MH.pdf" target="_blank" class="pdf-btn">LUP - Conexión Furgón MH</a>
+                <a href="./Estandar/LUP-MH-Conexion del Joloda . Pilotos.pdf" target="_blank" class="pdf-btn">LUP - Conexión Pilotos</a>
+                <a href="./Estandar/LUP-MH-Desactivacion del Sensor de Cortina.pdf" target="_blank" class="pdf-btn">LUP - Sensor de Cortina</a>
+                <a href="./Estandar/RUTINA ESTANDAR ACOPLE Y CONEXIÓN DE UNIDAD DE RAMPA AUTOMATIZADA JOLODA HYDRAROLL 18.03.2026.pdf" target="_blank" class="pdf-btn">Rutina - Acople y Conexión</a>
+                <a href="./Estandar/RUTINA ESTANDAR TRANSFERENCIA DE PRODUCTO DE RAMPA AUTOMATIZADA JOLODA HYDRAROLL 18.03.2026.pdf" target="_blank" class="pdf-btn">Rutina - Transferencia</a>
+                <a href="./Estandar/RUTINA ESTANDAR DESACOPLE Y RETIRO RAMPA AUTOMATIZADA JOLODA HYDRAROLL 18.03.2026.pdf" target="_blank" class="pdf-btn">Rutina - Desacople y Retiro</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalDevelopment" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal('modalDevelopment')">&times;</span>
+            <h2 style="color: #00f0ff; border-bottom: 1px solid #333; padding-bottom: 10px;">Team Development Plan</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="./img Desarrollo/Edgar Raúl Ical Toc.jpg" alt="Edgar Raúl Ical Toc">
+                    <p>Edgar Raúl Ical Toc</p>
+                </div>
+                <div class="team-member">
+                    <img src="./img Desarrollo/Ingrid Analy González Cruz.jpg" alt="Ingrid Analy González Cruz">
+                    <p>Ingrid Analy González</p>
+                </div>
+                <div class="team-member">
+                    <img src="./img Desarrollo/Josué Samuel Oxón.jpg" alt="Josué Samuel Oxón">
+                    <p>Josué Samuel Oxón</p>
+                </div>
+                <div class="team-member">
+                    <img src="./img Desarrollo/Lesly Mishel García Larios.jpg" alt="Lesly Mishel García Larios">
+                    <p>Lesly Mishel García</p>
+                </div>
+                <div class="team-member">
+                    <img src="./img Desarrollo/Rodolfo Antonio Rodríguez Roche.jpg" alt="Rodolfo Antonio Rodríguez Roche">
+                    <p>Rodolfo A. Rodríguez</p>
+                </div>
+                <div class="team-member">
+                    <img src="./img Desarrollo/Rosa Angélica Car Chajón.jpg" alt="Rosa Angélica Car Chajón">
+                    <p>Rosa Angélica Car</p>
+                </div>
+                <div class="team-member">
+                    <img src="./img Desarrollo/Suleima Patricia García.jpg" alt="Suleima Patricia García">
+                    <p>Suleima Patricia García</p>
+                </div>
+                <div class="team-member">
+                    <img src="./img Desarrollo/Yensi Anali Meda Dávila.jpg" alt="Yensi Anali Meda Dávila">
+                    <p>Yensi Anali Meda</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         const ops = [
             {n: 'Juan Carlos Damian Sunun', img: 'img/Juan Carlos Damian Sunun.png'},
@@ -171,13 +328,12 @@
             {n: 'Yendi Lorena Rueda Carrera', img: 'img/Yendi Lorena Rueda Carrera.png'}
         ];
 
-        // LÓGICA HTTP NATIVA (Imposible de bloquear por el Firewall)
+        // LÓGICA HTTP NATIVA
         const SYNC_CHANNEL = "nestle_joloda_barcenas_master_v12";
         const MY_ID = Math.random().toString(36).substring(2, 9);
         let eventSource;
 
         function initRemoteControl() {
-            // Iniciar escucha pasiva nativa (SSE)
             eventSource = new EventSource(`https://ntfy.sh/${SYNC_CHANNEL}/sse`);
 
             eventSource.onopen = () => {
@@ -189,12 +345,10 @@
                 try {
                     const data = JSON.parse(e.data);
                     if (data.event === 'message') {
-                        // El mensaje llega como "COMANDO|ID_DEL_QUE_ENVIA"
                         const parts = data.message.split('|');
                         const cmd = parts[0];
                         const senderId = parts[1];
 
-                        // Si el mensaje viene de otro equipo, lo ejecutamos
                         if (senderId !== MY_ID) {
                             executeCmd(cmd);
                         }
@@ -211,10 +365,8 @@
         }
 
         function sendAction(cmd) {
-            // 1. Ejecutar inmediatamente en la pantalla local
             executeCmd(cmd);
             
-            // 2. Disparar petición silenciosa a la nube (Se ve como tráfico web normal)
             fetch(`https://ntfy.sh/${SYNC_CHANNEL}`, {
                 method: 'POST',
                 body: `${cmd}|${MY_ID}`
@@ -254,6 +406,21 @@
 
         setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
         window.onload = initData;
+
+        // --- FUNCIONES PARA LOS MODALES ---
+        function abrirModal(id) {
+            document.getElementById(id).style.display = "block";
+        }
+
+        function cerrarModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target.className === "modal") {
+                event.target.style.display = "none";
+            }
+        }
     </script>
 </body>
 </html>

@@ -20,7 +20,7 @@
         #remote-ind.reconnect { color: var(--orange); }
 
         /* GRID PRINCIPAL Cibernético */
-        .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1250px; margin: 0 auto; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1250px; margin: 0 auto; transition: 0.5s; }
         
         .card { 
             background: var(--card); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 30px; 
@@ -31,6 +31,12 @@
         .card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent); transform: skewX(-20deg); transition: 0.5s; }
         .card:hover::before { left: 150%; }
         .card:hover, .card:active { border-color: var(--blue); transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,212,255,0.2); }
+
+        /* CLASES MÁGICAS PARA EL MODO PRESENTACIÓN */
+        .hidden-card { display: none !important; }
+        @media (min-width: 901px) {
+            .center-last { grid-column: 2; /* Fuerza la tarjeta al centro en pantallas grandes */ }
+        }
 
         /* VISTAS Y ANIMACIONES */
         .view { display: none; animation: fadeIn 0.5s ease-out; } 
@@ -164,7 +170,7 @@
 
     <header>
         <div>
-            <h1 style="color: var(--green); margin:0; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,255,136,0.3);">JOLODA LEAN HUB</h1>
+            <h1 onclick="toggleSecretCards()" style="color: var(--green); margin:0; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,255,136,0.3); cursor: pointer;" title="Doble clic para menú oculto">CONTINUOUS EXCELLENCE JOLODA HUB</h1>
             <small style="color: #8892b0; letter-spacing: 1px;">CD BÁRCENAS | ADVANCED OPERATIONS</small>
         </div>
         <div class="clock-box" onclick="window.location.reload();" title="Toca para refrescar conexión">
@@ -216,19 +222,19 @@
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">TROUBLESHOOTING</span>
             </div>
             
-            <div class="card" onclick="abrirModalDevPlan('DevelopmentPlan')" style="border-color: rgba(0, 255, 136, 0.4);">
+            <div id="card-dev-plan" class="card center-last" onclick="abrirModalDevPlan('DevelopmentPlan')" style="border-color: rgba(0, 255, 136, 0.4);">
                 <i class="fas fa-seedling" style="font-size:3.5rem;color:var(--green); text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--green); margin-bottom:0; font-size: 1.4rem;">Development Plan</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">TEAM GROWTH</span>
             </div>
 
-            <div class="card" onclick="abrirModalTimeWindow('TimeWindow')" style="display: none; border-color: rgba(0, 255, 136, 0.4);">
+            <div class="card secret-card hidden-card" onclick="abrirModalTimeWindow('TimeWindow')" style="border-color: rgba(0, 255, 136, 0.4);">
                 <i class="fas fa-clock" style="font-size:3.5rem;color:var(--green); text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--green); margin-bottom:0; font-size: 1.4rem;">Time Window</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">LIVE ARRIVALS</span>
             </div>
 
-            <div class="card" style="display: none; border-color: rgba(255, 170, 0, 0.4);">
+            <div class="card secret-card hidden-card" style="border-color: rgba(255, 170, 0, 0.4);">
                 <i class="fas fa-chart-line" style="font-size:3.5rem;color:var(--orange); text-shadow: 0 0 15px rgba(255, 170, 0, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--orange); margin-bottom:0; font-size: 1.4rem;">Impacto TDC (VDE)</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">VALUE CREATION</span>
@@ -644,6 +650,25 @@
                     </tr>`;
                     arribosBody.innerHTML += row;
                 });
+            }
+        }
+
+        // ================= MAGIA DE PRESENTACIÓN (EL BOTÓN SECRETO) =================
+        let secretCardsHidden = true;
+        function toggleSecretCards() {
+            const devPlanCard = document.getElementById('card-dev-plan');
+            const hiddenCards = document.querySelectorAll('.secret-card');
+
+            if (secretCardsHidden) {
+                // Mostrar las tarjetas ocultas
+                hiddenCards.forEach(card => card.classList.remove('hidden-card'));
+                devPlanCard.classList.remove('center-last'); // Quita el centrado para que vuelvan a ser 9 en cuadrícula
+                secretCardsHidden = false;
+            } else {
+                // Volver a ocultar las tarjetas
+                hiddenCards.forEach(card => card.classList.add('hidden-card'));
+                devPlanCard.classList.add('center-last'); // Vuelve a centrar Development Plan
+                secretCardsHidden = true;
             }
         }
     </script>

@@ -28,35 +28,39 @@
         }
         .card:hover, .card:active { border-color: var(--blue); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,212,255,0.15); }
 
-        /* FOTOS Y MINIGRÁFICOS */
-        .preview-top { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .preview-top img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--green); object-fit: cover; }
-        
-        .tower-dash { width: 100%; background: #000; border-radius: 10px; padding: 10px; border: 1px solid #333; margin-bottom: 15px; box-sizing: border-box; text-align: left;}
-        .kpi-row { display: flex; justify-content: space-between; margin: 5px 0; font-size: 0.9rem; font-weight: bold;}
-        .alert-active { color: var(--red); font-weight: bold; animation: alertBlink 1s infinite; }
-
-        /* VISTAS Y ANIMACIONES */
+        /* VISTAS PEOPLE ORIGINAL */
         .view { display: none; animation: fadeIn 0.4s; } 
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-        @keyframes alertBlink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
         
+        .preview-top { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .preview-top img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--green); object-fit: cover; }
         .btn-back { background: #222; color: #fff; padding: 15px 30px; border-radius: 50px; cursor: pointer; margin-bottom: 30px; display: inline-block; border: 1px solid #444; font-weight: bold; transition: 0.3s; }
         .btn-back:hover, .btn-back:active { background: var(--blue); color: #000; border-color: var(--blue); }
 
-        /* PANTALLA COMPLETA INMERSIVA (Monitor Excel) */
-        #towerFullscreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; background: #0b1116; display: none; }
+        /* PANTALLA COMPLETA Monitor Joloda */
+        #towerFullscreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10000; background: #0b1116; display: none; }
         #towerFullscreen.active { display: block; animation: slideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .btn-close-monitor { position: absolute; top: 15px; right: 25px; background: rgba(20,20,20,0.8); color: var(--red); padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; z-index: 10000; border: 1px solid var(--red); transition: 0.2s; backdrop-filter: blur(5px); }
+        .btn-close-monitor { position: absolute; top: 15px; right: 25px; background: rgba(20,20,20,0.8); color: var(--red); padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; z-index: 10001; border: 1px solid var(--red); transition: 0.2s; backdrop-filter: blur(5px); }
 
-        /* ================= ESTILOS MODALES ================= */
-        .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
+        /* KPI Card compacta */
+        .tower-dash-card { width: 100%; background: #000; border-radius: 10px; padding: 10px; border: 1px solid #333; margin-bottom: 15px; box-sizing: border-box; text-align: left;}
+        .kpi-row-card { display: flex; justify-content: space-between; margin: 5px 0; font-size: 0.9rem; font-weight: bold;}
+
+        /* ================= ESTILOS JOLODA REFINADOS ================= */
+        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
         .modal-content { background-color: #0d0d0d; margin: 2% auto; padding: 25px; border: 1px solid var(--blue); border-radius: 15px; width: 90%; max-width: 1000px; color: white; box-shadow: 0 0 30px rgba(0, 212, 255, 0.2); height: 90vh; display: flex; flex-direction: column; box-sizing: border-box; overflow-y: auto; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px;}
         .close { color: #aaa; font-size: 32px; font-weight: bold; cursor: pointer; }
         .close:hover { color: var(--red); }
+
+        /* KPI Preview Modal (Restaurado) */
+        .kpi-big-display { text-align: center; margin: 30px 0; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .kpi-big-value { font-size: 8rem; color: var(--green); font-weight: bold; margin: 0; text-shadow: 0 0 30px rgba(0,255,136,0.5); }
+        .kpi-big-label { font-size: 1.5rem; color: #aaa; text-transform: uppercase; letter-spacing: 2px;}
+        .btn-launch-tower { background: var(--blue); color: #000; font-size: 1.2rem; padding: 20px 40px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; text-transform: uppercase; box-shadow: 0 0 30px rgba(0, 212, 255, 0.4); transition: 0.3s; width: 80%; max-width: 400px; align-self: center; margin-bottom: 20px;}
+        .btn-launch-tower:hover { background: #00ff88; box-shadow: 0 0 40px rgba(0, 255, 136, 0.6); transform: scale(1.05);}
 
         /* Visor de PDF Interno */
         .standards-container { display: flex; flex: 1; gap: 15px; height: calc(100% - 60px); min-height: 400px; }
@@ -68,7 +72,7 @@
         .doc-btn:hover { border-color: var(--blue); background-color: #222; }
         .doc-btn.active { background-color: var(--blue); color: #000; font-weight: bold; border-color: var(--blue); }
 
-        /* Grid de Equipo Arreglado */
+        /* Grid de Equipo (Nombres sanetizados sin tildes) */
         .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 25px; margin-top: 20px; padding: 10px; justify-items: center; align-items: start; }
         .team-member { text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; }
         .team-member img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--green); margin-bottom: 12px; transition: 0.3s; background: #222; }
@@ -97,12 +101,12 @@
             .dashboard-grid { grid-template-columns: 1fr; padding: 0 10px; }
             .card { min-height: 150px; padding: 20px; }
             h1 { font-size: 1.5rem; }
+            .kpi-big-value { font-size: 5rem; }
             .standards-container { flex-direction: column; }
             .standards-menu { width: 100%; max-height: 150px; }
             .modal-content { width: 95%; margin: 5% auto; padding: 15px; height: 95vh;}
             .team-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
             .schedule-table { font-size: 12px; }
-            .schedule-table th, .schedule-table td { padding: 8px; }
             .filter-bar { flex-direction: column; align-items: stretch; }
             .btn-update { align-self: stretch; margin-top: 10px;}
         }
@@ -134,11 +138,11 @@
                 <h3 style="margin-top:20px; color:#ffaa00; margin-bottom:0;">Standards</h3>
             </div>
             
-            <div class="card" onclick="abrirMonitor()">
-                <div class="tower-dash">
-                    <div class="kpi-row"><span style="color:#aaa;">OEE Joloda</span><span style="color:var(--green)">98%</span></div>
-                    <div class="kpi-row"><span style="color:#aaa;">T. Ciclo</span><span style="color:var(--blue)">19m</span></div>
-                    <div class="kpi-row"><span style="color:#aaa;">Alertas</span><span class="alert-active">0 DETECTED</span></div>
+            <div class="card" onclick="abrirModalKpi('Kpi')">
+                <div class="tower-dash-card">
+                    <div class="kpi-row-card"><span style="color:#aaa;">OEE Joloda</span><span style="color:var(--green)">98%</span></div>
+                    <div class="kpi-row-card"><span style="color:#aaa;">T. Ciclo</span><span style="color:var(--blue)">19m</span></div>
+                    <div class="kpi-row-card"><span style="color:#aaa;">Alertas</span><span style="color:var(--red); font-weight:bold;">0 detected</span></div>
                 </div>
                 <h3 style="color:var(--blue); font-size:1.5rem; margin:0;">KPI's</h3>
                 <span style="color:#aaa; font-size:0.8rem; margin-top:5px;">SALA DE ACCESO</span>
@@ -173,7 +177,6 @@
                 <i class="fas fa-chart-line" style="font-size:3.5rem;color:var(--orange);"></i>
                 <h3 style="margin-top:20px; color:var(--orange);">Impacto TDC (VDE)</h3>
             </div>
-
         </div>
     </div>
 
@@ -188,6 +191,25 @@
         <iframe src="monitor_joloda.html" style="width: 100%; height: 100%; border: none;"></iframe>
     </div>
 
+    <div id="modalKpiPreview" class="modal">
+        <div class="modal-content" style="height: auto; max-height: 90vh; max-width: 600px;">
+            <div class="modal-header">
+                <h2 style="color: var(--blue); margin: 0;">Resumen OEE Joloda</h2>
+                <span class="close" onclick="cerrarModal('modalKpiPreview')">&times;</span>
+            </div>
+            <div class="kpi-big-display">
+                <p class="kpi-big-value">98%</p>
+                <p class="kpi-big-label">OEE Joloda Live</p>
+                
+                <div style="display: flex; justify-content: space-around; background: #111; padding: 20px; border-radius: 10px; border: 1px solid #333; margin: 20px 0;">
+                    <div><span style="font-size:2rem; color:var(--blue); font-weight:bold;">19m</span><br><span style="color:#aaa;">T. Ciclo</span></div>
+                    <div><span style="font-size:2rem; color:var(--red); font-weight:bold;">Cero</span><br><span style="color:#aaa;">Alertas</span></div>
+                </div>
+            </div>
+            <button class="btn-launch-tower" onclick="abrirMonitor()">🚀 ABRIR MONITOR COMPLETO</button>
+        </div>
+    </div>
+
     <div id="modalStandards" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -196,13 +218,13 @@
             </div>
             <div class="standards-container">
                 <div class="standards-menu">
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, './Estandar/RUTINA ESTANDAR ACOPLE Y CONEXIÓN DE UNIDAD DE RAMPA AUTOMATIZADA .pdf')">SOP - Acople y Conexión</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, './Estandar/RUTINA ESTANDAR TRANSFERENCIA DE PRODUCTO DE RAMPA AUTOMATIZADA.pdf')">SOP - Transferencia</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, './Estandar/RUTINA ESTANDAR DESACOPLE Y RETIRO RAMPA AUTOMATIZADA JOLODA.pdf')">SOP - Desacople y Retiro</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, './Estandar/LUP-MH-Carga y Descarga del Joloda (Operador).pdf')">LUP - Carga/Descarga MH</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, './Estandar/LUP-MH-Conexion del Furgon Personal MH.pdf')">LUP - Conexión Furgón MH</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, './Estandar/LUP-MH-Conexion del Joloda . Pilotos.pdf')">LUP - Conexión Pilotos</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, './Estandar/LUP-MH-Desactivacion del Sensor de Cortina.pdf')">LUP - Sensor Cortina</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/RUTINA ESTANDAR ACOPLE Y CONEXIÓN DE UNIDAD DE RAMPA AUTOMATIZADA .pdf')">SOP - Acople y Conexión</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/RUTINA ESTANDAR TRANSFERENCIA DE PRODUCTO DE RAMPA AUTOMATIZADA.pdf')">SOP - Transferencia</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/RUTINA ESTANDAR DESACOPLE Y RETIRO RAMPA AUTOMATIZADA JOLODA.pdf')">SOP - Desacople y Retiro</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Carga y Descarga del Joloda (Operador).pdf')">LUP - Carga/Descarga MH</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Conexion del Furgon Personal MH.pdf')">LUP - Conexión Furgón</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Conexion del Joloda . Pilotos.pdf')">LUP - Conexión Pilotos</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Desactivacion del Sensor de Cortina.pdf')">LUP - Sensor Cortina</button>
                 </div>
                 <div class="pdf-viewer-area">
                     <iframe id="pdfFrameStandards" src="" title="SOP Viewer"></iframe>
@@ -217,14 +239,7 @@
                 <h2 style="color: var(--red); margin: 0;">Cadena de Ayuda Operativa</h2>
                 <span class="close" onclick="cerrarModal('modalHelp')">&times;</span>
             </div>
-            <div class="standards-container">
-                <div class="standards-menu">
-                    <button class="doc-btn active" onclick="cargarPDF('pdfFrameHelp', this, './Cadena de Ayuda/Cadena de Ayuda para eventos de Ramapa Joloda.pdf')">Estructura Cadena Ayuda</button>
-                </div>
-                <div class="pdf-viewer-area">
-                    <iframe id="pdfFrameHelp" src="./Cadena de Ayuda/Cadena de Ayuda para eventos de Ramapa Joloda.pdf" title="Help Chain Viewer"></iframe>
-                </div>
-            </div>
+            <iframe src="Cadena de Ayuda/Cadena de Ayuda para eventos de Ramapa Joloda.pdf" style="width: 100%; flex: 1; border: none; background: #fff;"></iframe>
         </div>
     </div>
 
@@ -236,35 +251,35 @@
             </div>
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="./img Desarrollo/Edgar Raúl Ical Toc.jpg" alt="Edgar Raul">
-                    <p>Edgar Raúl Ical Toc</p>
+                    <img src="./img Desarrollo/Edgar Raul Ical Toc.jpg" alt="Edgar Raul">
+                    <p>Edgar Raul Ical Toc</p>
                 </div>
                 <div class="team-member">
-                    <img src="./img Desarrollo/Ingrid Analy González Cruz.jpg" alt="Ingrid Analy">
-                    <p>Ingrid Analy González</p>
+                    <img src="./img Desarrollo/Ingrid Analy Gonzalez Cruz.jpg" alt="Ingrid Analy">
+                    <p>Ingrid Analy Gonzalez</p>
                 </div>
                 <div class="team-member">
-                    <img src="./img Desarrollo/Josué Samuel Oxón.jpg" alt="Josué Samuel">
-                    <p>Josué Samuel Oxón</p>
+                    <img src="./img Desarrollo/Josue Samuel Oxon.jpg" alt="Josue Samuel">
+                    <p>Josue Samuel Oxon</p>
                 </div>
                 <div class="team-member">
-                    <img src="./img Desarrollo/Lesly Mishel García Larios.jpg" alt="Lesly Mishel">
-                    <p>Lesly Mishel García</p>
+                    <img src="./img Desarrollo/Lesly Mishel Garcia Larios.jpg" alt="Lesly Mishel">
+                    <p>Lesly Mishel Garcia</p>
                 </div>
                 <div class="team-member">
-                    <img src="./img Desarrollo/Rodolfo Antonio Rodríguez Roche.jpg" alt="Rodolfo Antonio">
-                    <p>Rodolfo A. Rodríguez</p>
+                    <img src="./img Desarrollo/Rodolfo Antonio Rodriguez Roche.jpg" alt="Rodolfo Antonio">
+                    <p>Rodolfo A. Rodriguez</p>
                 </div>
                 <div class="team-member">
-                    <img src="./img Desarrollo/Rosa Angélica Car Chajón.jpg" alt="Rosa Angélica">
-                    <p>Rosa Angélica Car</p>
+                    <img src="./img Desarrollo/Rosa Angelica Car Chajon.jpg" alt="Rosa Angelica">
+                    <p>Rosa Angelica Car</p>
                 </div>
                 <div class="team-member">
-                    <img src="./img Desarrollo/Suleima Patricia García.jpg" alt="Suleima Patricia">
-                    <p>Suleima Patricia García</p>
+                    <img src="./img Desarrollo/Suleima Patricia Garcia.jpg" alt="Suleima Patricia">
+                    <p>Suleima Patricia Garcia</p>
                 </div>
                 <div class="team-member">
-                    <img src="./img Desarrollo/Yensi Anali Meda Dávila.jpg" alt="Yensi Anali">
+                    <img src="./img Desarrollo/Yensi Anali Meda Davila.jpg" alt="Yensi Anali">
                     <p>Yensi Anali Meda</p>
                 </div>
             </div>
@@ -322,7 +337,7 @@
     <script src="datos_live.js"></script>
 
     <script>
-        // Data Certified Team (People Card)
+        // Certified Team Data (FOTOS Sanetizadas sin tildes)
         const ops = [
             {n: 'Juan Carlos Damian Sunun', img: 'img/Juan Carlos Damian Sunun.png'},
             {n: 'Marbel Augusto Rivera Marroquin', img: 'img/Marbel Augusto Rivera Marroquin.png'},
@@ -332,7 +347,7 @@
             {n: 'Yendi Lorena Rueda Carrera', img: 'img/Yendi Lorena Rueda Carrera.png'}
         ];
 
-        // LÓGICA HTTP NATIVA (Nube)
+        // LÓGICA HTTP Master Sync V12 (Nube)
         const SYNC_CHANNEL = "nestle_joloda_barcenas_master_v12";
         const MY_ID = Math.random().toString(36).substring(2, 9);
         let eventSource;
@@ -373,9 +388,10 @@
                     cerrarTodosModales();
                     showView('homeView'); 
                     break;
-                // Control Remoto de Modales
+                // Control Remoto
                 case 'OPEN_MONITOR': abrirMonitor(); break;
                 case 'CLOSE_MONITOR': cerrarMonitor(); break;
+                case 'OPEN_KPI_PREVIEW': abrirModal('modalKpiPreview'); break;
                 case 'OPEN_STANDARDS': abrirModal('modalStandards'); break;
                 case 'OPEN_HELP': abrirModal('modalHelp'); break;
                 case 'OPEN_DEVPLAN': abrirModal('modalDevelopment'); break;
@@ -398,20 +414,26 @@
                 list.innerHTML += `<div class="card"><img src="${o.img}" style="width:110px;height:110px;border-radius:50%;border:3px solid var(--green);margin-bottom:15px;object-fit:cover;"><h3>${o.n}</h3></div>`;
             });
             initRemoteControl();
+            // Fecha por defecto: Hoy
             document.getElementById('datePickerWindow').valueAsDate = new Date();
         }
 
         setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
         window.onload = initData;
 
-        // ================= FUNCIONES JOLODA =================
-        function abrirMonitor() { document.getElementById('towerFullscreen').classList.add('active'); }
+        // --- FUNCIONES JOLODA COMPLETO ---
+        function abrirMonitor() { 
+            cerrarTodosModales(); // Cerrar preview si estaba abierta
+            document.getElementById('towerFullscreen').classList.add('active'); 
+        }
         function cerrarMonitor() { document.getElementById('towerFullscreen').classList.remove('active'); }
 
-        function abrirModalStandards(analyticsName) { abrirModal('modalStandards'); }
-        function abrirModalDevPlan(analyticsName) { abrirModal('modalDevelopment'); }
-        function abrirModalTimeWindow(analyticsName) { abrirModal('modalTimeWindow'); }
-        function abrirModalHelp(analyticsName) { abrirModal('modalHelp'); }
+        // Funciones de Apertura de Modales
+        function abrirModalStandards(analytics) { abrirModal('modalStandards'); document.getElementById('pdfFrameStandards').src = ""; }
+        function abrirModalKpi(analytics) { abrirModal('modalKpiPreview'); }
+        function abrirModalDevPlan(analytics) { abrirModal('modalDevelopment'); }
+        function abrirModalTimeWindow(analytics) { abrirModal('modalTimeWindow'); }
+        function abrirModalHelp(analytics) { abrirModal('modalHelp'); }
 
         function abrirModal(id) { document.getElementById(id).style.display = "block"; }
 
@@ -436,38 +458,44 @@
             document.getElementById(frameId).src = ruta;
         }
 
-        // MOTOR INTELIGENTE VENTANA HORARIA
+        // MOTOR INTELIGENTE VENTANA HORARIA (Mejorado UTC)
         function filtrarVentanaHoraria() {
             const arribosBody = document.getElementById('arribosBody');
             arribosBody.innerHTML = '';
             const nodoSeleccionado = document.getElementById('nodeSelectWindow').value;
-            const fechaInput = document.getElementById('datePickerWindow').value;
+            const dateInput = document.getElementById('datePickerWindow');
             
-            if (!fechaInput) {
-                arribosBody.innerHTML = '<tr><td colspan="5" class="no-data">Por favor selecciona una fecha</td></tr>';
+            // 1. Obtener fecha pura en UTC para evitar desfases de zona horaria
+            const dateObj = dateInput.valueAsDate; // Retorna fecha en UTC medianoche
+
+            if (!dateObj) {
+                arribosBody.innerHTML = '<tr><td colspan="5" class="no-data">Por favor selecciona una fecha válida</td></tr>';
                 return;
             }
 
-            const fechaVal = new Date(fechaInput);
-            const diaDelMes = fechaVal.getDate() + 1; // Ajuste de zona horaria local
-            const mesNumero = fechaVal.getMonth(); 
+            const diaDelMes = dateObj.getUTCDate(); // 15
+            const mesNumero = dateObj.getUTCMonth(); // 2 (Marzo)
+            const anio = dateObj.getUTCFullYear(); // 2026
             const mesLookup = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
             const mesNombre = mesLookup[mesNumero];
 
             if (!window.liveData || window.liveData.length === 0) {
-                arribosBody.innerHTML = '<tr><td colspan="5" class="no-data">Esperando datos del archivo Excel... Actualiza la web del Excel.</td></tr>';
+                arribosBody.innerHTML = '<tr><td colspan="5" class="no-data">Error: No hay datos cargados del Excel. Sube tu Excel a la nube.</td></tr>';
                 return;
             }
 
+            // 2. Filtrar Live Data
             const datosFiltrados = window.liveData.filter(camion => {
                 const matchNodo = camion.location === nodoSeleccionado;
                 const matchDia = parseInt(camion.day) === diaDelMes;
                 const matchMes = camion.month.toLowerCase() === mesNombre.toLowerCase();
+                // Opcional: matchAnio si lo tienes en el excel
                 return matchNodo && matchDia && matchMes;
             });
 
+            // 3. Renderizar Tabla
             if (datosFiltrados.length === 0) {
-                arribosBody.innerHTML = `<tr><td colspan="5" class="no-data">No hay arribos programados en ${nodoSeleccionado} para el ${diaDelMes} de ${mesNombre}</td></tr>`;
+                arribosBody.innerHTML = `<tr><td colspan="5" class="no-data">No hay arribos programados en ${nodoSeleccionado} para el ${diaDelMes} de ${mesNombre} de ${anio}</td></tr>`;
             } else {
                 datosFiltrados.forEach(camion => {
                     const row = `<tr>

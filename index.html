@@ -107,18 +107,20 @@
         .cert-badge.training { background: rgba(255, 170, 0, 0.1); color: var(--orange); border: 1px solid var(--orange);}
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Estilos Action Plans (Mapeo Visual) */
+        /* Estilos Action Plans (Mapeo Visual CORREGIDO para evitar imágenes comprimidas) */
         .action-plans-view { display: flex; flex-direction: column; gap: 25px; padding: 15px;}
-        .visual-plan-item { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; display: grid; grid-template-columns: 350px 1fr; transition: 0.3s; }
+        .visual-plan-item { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; display: grid; grid-template-columns: 400px 1fr; transition: 0.3s; align-items: stretch; }
         .visual-plan-item:hover { border-color: var(--orange); box-shadow: 0 5px 20px rgba(255, 170, 0, 0.15); }
-        .mapped-failure { position: relative; background: #000; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgba(255,255,255,0.05); overflow: hidden; padding: 15px;}
-        .mapped-failure img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px;}
+        
+        /* Imagen sin compresión */
+        .mapped-failure { position: relative; background: #000; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgba(255,255,255,0.05); padding: 15px; }
+        .mapped-failure img { width: 100%; height: auto; max-height: 280px; object-fit: contain; border-radius: 8px; display: block;}
         
         .error-marker { position: absolute; border: 2px solid var(--red); border-radius: 6px; animation: errorBlink 1.5s infinite; box-shadow: 0 0 15px rgba(255, 68, 68, 0.5); background: rgba(255, 68, 68, 0.15); backdrop-filter: blur(2px);}
         @keyframes errorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
         .visual-plan-item:hover .error-marker { animation: none; border-color: var(--orange); box-shadow: 0 0 15px rgba(255, 170, 0, 0.5); background: rgba(255, 170, 0, 0.15);}
 
-        .plan-instructions { padding: 25px; text-align: left; display: flex; flex-direction: column; gap: 12px; }
+        .plan-instructions { padding: 25px; text-align: left; display: flex; flex-direction: column; gap: 12px; justify-content: center;}
         .plan-header { margin: 0; color: var(--orange); font-size: 1.25rem; font-weight: bold; display: flex; align-items: center; gap: 10px;}
         .plan-instructions p { margin: 0; font-size: 13px; color: #94a3b8; line-height: 1.6;}
         
@@ -127,6 +129,19 @@
         .step-number { background: rgba(0, 212, 255, 0.15); color: var(--blue); min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;}
         .step-icon { color: var(--orange); font-size: 1.1rem; width: 20px; text-align: center;}
         .sop-reference { font-size: 11px; color: #64748b; font-style: italic; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);}
+
+        /* Time Window INTERACTIVA */
+        .time-window-container { flex: 1; display: flex; flex-direction: column; gap: 20px; overflow: hidden; }
+        .filter-bar { display: flex; gap: 15px; background: rgba(0,0,0,0.4); padding: 15px 20px; border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.2); justify-content: start; flex-wrap: wrap; align-items: end; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);}
+        .filter-group { display: flex; flex-direction: column; text-align: left; gap: 8px; }
+        .filter-group label { font-size: 11px; color: var(--blue); text-transform: uppercase; font-weight: bold; letter-spacing: 1px;}
+        .joloda-select, .joloda-date { background: #0f172a; color: #fff; border: 1px solid #334155; border-radius: 6px; padding: 12px 15px; font-family: 'Segoe UI', sans-serif; font-size: 13px; outline: none; transition: 0.3s;}
+        .joloda-select:focus, .joloda-date:focus { border-color: var(--blue); box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);}
+        
+        .btn-update { background: transparent; color: var(--green); border: 1px solid var(--green); border-radius: 6px; padding: 12px 25px; font-weight: bold; cursor: pointer; transition: 0.3s; letter-spacing: 1px;}
+        .btn-update:hover { background: var(--green); color: #000; box-shadow: 0 0 15px rgba(0, 255, 136, 0.4); }
+        
+        .time-tables { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 25px; padding-right: 10px;}
 
         /* ADAPTACIÓN CELULAR */
         @media only screen and (max-width: 900px) {
@@ -139,8 +154,10 @@
             .modal-content { width: 95%; margin: 5% auto; padding: 20px; height: 95vh;}
             .dual-matrix-container { grid-template-columns: 1fr; }
             .visual-plan-item { grid-template-columns: 1fr; }
-            .mapped-failure { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 20px; height: 200px;}
+            .mapped-failure { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 20px; height: auto;}
             .schedule-table { font-size: 11px; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .btn-update { align-self: stretch; margin-top: 5px;}
         }
     </style>
 </head>
@@ -262,7 +279,8 @@
                 <div class="standards-menu">
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estandar Acople Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Acople</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estandar Transferencia Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Transferencia</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estándar Desacople Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Desacople</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estandar Desacople Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Desacople</button>
+                    
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Carga y Descarga del Joloda (Operador).pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Carga/Descarga MH</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Conexion del Furgon Personal MH.pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Conexión Furgón MH</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Conexion del Joloda . Pilotos.pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Conexión Pilotos</button>
@@ -302,7 +320,7 @@
                                 <div class="mapped-failure">
                                     <img src="./Img Estandar/Activacion de Parada de Emergencia.jpeg" alt="E-Stop Activado">
                                     <span class="error-marker" style="width: 80px; height: 80px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%;"></span>
-                                }
+                                </div>
                                 <div class="plan-instructions">
                                     <div class="plan-header"><i class="fas fa-exclamation-triangle"></i> 1. Safety Reset (E-Stop)</div>
                                     <p><strong>Condición:</strong> Parada de emergencia activada. Rampa detenida.</p>
@@ -319,7 +337,7 @@
                                 <div class="mapped-failure">
                                     <img src="./Img Estandar/Desface y abertura en enrampar furgon y andem.jpeg" alt="Gap Furgon">
                                     <span class="error-marker" style="width: 100px; height: 60px; top: 50%; left: 60%; transform: translate(-50%, -50%);"></span>
-                                }
+                                </div>
                                 <div class="plan-instructions">
                                     <div class="plan-header"><i class="fas fa-compress-arrows-alt"></i> 2. Error de Interlock Físico (Gap)</div>
                                     <p><strong>Condición:</strong> Furgón mal acoplado contra sensores de tope. Sistema no permite transferencia.</p>
@@ -336,7 +354,7 @@
                                 <div class="mapped-failure">
                                     <img src="./Img Estandar/Falla de Sensor de Piso.jpeg" alt="HMI Error">
                                     <span class="error-marker" style="width: 250px; height: 180px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 8px;"></span>
-                                }
+                                </div>
                                 <div class="plan-instructions">
                                     <div class="plan-header"><i class="fas fa-bacon"></i> 3. Atasco / Falla Sensor Transferencia</div>
                                     <p><strong>Condición:</strong> Transferencia detenida a medio ciclo por error de lectura de sensor de palet.</p>
@@ -600,18 +618,11 @@
         function abrirMonitor() { cerrarTodosModales(); document.getElementById('towerFullscreen').classList.add('active'); }
         function cerrarMonitor() { document.getElementById('towerFullscreen').classList.remove('active'); }
 
-        function abrirModalStandards() { abrirModal('modalStandards'); document.getElementById('pdfFrameStandards').src = ""; }
-        function abrirModalKpi() { abrirModal('modalKpiPreview'); }
-        function abrirModalDevPlan() { abrirModal('modalDevelopment'); }
-        function abrirModalCompetencias() { abrirModal('modalCompetencias'); }
-        function abrirModalHelp() { 
-            abrirModal('modalHelp'); 
-            // Reiniciar a pestaña PDF por defecto
-            switchHelpTab('pdf');
+        // ================= FUNCIÓN CORREGIDA PARA CERRAR Y ABRIR MODALES =================
+        function abrirModal(id) { 
+            cerrarTodosModales(); // GARANTIZA QUE NO SE ABRAN DOS VENTANAS A LA VEZ
+            document.getElementById(id).style.display = "block"; 
         }
-        function abrirModalTimeWindow() { abrirModal('modalTimeWindow'); }
-
-        function abrirModal(id) { document.getElementById(id).style.display = "block"; }
 
         function cerrarModal(id) {
             document.getElementById(id).style.display = "none";
@@ -623,9 +634,20 @@
             document.getElementById('pdfFrameStandards').src = "";
         }
 
+        // Clic fuera del modal para cerrarlo
         window.onclick = function(event) {
             if (event.target.className === "modal") { cerrarTodosModales(); }
         }
+
+        function abrirModalStandards() { abrirModal('modalStandards'); document.getElementById('pdfFrameStandards').src = ""; }
+        function abrirModalKpi() { abrirModal('modalKpiPreview'); }
+        function abrirModalDevPlan() { abrirModal('modalDevelopment'); }
+        function abrirModalCompetencias() { abrirModal('modalCompetencias'); }
+        function abrirModalHelp() { 
+            abrirModal('modalHelp'); 
+            switchHelpTab('pdf');
+        }
+        function abrirModalTimeWindow() { abrirModal('modalTimeWindow'); }
 
         function cargarPDF(frameId, btn, ruta) {
             const container = btn.parentElement;

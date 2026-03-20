@@ -54,7 +54,7 @@
         .tower-dash-card { width: 100%; background: rgba(0,0,0,0.4); border-radius: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; box-sizing: border-box; text-align: left;}
         .kpi-row-card { display: flex; justify-content: space-between; margin: 6px 0; font-size: 0.95rem; font-weight: bold;}
 
-        /* ================= ESTILOS MODALES REFINADOS (GLASSMORPHISM) ================= */
+        /* ================= ESTILOS MODALES REFINADOS ================= */
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(4, 7, 12, 0.85); backdrop-filter: blur(10px); }
         .modal-content { background-color: rgba(18, 24, 32, 0.95); margin: 2% auto; padding: 30px; border: 1px solid var(--blue); border-radius: 16px; width: 92%; max-width: 1100px; color: white; box-shadow: 0 0 40px rgba(0, 212, 255, 0.15); height: 92vh; display: flex; flex-direction: column; box-sizing: border-box; overflow-y: auto; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 212, 255, 0.3); padding-bottom: 15px; margin-bottom: 20px;}
@@ -85,7 +85,7 @@
         .team-member:hover img { transform: scale(1.15) translateY(-5px); box-shadow: 0 10px 25px rgba(0, 255, 136, 0.4); }
         .team-member p { font-size: 13px; margin: 0; line-height: 1.4; color: #e0e6ed; font-weight: bold; }
 
-        /* ================= ESTILOS JOLODA: TABLAS Y MATRICES (HIGH-TECH) ================= */
+        /* ================= ESTILOS JOLODA: TABLAS Y MATRICES ================= */
         .schedule-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; background: rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden;}
         .schedule-table th, .schedule-table td { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 14px; text-align: left; }
         .schedule-table th { background-color: rgba(0, 212, 255, 0.1); color: var(--blue); font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;}
@@ -129,7 +129,7 @@
         .step-icon { color: var(--orange); font-size: 1.1rem; width: 20px; text-align: center;}
         .sop-reference { font-size: 11px; color: #64748b; font-style: italic; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);}
 
-        /* Time Window INTERACTIVA (Holographic feel) */
+        /* Time Window INTERACTIVA */
         .time-window-container { flex: 1; display: flex; flex-direction: column; gap: 20px; overflow: hidden; }
         .filter-bar { display: flex; gap: 15px; background: rgba(0,0,0,0.4); padding: 15px 20px; border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.2); justify-content: start; flex-wrap: wrap; align-items: end; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);}
         .filter-group { display: flex; flex-direction: column; text-align: left; gap: 8px; }
@@ -327,7 +327,6 @@
             </div>
             
             <div class="dual-matrix-container">
-                
                 <div class="matrix-section">
                     <h3><i class="fas fa-medal" style="color:var(--blue);"></i> Certified Operator Skills</h3>
                     <div style="overflow-x: auto;">
@@ -358,7 +357,6 @@
                         </table>
                     </div>
                 </div>
-
             </div>
             <div style="display: flex; gap: 25px; margin-top: 25px; justify-content: center; font-size: 12px; color: #8892b0; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">
                 <span><i class="fas fa-check-circle icon-check"></i> Validated</span>
@@ -483,9 +481,7 @@
     </div>
 
     <script>
-        var scriptDatos = document.createElement('script');
-        scriptDatos.src = "datos_live.js?v=" + new Date().getTime();
-        document.head.appendChild(scriptDatos);
+        document.write('<script src="datos_live.js?v=' + new Date().getTime() + '"><\/script>');
     </script>
 
     <script>
@@ -568,7 +564,6 @@
         setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-US', {hour12:false}); }, 1000);
         window.onload = initData;
 
-        // --- FUNCIONES JOLODA ---
         function abrirMonitor() { cerrarTodosModales(); document.getElementById('towerFullscreen').classList.add('active'); }
         function cerrarMonitor() { document.getElementById('towerFullscreen').classList.remove('active'); }
 
@@ -603,7 +598,6 @@
             document.getElementById(frameId).src = ruta;
         }
 
-        // MOTOR INTELIGENTE VENTANA HORARIA (Ignora tildes y mayúsculas)
         function filtrarVentanaHoraria() {
             const arribosBody = document.getElementById('arribosBody');
             arribosBody.innerHTML = '';

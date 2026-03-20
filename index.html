@@ -7,7 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg: #070a0f; --card: #121820; --green: #00ff88; --blue: #00d4ff; --red: #ff3366; --orange: #ffaa00; --text: #e0e6ed;
+            --bg: #070a11; --card: #121820; --green: #00ff88; --blue: #00d4ff; --red: #ff3366; --orange: #ffaa00; --text: #e0e6ed;
             --neon-glow: 0 0 15px rgba(0, 212, 255, 0.3);
         }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; text-align: center; overflow-x: hidden; }
@@ -19,7 +19,7 @@
         #remote-ind.online { color: var(--green); text-shadow: 0 0 8px var(--green);}
         #remote-ind.reconnect { color: var(--orange); }
 
-        /* GRID PRINCIPAL */
+        /* GRID PRINCIPAL Cibernético */
         .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1250px; margin: 0 auto; }
         
         .card { 
@@ -32,7 +32,7 @@
         .card:hover::before { left: 150%; }
         .card:hover, .card:active { border-color: var(--blue); transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,212,255,0.2); }
 
-        /* FOTOS Y MINIGRÁFICOS */
+        /* VISTAS Y ANIMACIONES */
         .view { display: none; animation: fadeIn 0.5s ease-out; } 
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
@@ -44,24 +44,24 @@
         .btn-back { background: #1a222c; color: var(--blue); padding: 12px 30px; border-radius: 50px; cursor: pointer; margin-bottom: 30px; display: inline-block; border: 1px solid var(--blue); font-weight: bold; transition: 0.3s; letter-spacing: 1px;}
         .btn-back:hover { background: var(--blue); color: #000; box-shadow: var(--neon-glow); }
 
-        /* PANTALLA COMPLETA Monitor Joloda */
+        /* Monitor Joloda Monitor Inmersivo */
         #towerFullscreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10000; background: #0b1116; display: none; }
         #towerFullscreen.active { display: block; animation: slideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         .btn-close-monitor { position: absolute; top: 15px; right: 25px; background: rgba(20,20,20,0.8); color: var(--red); padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; z-index: 10001; border: 1px solid var(--red); transition: 0.2s; backdrop-filter: blur(5px); }
 
-        /* KPI Card compacta */
+        /* KPI Card compacta avanzada */
         .tower-dash-card { width: 100%; background: rgba(0,0,0,0.4); border-radius: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; box-sizing: border-box; text-align: left;}
         .kpi-row-card { display: flex; justify-content: space-between; margin: 6px 0; font-size: 0.95rem; font-weight: bold;}
 
-        /* ================= ESTILOS MODALES (GLASSMORPHISM) ================= */
+        /* ================= ESTILOS MODALES REFINADOS (GLASSMORPHISM) ================= */
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(4, 7, 12, 0.85); backdrop-filter: blur(10px); }
         .modal-content { background-color: rgba(18, 24, 32, 0.95); margin: 2% auto; padding: 30px; border: 1px solid var(--blue); border-radius: 16px; width: 92%; max-width: 1100px; color: white; box-shadow: 0 0 40px rgba(0, 212, 255, 0.15); height: 92vh; display: flex; flex-direction: column; box-sizing: border-box; overflow-y: auto; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 212, 255, 0.3); padding-bottom: 15px; margin-bottom: 20px;}
         .close { color: #8892b0; font-size: 32px; font-weight: bold; cursor: pointer; transition: 0.3s;}
         .close:hover { color: var(--red); transform: rotate(90deg);}
 
-        /* KPI Preview Modal */
+        /* KPI Preview Cibernético */
         .kpi-big-display { text-align: center; margin: 30px 0; flex: 1; display: flex; flex-direction: column; justify-content: center; }
         .kpi-big-value { font-size: 8.5rem; color: var(--green); font-weight: bold; margin: 0; text-shadow: 0 0 40px rgba(0,255,136,0.4); line-height: 1;}
         .kpi-big-label { font-size: 1.5rem; color: #8892b0; text-transform: uppercase; letter-spacing: 3px; margin-top: 10px;}
@@ -78,14 +78,14 @@
         .doc-btn:hover { border-color: var(--orange); background-color: rgba(255, 170, 0, 0.05); }
         .doc-btn.active { background-color: rgba(0, 212, 255, 0.1); color: var(--blue); font-weight: bold; border-color: var(--blue); box-shadow: inset 4px 0 0 var(--blue);}
 
-        /* Grid de Equipo */
+        /* Grid de Equipo Cibernético */
         .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 25px; margin-top: 20px; padding: 10px; justify-items: center; align-items: start; }
         .team-member { text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; }
         .team-member img { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid var(--green); margin-bottom: 15px; transition: 0.4s; background: #222; box-shadow: 0 5px 15px rgba(0,0,0,0.5);}
         .team-member:hover img { transform: scale(1.15) translateY(-5px); box-shadow: 0 10px 25px rgba(0, 255, 136, 0.4); }
         .team-member p { font-size: 13px; margin: 0; line-height: 1.4; color: #e0e6ed; font-weight: bold; }
 
-        /* ================= TABLAS Y MATRICES (HIGH-TECH) ================= */
+        /* ================= ESTILOS JOLODA: TABLAS Y MATRICES (HIGH-TECH) ================= */
         .schedule-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; background: rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden;}
         .schedule-table th, .schedule-table td { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 14px; text-align: left; }
         .schedule-table th { background-color: rgba(0, 212, 255, 0.1); color: var(--blue); font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;}
@@ -129,7 +129,7 @@
         .step-icon { color: var(--orange); font-size: 1.1rem; width: 20px; text-align: center;}
         .sop-reference { font-size: 11px; color: #64748b; font-style: italic; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);}
 
-        /* Ventana Horaria INTERACTIVA (Holographic feel) */
+        /* Time Window INTERACTIVA (Holographic feel) */
         .time-window-container { flex: 1; display: flex; flex-direction: column; gap: 20px; overflow: hidden; }
         .filter-bar { display: flex; gap: 15px; background: rgba(0,0,0,0.4); padding: 15px 20px; border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.2); justify-content: start; flex-wrap: wrap; align-items: end; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);}
         .filter-group { display: flex; flex-direction: column; text-align: left; gap: 8px; }
@@ -154,6 +154,7 @@
             .dual-matrix-container { grid-template-columns: 1fr; }
             .visual-plan-item { grid-template-columns: 1fr; }
             .mapped-failure { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 20px; height: 200px;}
+            .schedule-table { font-size: 11px; }
             .filter-bar { flex-direction: column; align-items: stretch; }
             .btn-update { align-self: stretch; margin-top: 5px;}
         }
@@ -331,12 +332,12 @@
                     <h3><i class="fas fa-medal" style="color:var(--blue);"></i> Certified Operator Skills</h3>
                     <div style="overflow-x: auto;">
                         <table class="schedule-table" style="min-width: 500px; text-align: center;">
-                            <thead><tr><th style="text-align: left;">Certified Operator</th><th>Troubleshooting</th><th>Zone Mastery</th><th>Panel Control</th><th>SOP Creation</th><th>Level</th></tr></thead>
+                            <thead><tr><th style="text-align: left;">Operator</th><th>Troubleshooting</th><th>Zone Mastery</th><th>Panel Control</th><th>SOP Creation</th><th>Level</th></tr></thead>
                             <tbody>
-                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Juan Carlos Damian</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge master">Master</span></td></tr>
-                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Marbel Augusto Rivera</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><span class="cert-badge master">Master</span></td></tr>
-                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Rene Vidal Ramirez</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><span class="cert-badge master" style="border-color:#8892b0; color:#8892b0;">Advanced</span></td></tr>
-                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Williams Marroquin</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge master">Master</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Juan Carlos Damian</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge certified">Certified</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Marbel Augusto Rivera</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><span class="cert-badge cert-badge certified" style="background:rgba(0, 212, 255, 0.1); color:var(--blue); border-color:var(--blue);">Master</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Joel David Ajuchan</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge certified">Certified</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Yendi Lorena Rueda</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><span class="cert-badge training">In Progress</span></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -351,7 +352,7 @@
                                 <tr><td style="text-align: left; font-weight: bold;">Edgar Raul Ical</td><td><span style="color:#8892b0; font-size:11px;">Montacargas</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge training">50%</span></td></tr>
                                 <tr><td style="text-align: left; font-weight: bold;">Josue Samuel Oxon</td><td><span style="color:#8892b0; font-size:11px;">Montacargas</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><span class="cert-badge certified">Cert.</span></td></tr>
                                 <tr><td style="text-align: left; font-weight: bold;">Ingrid Analy Gonzalez</td><td><span style="color:#8892b0; font-size:11px;">Picker</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge training">50%</span></td></tr>
-                                <tr><td style="text-align: left; font-weight: bold;">Lesly Mishel Garcia</td><td><span style="color:#8892b0; font-size:11px;">Picker</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><span class="cert-badge training" style="color:#8892b0; border-color:#8892b0;">10%</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold;">Rodolfo Rodriguez</td><td><span style="color:#8892b0; font-size:11px;">Montacargas</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><span class="cert-badge training" style="color:#8892b0; border-color:#8892b0;">25%</span></td></tr>
                                 <tr><td style="text-align: left; font-weight: bold;">Rosa Angelica Car</td><td><span style="color:#8892b0; font-size:11px;">Picker</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><span class="cert-badge training" style="color:var(--green); border-color:var(--green);">80%</span></td></tr>
                             </tbody>
                         </table>
@@ -370,7 +371,7 @@
     <div id="modalActionPlans" class="modal">
         <div class="modal-content" style="height: auto; max-height: 95vh; max-width: 1050px;">
             <div class="modal-header">
-                <h2 style="color: var(--orange); margin: 0;">Operational Action Plans (Troubleshooting)</h2>
+                <h2 style="color: var(--orange); margin: 0; text-shadow: 0 0 15px rgba(255, 170, 0, 0.3);">Operational Action Plans (Troubleshooting)</h2>
                 <span class="close" onclick="cerrarModal('modalActionPlans')">&times;</span>
             </div>
             
@@ -481,11 +482,11 @@
         </div>
     </div>
 
-   <script>
-    var scriptDatos = document.createElement('script');
-    scriptDatos.src = "datos_live.js?v=" + new Date().getTime();
-    document.head.appendChild(scriptDatos);
-</script>
+    <script>
+        var scriptDatos = document.createElement('script');
+        scriptDatos.src = "datos_live.js?v=" + new Date().getTime();
+        document.head.appendChild(scriptDatos);
+    </script>
 
     <script>
         const ops = [
@@ -602,6 +603,7 @@
             document.getElementById(frameId).src = ruta;
         }
 
+        // MOTOR INTELIGENTE VENTANA HORARIA (Ignora tildes y mayúsculas)
         function filtrarVentanaHoraria() {
             const arribosBody = document.getElementById('arribosBody');
             arribosBody.innerHTML = '';

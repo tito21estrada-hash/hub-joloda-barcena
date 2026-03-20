@@ -54,7 +54,7 @@
         .tower-dash-card { width: 100%; background: rgba(0,0,0,0.4); border-radius: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; box-sizing: border-box; text-align: left;}
         .kpi-row-card { display: flex; justify-content: space-between; margin: 6px 0; font-size: 0.95rem; font-weight: bold;}
 
-        /* ================= ESTILOS MODALES REFINADOS ================= */
+        /* ================= ESTILOS MODALES REFINADOS (GLASSMORPHISM) ================= */
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(4, 7, 12, 0.85); backdrop-filter: blur(10px); }
         .modal-content { background-color: rgba(18, 24, 32, 0.95); margin: 2% auto; padding: 30px; border: 1px solid var(--blue); border-radius: 16px; width: 92%; max-width: 1100px; color: white; box-shadow: 0 0 40px rgba(0, 212, 255, 0.15); height: 92vh; display: flex; flex-direction: column; box-sizing: border-box; overflow-y: auto; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 212, 255, 0.3); padding-bottom: 15px; margin-bottom: 20px;}
@@ -222,17 +222,18 @@
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">TEAM GROWTH</span>
             </div>
 
-            <div class="card" onclick="abrirModalTimeWindow('TimeWindow')" style="border-color: rgba(0, 255, 136, 0.4);">
+            <div class="card" onclick="abrirModalTimeWindow('TimeWindow')" style="display: none; border-color: rgba(0, 255, 136, 0.4);">
                 <i class="fas fa-clock" style="font-size:3.5rem;color:var(--green); text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--green); margin-bottom:0; font-size: 1.4rem;">Time Window</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">LIVE ARRIVALS</span>
             </div>
 
-            <div class="card" style="border-color: rgba(255, 170, 0, 0.4);">
+            <div class="card" style="display: none; border-color: rgba(255, 170, 0, 0.4);">
                 <i class="fas fa-chart-line" style="font-size:3.5rem;color:var(--orange); text-shadow: 0 0 15px rgba(255, 170, 0, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--orange); margin-bottom:0; font-size: 1.4rem;">Impacto TDC (VDE)</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">VALUE CREATION</span>
             </div>
+
         </div>
     </div>
 

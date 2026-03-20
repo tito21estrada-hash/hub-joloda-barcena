@@ -55,7 +55,7 @@
         .close { color: #aaa; font-size: 32px; font-weight: bold; cursor: pointer; }
         .close:hover { color: var(--red); }
 
-        /* KPI Preview Modal (Restaurado) */
+        /* KPI Preview Modal */
         .kpi-big-display { text-align: center; margin: 30px 0; flex: 1; display: flex; flex-direction: column; justify-content: center; }
         .kpi-big-value { font-size: 8rem; color: var(--green); font-weight: bold; margin: 0; text-shadow: 0 0 30px rgba(0,255,136,0.5); }
         .kpi-big-label { font-size: 1.5rem; color: #aaa; text-transform: uppercase; letter-spacing: 2px;}
@@ -72,7 +72,7 @@
         .doc-btn:hover { border-color: var(--blue); background-color: #222; }
         .doc-btn.active { background-color: var(--blue); color: #000; font-weight: bold; border-color: var(--blue); }
 
-        /* Grid de Equipo (Nombres sanetizados sin tildes) */
+        /* Grid de Equipo */
         .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 25px; margin-top: 20px; padding: 10px; justify-items: center; align-items: start; }
         .team-member { text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; }
         .team-member img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--green); margin-bottom: 12px; transition: 0.3s; background: #222; }
@@ -218,7 +218,7 @@
             </div>
             <div class="standards-container">
                 <div class="standards-menu">
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/RUTINA ESTANDAR ACOPLE Y CONEXIÓN DE UNIDAD DE RAMPA AUTOMATIZADA .pdf')">SOP - Acople y Conexión</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/RUTINA ESTANDAR ACOPLE Y CONEXION DE UNIDAD DE RAMPA AUTOMATIZADA .pdf')">SOP - Acople y Conexión</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/RUTINA ESTANDAR TRANSFERENCIA DE PRODUCTO DE RAMPA AUTOMATIZADA.pdf')">SOP - Transferencia</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/RUTINA ESTANDAR DESACOPLE Y RETIRO RAMPA AUTOMATIZADA JOLODA.pdf')">SOP - Desacople y Retiro</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Carga y Descarga del Joloda (Operador).pdf')">LUP - Carga/Descarga MH</button>
@@ -337,17 +337,17 @@
     <script src="datos_live.js"></script>
 
     <script>
-        // Certified Team Data (FOTOS Sanetizadas sin tildes)
+        // FOTO JOEL CORREGIDA (Se ajustó la "J")
         const ops = [
             {n: 'Juan Carlos Damian Sunun', img: 'img/Juan Carlos Damian Sunun.png'},
             {n: 'Marbel Augusto Rivera Marroquin', img: 'img/Marbel Augusto Rivera Marroquin.png'},
-            {n: 'Joel David Ajuchan Puac', img: 'img/oel David Ajuchan Puac.png'},
+            {n: 'Joel David Ajuchan Puac', img: 'img/Joel David Ajuchan Puac.png'},
             {n: 'Rene Vidal Ramirez Bran', img: 'img/Rene Vidal Ramirez Bran.png'},
             {n: 'Williams Cesar Marroquin Ovalle', img: 'img/Williams Cesar Rolando Marroquin Ovalle.png'},
             {n: 'Yendi Lorena Rueda Carrera', img: 'img/Yendi Lorena Rueda Carrera.png'}
         ];
 
-        // LÓGICA HTTP Master Sync V12 (Nube)
+        // LÓGICA HTTP Master Sync
         const SYNC_CHANNEL = "nestle_joloda_barcenas_master_v12";
         const MY_ID = Math.random().toString(36).substring(2, 9);
         let eventSource;
@@ -388,7 +388,6 @@
                     cerrarTodosModales();
                     showView('homeView'); 
                     break;
-                // Control Remoto
                 case 'OPEN_MONITOR': abrirMonitor(); break;
                 case 'CLOSE_MONITOR': cerrarMonitor(); break;
                 case 'OPEN_KPI_PREVIEW': abrirModal('modalKpiPreview'); break;
@@ -414,21 +413,19 @@
                 list.innerHTML += `<div class="card"><img src="${o.img}" style="width:110px;height:110px;border-radius:50%;border:3px solid var(--green);margin-bottom:15px;object-fit:cover;"><h3>${o.n}</h3></div>`;
             });
             initRemoteControl();
-            // Fecha por defecto: Hoy
             document.getElementById('datePickerWindow').valueAsDate = new Date();
         }
 
         setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
         window.onload = initData;
 
-        // --- FUNCIONES JOLODA COMPLETO ---
+        // --- FUNCIONES JOLODA ---
         function abrirMonitor() { 
-            cerrarTodosModales(); // Cerrar preview si estaba abierta
+            cerrarTodosModales();
             document.getElementById('towerFullscreen').classList.add('active'); 
         }
         function cerrarMonitor() { document.getElementById('towerFullscreen').classList.remove('active'); }
 
-        // Funciones de Apertura de Modales
         function abrirModalStandards(analytics) { abrirModal('modalStandards'); document.getElementById('pdfFrameStandards').src = ""; }
         function abrirModalKpi(analytics) { abrirModal('modalKpiPreview'); }
         function abrirModalDevPlan(analytics) { abrirModal('modalDevelopment'); }
@@ -458,24 +455,23 @@
             document.getElementById(frameId).src = ruta;
         }
 
-        // MOTOR INTELIGENTE VENTANA HORARIA (Mejorado UTC)
+        // MOTOR INTELIGENTE VENTANA HORARIA (Ignora tildes y mayúsculas)
         function filtrarVentanaHoraria() {
             const arribosBody = document.getElementById('arribosBody');
             arribosBody.innerHTML = '';
             const nodoSeleccionado = document.getElementById('nodeSelectWindow').value;
             const dateInput = document.getElementById('datePickerWindow');
             
-            // 1. Obtener fecha pura en UTC para evitar desfases de zona horaria
-            const dateObj = dateInput.valueAsDate; // Retorna fecha en UTC medianoche
+            const dateObj = dateInput.valueAsDate;
 
             if (!dateObj) {
                 arribosBody.innerHTML = '<tr><td colspan="5" class="no-data">Por favor selecciona una fecha válida</td></tr>';
                 return;
             }
 
-            const diaDelMes = dateObj.getUTCDate(); // 15
-            const mesNumero = dateObj.getUTCMonth(); // 2 (Marzo)
-            const anio = dateObj.getUTCFullYear(); // 2026
+            const diaDelMes = dateObj.getUTCDate();
+            const mesNumero = dateObj.getUTCMonth(); 
+            const anio = dateObj.getUTCFullYear(); 
             const mesLookup = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
             const mesNombre = mesLookup[mesNumero];
 
@@ -484,16 +480,20 @@
                 return;
             }
 
-            // 2. Filtrar Live Data
+            // Normalizador mágico: quita acentos y pasa todo a mayúsculas para comparar perfecto
+            const normalizarTexto = (texto) => {
+                if (!texto) return "";
+                return texto.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().trim();
+            };
+
             const datosFiltrados = window.liveData.filter(camion => {
-                const matchNodo = camion.location === nodoSeleccionado;
+                // Comparamos sin acentos: "CD BARCENAS" === "CD BARCENAS"
+                const matchNodo = normalizarTexto(camion.location) === normalizarTexto(nodoSeleccionado);
                 const matchDia = parseInt(camion.day) === diaDelMes;
-                const matchMes = camion.month.toLowerCase() === mesNombre.toLowerCase();
-                // Opcional: matchAnio si lo tienes en el excel
+                const matchMes = normalizarTexto(camion.month) === normalizarTexto(mesNombre);
                 return matchNodo && matchDia && matchMes;
             });
 
-            // 3. Renderizar Tabla
             if (datosFiltrados.length === 0) {
                 arribosBody.innerHTML = `<tr><td colspan="5" class="no-data">No hay arribos programados en ${nodoSeleccionado} para el ${diaDelMes} de ${mesNombre} de ${anio}</td></tr>`;
             } else {

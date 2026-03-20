@@ -185,7 +185,11 @@
         <span id="last-update">Sincronizando...</span>
     </div>
 
-    <script src="datos_live.js"></script>
+ <script>
+    var scriptDatos = document.createElement('script');
+    scriptDatos.src = "datos_live.js?v=" + new Date().getTime();
+    document.head.appendChild(scriptDatos);
+</script>
     <script>
         const allTrips = window.liveData || [];
         const POWER_BI_URL = "https://app.powerbi.com/groups/me/reports/9c8cf0e6-9c0d-4322-965a-2e6b742d32e2/775a8d9db97de015d1a6?experience=power-bi"; 

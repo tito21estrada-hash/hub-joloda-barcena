@@ -192,7 +192,7 @@
             <div class="card" onclick="abrirModalHelp('HelpChain')" style="border-color: rgba(255, 51, 102, 0.4);">
                 <i class="fas fa-bullhorn" style="font-size:3.5rem;color:var(--red); text-shadow: 0 0 15px rgba(255, 51, 102, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--red); margin-bottom:0; font-size: 1.4rem;">Help Chain</h3>
-                <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">ESCALATION & ACTION PLANS</span>
+                <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">ESCALATION & Troubleshooting</span>
             </div>
             
             <div class="card" onclick="window.open('https://planner.cloud.microsoft/webui/plan/iAiz4GCKNEWENlUCBRjES5YAF1hL/view/board?tid=12a3af23-a769-4654-847f-958f3d479f4a', '_blank')" style="border-color: rgba(168, 85, 247, 0.4);">
@@ -262,7 +262,7 @@
                 <div class="standards-menu">
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estandar Acople Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Acople</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estandar Transferencia Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Transferencia</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estandar Desacople Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Desacople</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estándar Desacople Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Desacople</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Carga y Descarga del Joloda (Operador).pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Carga/Descarga MH</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Conexion del Furgon Personal MH.pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Conexión Furgón MH</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Conexion del Joloda . Pilotos.pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Conexión Pilotos</button>
@@ -302,7 +302,7 @@
                                 <div class="mapped-failure">
                                     <img src="./Img Estandar/Activacion de Parada de Emergencia.jpeg" alt="E-Stop Activado">
                                     <span class="error-marker" style="width: 80px; height: 80px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%;"></span>
-                                </div>
+                                }
                                 <div class="plan-instructions">
                                     <div class="plan-header"><i class="fas fa-exclamation-triangle"></i> 1. Safety Reset (E-Stop)</div>
                                     <p><strong>Condición:</strong> Parada de emergencia activada. Rampa detenida.</p>
@@ -319,7 +319,7 @@
                                 <div class="mapped-failure">
                                     <img src="./Img Estandar/Desface y abertura en enrampar furgon y andem.jpeg" alt="Gap Furgon">
                                     <span class="error-marker" style="width: 100px; height: 60px; top: 50%; left: 60%; transform: translate(-50%, -50%);"></span>
-                                </div>
+                                }
                                 <div class="plan-instructions">
                                     <div class="plan-header"><i class="fas fa-compress-arrows-alt"></i> 2. Error de Interlock Físico (Gap)</div>
                                     <p><strong>Condición:</strong> Furgón mal acoplado contra sensores de tope. Sistema no permite transferencia.</p>
@@ -336,7 +336,7 @@
                                 <div class="mapped-failure">
                                     <img src="./Img Estandar/Falla de Sensor de Piso.jpeg" alt="HMI Error">
                                     <span class="error-marker" style="width: 250px; height: 180px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 8px;"></span>
-                                </div>
+                                }
                                 <div class="plan-instructions">
                                     <div class="plan-header"><i class="fas fa-bacon"></i> 3. Atasco / Falla Sensor Transferencia</div>
                                     <p><strong>Condición:</strong> Transferencia detenida a medio ciclo por error de lectura de sensor de palet.</p>
@@ -390,12 +390,12 @@
                         <tr>
                             <td style="text-align: left;"><i class="fas fa-microchip" style="color: var(--red); width: 25px;"></i> 3. Diagnóstico de equipo y estado de sensores</td>
                             <td style="text-align: center; font-weight: bold; color: var(--text);">8</td>
-                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--red); color:var(--red);">Junio</span></td>
+                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--red); color:var(--red);">Mayo</span></td>
                         </tr>
                         <tr>
                             <td style="text-align: left;"><i class="fas fa-sync" style="color: var(--green); width: 25px;"></i> 4. Revisión 360 del equipo</td>
                             <td style="text-align: center; font-weight: bold; color: var(--text);">8</td>
-                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--green); color:var(--green);">Junio</span></td>
+                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--green); color:var(--green);">Mayo</span></td>
                         </tr>
                         <tr>
                             <td style="text-align: left;"><i class="fas fa-satellite-dish" style="color: var(--purple); width: 25px;"></i> 5. Uso de Torre Control Joloda</td>

@@ -28,7 +28,7 @@
         }
         .card:hover, .card:active { border-color: var(--blue); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,212,255,0.15); }
 
-        /* VISTAS PEOPLE ORIGINAL */
+        /* VISTAS Y ANIMACIONES */
         .view { display: none; animation: fadeIn 0.4s; } 
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
@@ -55,13 +55,6 @@
         .close { color: #aaa; font-size: 32px; font-weight: bold; cursor: pointer; }
         .close:hover { color: var(--red); }
 
-        /* KPI Preview Modal */
-        .kpi-big-display { text-align: center; margin: 30px 0; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        .kpi-big-value { font-size: 8rem; color: var(--green); font-weight: bold; margin: 0; text-shadow: 0 0 30px rgba(0,255,136,0.5); }
-        .kpi-big-label { font-size: 1.5rem; color: #aaa; text-transform: uppercase; letter-spacing: 2px;}
-        .btn-launch-tower { background: var(--blue); color: #000; font-size: 1.2rem; padding: 20px 40px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; text-transform: uppercase; box-shadow: 0 0 30px rgba(0, 212, 255, 0.4); transition: 0.3s; width: 80%; max-width: 400px; align-self: center; margin-bottom: 20px;}
-        .btn-launch-tower:hover { background: #00ff88; box-shadow: 0 0 40px rgba(0, 255, 136, 0.6); transform: scale(1.05);}
-
         /* Visor de PDF Interno */
         .standards-container { display: flex; flex: 1; gap: 15px; height: calc(100% - 60px); min-height: 400px; }
         .standards-menu { width: 250px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding-right: 10px; }
@@ -79,6 +72,24 @@
         .team-member:hover img { transform: scale(1.1); box-shadow: 0 0 15px rgba(0, 255, 136, 0.4); }
         .team-member p { font-size: 14px; margin: 0; line-height: 1.4; color: #eee; font-weight: bold; }
 
+        /* Tablas Generales */
+        .schedule-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px;}
+        .schedule-table th, .schedule-table td { border: 1px solid #333; padding: 12px; text-align: left; }
+        .schedule-table th { background-color: #1a1a1a; color: var(--green); }
+        .schedule-table tr:hover td { background-color: #111; }
+        .no-data { text-align: center !important; color: var(--red); padding: 20px; font-style: italic;}
+
+        /* Iconos de Matriz */
+        .status-icon { font-size: 1.2rem; }
+        .icon-check { color: var(--green); }
+        .icon-process { color: var(--orange); animation: spin 4s linear infinite;}
+        .icon-pending { color: #444; }
+        .cert-badge { background: #222; padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid #444;}
+        .cert-badge.certified { background: rgba(0, 255, 136, 0.1); color: var(--green); border-color: var(--green);}
+        .cert-badge.training { background: rgba(255, 170, 0, 0.1); color: var(--orange); border-color: var(--orange);}
+        
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
         /* Ventana Horaria INTERACTIVA */
         .time-window-container { flex: 1; display: flex; flex-direction: column; gap: 15px; overflow: hidden; }
         .filter-bar { display: flex; gap: 10px; background: #111; padding: 10px; border-radius: 8px; border: 1px solid #333; justify-content: start; flex-wrap: wrap; }
@@ -89,24 +100,16 @@
         .btn-update:hover { background: #00ff88; box-shadow: 0 0 15px rgba(0, 212, 255, 0.4); }
         .time-tables { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding-right: 10px;}
 
-        .schedule-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px;}
-        .schedule-table th, .schedule-table td { border: 1px solid #333; padding: 12px; text-align: left; }
-        .schedule-table th { background-color: #1a1a1a; color: var(--green); }
-        .schedule-table tr:hover td { background-color: #111; }
-        .no-data { text-align: center !important; color: var(--red); padding: 20px; font-style: italic;}
-
         /* ADAPTACIÓN CELULAR */
         @media only screen and (max-width: 768px) {
             header { flex-direction: column; text-align: center; gap: 15px; }
             .dashboard-grid { grid-template-columns: 1fr; padding: 0 10px; }
             .card { min-height: 150px; padding: 20px; }
-            h1 { font-size: 1.5rem; }
-            .kpi-big-value { font-size: 5rem; }
             .standards-container { flex-direction: column; }
             .standards-menu { width: 100%; max-height: 150px; }
             .modal-content { width: 95%; margin: 5% auto; padding: 15px; height: 95vh;}
             .team-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-            .schedule-table { font-size: 12px; }
+            .schedule-table { font-size: 11px; }
             .filter-bar { flex-direction: column; align-items: stretch; }
             .btn-update { align-self: stretch; margin-top: 10px;}
         }
@@ -148,9 +151,9 @@
                 <span style="color:#aaa; font-size:0.8rem; margin-top:5px;">SALA DE ACCESO</span>
             </div>
             
-            <div class="card">
-                <i class="fas fa-award" style="font-size:3.5rem;color:#fff;"></i>
-                <h3 style="margin-top:20px;">Competencias</h3>
+            <div class="card" onclick="abrirModalCompetencias('Competencias')" style="border-color: #00d4ff;">
+                <i class="fas fa-award" style="font-size:3.5rem;color:#00d4ff;"></i>
+                <h3 style="margin-top:20px; color:#00d4ff; margin-bottom:0;">Competencias</h3>
             </div>
             
             <div class="card" onclick="abrirModalHelp('HelpChain')" style="border-color: var(--red);">
@@ -197,16 +200,15 @@
                 <h2 style="color: var(--blue); margin: 0;">Resumen OEE Joloda</h2>
                 <span class="close" onclick="cerrarModal('modalKpiPreview')">&times;</span>
             </div>
-            <div class="kpi-big-display">
-                <p class="kpi-big-value">98%</p>
-                <p class="kpi-big-label">OEE Joloda Live</p>
-                
+            <div style="text-align: center; margin: 30px 0;">
+                <p style="font-size: 8rem; color: var(--green); font-weight: bold; margin: 0; text-shadow: 0 0 30px rgba(0,255,136,0.5);">98%</p>
+                <p style="font-size: 1.5rem; color: #aaa; text-transform: uppercase; letter-spacing: 2px;">OEE Joloda Live</p>
                 <div style="display: flex; justify-content: space-around; background: #111; padding: 20px; border-radius: 10px; border: 1px solid #333; margin: 20px 0;">
                     <div><span style="font-size:2rem; color:var(--blue); font-weight:bold;">19m</span><br><span style="color:#aaa;">T. Ciclo</span></div>
                     <div><span style="font-size:2rem; color:var(--red); font-weight:bold;">Cero</span><br><span style="color:#aaa;">Alertas</span></div>
                 </div>
             </div>
-            <button class="btn-launch-tower" onclick="abrirMonitor()">🚀 ABRIR MONITOR COMPLETO</button>
+            <button style="background: var(--blue); color: #000; font-size: 1.2rem; padding: 20px 40px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; width: 100%;" onclick="abrirMonitor()">🚀 ABRIR MONITOR COMPLETO</button>
         </div>
     </div>
 
@@ -218,9 +220,9 @@
             </div>
             <div class="standards-container">
                 <div class="standards-menu">
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/RUTINA ESTANDAR ACOPLE Y CONEXION DE UNIDAD DE RAMPA AUTOMATIZADA .pdf')">SOP - Acople y Conexión</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/RUTINA ESTANDAR TRANSFERENCIA DE PRODUCTO DE RAMPA AUTOMATIZADA.pdf')">SOP - Transferencia</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/RUTINA ESTANDAR DESACOPLE Y RETIRO RAMPA AUTOMATIZADA JOLODA.pdf')">SOP - Desacople y Retiro</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/SOP_Acople.pdf')">SOP - Acople y Conexión</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/SOP_Transferencia.pdf')">SOP - Transferencia</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/SOP_Desacople.pdf')">SOP - Desacople y Retiro</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Carga y Descarga del Joloda (Operador).pdf')">LUP - Carga/Descarga MH</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Conexion del Furgon Personal MH.pdf')">LUP - Conexión Furgón</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Conexion del Joloda . Pilotos.pdf')">LUP - Conexión Pilotos</button>
@@ -286,6 +288,115 @@
         </div>
     </div>
 
+    <div id="modalCompetencias" class="modal">
+        <div class="modal-content" style="max-width: 1100px;">
+            <div class="modal-header">
+                <h2 style="color: #00d4ff; margin: 0;">Matriz de Competencias: Operador Joloda</h2>
+                <span class="close" onclick="cerrarModal('modalCompetencias')">&times;</span>
+            </div>
+            
+            <p style="color: #aaa; text-align: left; font-size: 14px; margin-bottom: 20px;">
+                Programa de desarrollo para transición de Montacarguistas y Pickers (Nivel Diversificado) a Operadores Certificados de Rampa Joloda.
+            </p>
+
+            <div style="overflow-x: auto;">
+                <table class="schedule-table" style="min-width: 800px; text-align: center;">
+                    <thead>
+                        <tr>
+                            <th style="text-align: left;">Colaborador</th>
+                            <th>Rol Base</th>
+                            <th>Seguridad & EPP</th>
+                            <th>Teoría Joloda</th>
+                            <th>Práctica: Acople</th>
+                            <th>Op. de Panel</th>
+                            <th>Status Actual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left; font-weight: bold;">Edgar Raul Ical Toc</td>
+                            <td><span style="color:#aaa;">Montacargas</span></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-cog status-icon icon-process"></i></td>
+                            <td><i class="fas fa-circle status-icon icon-pending"></i></td>
+                            <td><span class="cert-badge training">En Proceso (50%)</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; font-weight: bold;">Josue Samuel Oxon</td>
+                            <td><span style="color:#aaa;">Montacargas</span></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><span class="cert-badge certified">CERTIFICADO</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; font-weight: bold;">Rodolfo A. Rodriguez</td>
+                            <td><span style="color:#aaa;">Montacargas</span></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-cog status-icon icon-process"></i></td>
+                            <td><i class="fas fa-circle status-icon icon-pending"></i></td>
+                            <td><i class="fas fa-circle status-icon icon-pending"></i></td>
+                            <td><span class="cert-badge training">Entrenamiento (25%)</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; font-weight: bold;">Ingrid Analy Gonzalez</td>
+                            <td><span style="color:#aaa;">Picker</span></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-cog status-icon icon-process"></i></td>
+                            <td><i class="fas fa-circle status-icon icon-pending"></i></td>
+                            <td><span class="cert-badge training">En Proceso (50%)</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; font-weight: bold;">Lesly Mishel Garcia</td>
+                            <td><span style="color:#aaa;">Picker</span></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-circle status-icon icon-pending"></i></td>
+                            <td><i class="fas fa-circle status-icon icon-pending"></i></td>
+                            <td><i class="fas fa-circle status-icon icon-pending"></i></td>
+                            <td><span class="cert-badge training">Iniciando (10%)</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; font-weight: bold;">Rosa Angelica Car</td>
+                            <td><span style="color:#aaa;">Picker</span></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-cog status-icon icon-process"></i></td>
+                            <td><span class="cert-badge training">Práctica Final (75%)</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; font-weight: bold;">Suleima Patricia Garcia</td>
+                            <td><span style="color:#aaa;">Picker</span></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-cog status-icon icon-process"></i></td>
+                            <td><i class="fas fa-circle status-icon icon-pending"></i></td>
+                            <td><span class="cert-badge training">En Proceso (50%)</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; font-weight: bold;">Yensi Anali Meda</td>
+                            <td><span style="color:#aaa;">Picker</span></td>
+                            <td><i class="fas fa-check-circle status-icon icon-check"></i></td>
+                            <td><i class="fas fa-circle status-icon icon-pending"></i></td>
+                            <td><i class="fas fa-circle status-icon icon-pending"></i></td>
+                            <td><i class="fas fa-circle status-icon icon-pending"></i></td>
+                            <td><span class="cert-badge training">Iniciando (10%)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="display: flex; gap: 20px; margin-top: 20px; justify-content: center; font-size: 12px; color: #aaa;">
+                <span><i class="fas fa-check-circle icon-check"></i> Completado</span>
+                <span><i class="fas fa-cog icon-process"></i> En Entrenamiento</span>
+                <span><i class="fas fa-circle icon-pending"></i> Pendiente</span>
+            </div>
+        </div>
+    </div>
+
     <div id="modalTimeWindow" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -337,7 +448,6 @@
     <script src="datos_live.js"></script>
 
     <script>
-        // FOTO JOEL CORREGIDA (Se ajustó la "J")
         const ops = [
             {n: 'Juan Carlos Damian Sunun', img: 'img/Juan Carlos Damian Sunun.png'},
             {n: 'Marbel Augusto Rivera Marroquin', img: 'img/Marbel Augusto Rivera Marroquin.png'},
@@ -383,17 +493,14 @@
         function executeCmd(cmd) {
             switch(cmd) {
                 case 'CMD_GENTE': showView('peopleView'); break;
-                case 'CMD_HOME': 
-                    cerrarMonitor();
-                    cerrarTodosModales();
-                    showView('homeView'); 
-                    break;
+                case 'CMD_HOME': cerrarMonitor(); cerrarTodosModales(); showView('homeView'); break;
                 case 'OPEN_MONITOR': abrirMonitor(); break;
                 case 'CLOSE_MONITOR': cerrarMonitor(); break;
                 case 'OPEN_KPI_PREVIEW': abrirModal('modalKpiPreview'); break;
                 case 'OPEN_STANDARDS': abrirModal('modalStandards'); break;
                 case 'OPEN_HELP': abrirModal('modalHelp'); break;
                 case 'OPEN_DEVPLAN': abrirModal('modalDevelopment'); break;
+                case 'OPEN_COMPETENCIAS': abrirModal('modalCompetencias'); break;
                 case 'OPEN_TIME': abrirModal('modalTimeWindow'); break;
                 case 'CERRAR_MODALES': cerrarTodosModales(); break;
             }
@@ -420,17 +527,15 @@
         window.onload = initData;
 
         // --- FUNCIONES JOLODA ---
-        function abrirMonitor() { 
-            cerrarTodosModales();
-            document.getElementById('towerFullscreen').classList.add('active'); 
-        }
+        function abrirMonitor() { cerrarTodosModales(); document.getElementById('towerFullscreen').classList.add('active'); }
         function cerrarMonitor() { document.getElementById('towerFullscreen').classList.remove('active'); }
 
-        function abrirModalStandards(analytics) { abrirModal('modalStandards'); document.getElementById('pdfFrameStandards').src = ""; }
-        function abrirModalKpi(analytics) { abrirModal('modalKpiPreview'); }
-        function abrirModalDevPlan(analytics) { abrirModal('modalDevelopment'); }
-        function abrirModalTimeWindow(analytics) { abrirModal('modalTimeWindow'); }
-        function abrirModalHelp(analytics) { abrirModal('modalHelp'); }
+        function abrirModalStandards() { abrirModal('modalStandards'); document.getElementById('pdfFrameStandards').src = ""; }
+        function abrirModalKpi() { abrirModal('modalKpiPreview'); }
+        function abrirModalDevPlan() { abrirModal('modalDevelopment'); }
+        function abrirModalCompetencias() { abrirModal('modalCompetencias'); }
+        function abrirModalTimeWindow() { abrirModal('modalTimeWindow'); }
+        function abrirModalHelp() { abrirModal('modalHelp'); }
 
         function abrirModal(id) { document.getElementById(id).style.display = "block"; }
 
@@ -455,7 +560,6 @@
             document.getElementById(frameId).src = ruta;
         }
 
-        // MOTOR INTELIGENTE VENTANA HORARIA (Ignora tildes y mayúsculas)
         function filtrarVentanaHoraria() {
             const arribosBody = document.getElementById('arribosBody');
             arribosBody.innerHTML = '';
@@ -463,11 +567,7 @@
             const dateInput = document.getElementById('datePickerWindow');
             
             const dateObj = dateInput.valueAsDate;
-
-            if (!dateObj) {
-                arribosBody.innerHTML = '<tr><td colspan="5" class="no-data">Por favor selecciona una fecha válida</td></tr>';
-                return;
-            }
+            if (!dateObj) { arribosBody.innerHTML = '<tr><td colspan="5" class="no-data">Por favor selecciona una fecha válida</td></tr>'; return; }
 
             const diaDelMes = dateObj.getUTCDate();
             const mesNumero = dateObj.getUTCMonth(); 
@@ -480,14 +580,12 @@
                 return;
             }
 
-            // Normalizador mágico: quita acentos y pasa todo a mayúsculas para comparar perfecto
             const normalizarTexto = (texto) => {
                 if (!texto) return "";
                 return texto.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().trim();
             };
 
             const datosFiltrados = window.liveData.filter(camion => {
-                // Comparamos sin acentos: "CD BARCENAS" === "CD BARCENAS"
                 const matchNodo = normalizarTexto(camion.location) === normalizarTexto(nodoSeleccionado);
                 const matchDia = parseInt(camion.day) === diaDelMes;
                 const matchMes = normalizarTexto(camion.month) === normalizarTexto(mesNombre);

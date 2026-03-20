@@ -35,7 +35,7 @@
         /* CLASES MÁGICAS PARA EL MODO PRESENTACIÓN */
         .hidden-card { display: none !important; }
         @media (min-width: 901px) {
-            .center-last { grid-column: 2; /* Fuerza la tarjeta al centro en pantallas grandes */ }
+            .center-last { grid-column: 2; }
         }
 
         /* VISTAS Y ANIMACIONES */
@@ -58,7 +58,7 @@
 
         /* KPI Card compacta avanzada */
         .tower-dash-card { width: 100%; background: rgba(0,0,0,0.4); border-radius: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; box-sizing: border-box; text-align: left;}
-        .kpi-row-card { display: flex; justify-content: space-between; margin: 6px 0; font-size: 0.95rem; font-weight: bold;}
+        .kpi-row-card { display: flex; justify-content: space-between; margin: 6px 0; font-size: 0.85rem; font-weight: bold;}
 
         /* ================= ESTILOS MODALES REFINADOS (GLASSMORPHISM) ================= */
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(4, 7, 12, 0.85); backdrop-filter: blur(10px); }
@@ -170,7 +170,7 @@
 
     <header>
         <div>
-            <h1 onclick="toggleSecretCards()" style="color: var(--green); margin:0; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,255,136,0.3); cursor: pointer;" title="Doble clic para menú oculto">CONTINUOUS EXCELLENCE JOLODA HUB</h1>
+            <h1 onclick="toggleSecretCards()" style="color: var(--green); margin:0; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,255,136,0.3); cursor: pointer;" title="Doble clic para menú oculto">MEJORA CONTINUA - TEAM JOLODA</h1>
             <small style="color: #8892b0; letter-spacing: 1px;">CD BÁRCENAS | ADVANCED OPERATIONS</small>
         </div>
         <div class="clock-box" onclick="window.location.reload();" title="Toca para refrescar conexión">
@@ -191,13 +191,14 @@
             <div class="card" onclick="abrirModalStandards('Standards')" style="border-color: rgba(255, 170, 0, 0.4);">
                 <i class="fas fa-file-contract" style="font-size:3.5rem;color:var(--orange); text-shadow: 0 0 15px rgba(255, 170, 0, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--orange); margin-bottom:0; font-size: 1.4rem;">Standards</h3>
-                <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">SOP & LUP DIRECTORY</span>
+                <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">RUTINA ESTÁNDAR & LUP</span>
             </div>
             
             <div class="card" onclick="abrirModalKpi('Kpi')" style="border-color: rgba(0, 212, 255, 0.4);">
                 <div class="tower-dash-card">
-                    <div class="kpi-row-card"><span style="color:#8892b0;">OEE Joloda</span><span style="color:var(--green)">98%</span></div>
-                    <div class="kpi-row-card"><span style="color:#8892b0;">T. Ciclo</span><span style="color:var(--blue)">19m</span></div>
+                    <div class="kpi-row-card"><span style="color:#8892b0;">Cumplimiento Viajes</span><span style="color:var(--green)">98%</span></div>
+                    <div class="kpi-row-card"><span style="color:#8892b0;">T. Ciclo CD Bárcenas</span><span style="color:var(--blue)">19m</span></div>
+                    <div class="kpi-row-card"><span style="color:#8892b0;">T. Ciclo Circuito</span><span style="color:var(--orange)">3h 45m</span></div>
                     <div class="kpi-row-card"><span style="color:#8892b0;">Alertas</span><span style="color:var(--green); font-weight:bold;">0 DETECTED</span></div>
                 </div>
                 <h3 style="color:var(--blue); font-size:1.4rem; margin:0; text-shadow: var(--neon-glow);">KPI's</h3>
@@ -255,17 +256,18 @@
     </div>
 
     <div id="modalKpiPreview" class="modal">
-        <div class="modal-content" style="height: auto; max-height: 90vh; max-width: 600px;">
+        <div class="modal-content" style="height: auto; max-height: 90vh; max-width: 800px;">
             <div class="modal-header">
-                <h2 style="color: var(--blue); margin: 0; text-shadow: var(--neon-glow);">OEE Joloda Summary</h2>
+                <h2 style="color: var(--blue); margin: 0; text-shadow: var(--neon-glow);">Resumen de KPIs Joloda</h2>
                 <span class="close" onclick="cerrarModal('modalKpiPreview')">&times;</span>
             </div>
             <div style="text-align: center; margin: 30px 0;">
                 <p class="kpi-big-value">98%</p>
-                <p class="kpi-big-label">OEE Joloda Live</p>
+                <p class="kpi-big-label">Cumplimiento de Viajes (OEE)</p>
                 <div style="display: flex; justify-content: space-around; background: rgba(0,0,0,0.3); padding: 25px; border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.2); margin: 25px 0;">
-                    <div><span style="font-size:2.5rem; color:var(--blue); font-weight:bold; text-shadow: var(--neon-glow);">19m</span><br><span style="color:#8892b0; font-size: 13px; text-transform: uppercase;">Avg. Cycle Time</span></div>
-                    <div><span style="font-size:2.5rem; color:var(--green); font-weight:bold;">0</span><br><span style="color:#8892b0; font-size: 13px; text-transform: uppercase;">Active Alerts</span></div>
+                    <div><span style="font-size:2.2rem; color:var(--blue); font-weight:bold; text-shadow: var(--neon-glow);">19m</span><br><span style="color:#8892b0; font-size: 11px; text-transform: uppercase;">T. Ciclo CD Bárcenas</span></div>
+                    <div><span style="font-size:2.2rem; color:var(--orange); font-weight:bold;">3h 45m</span><br><span style="color:#8892b0; font-size: 11px; text-transform: uppercase;">T. Ciclo Circuito (CD-Z12-CD)</span></div>
+                    <div><span style="font-size:2.2rem; color:var(--green); font-weight:bold;">0</span><br><span style="color:#8892b0; font-size: 11px; text-transform: uppercase;">Alertas Activas</span></div>
                 </div>
             </div>
             <button class="btn-launch-tower" onclick="abrirMonitor()">🚀 LAUNCH FULL DASHBOARD</button>
@@ -275,14 +277,14 @@
     <div id="modalStandards" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 style="color: var(--orange); margin: 0;">Standard Operating Procedures (SOP)</h2>
+                <h2 style="color: var(--orange); margin: 0;">Rutina Estándar & LUP</h2>
                 <span class="close" onclick="cerrarModal('modalStandards')">&times;</span>
             </div>
             <div class="standards-container">
                 <div class="standards-menu">
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/SOP_Acople.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> SOP - Acople y Conexión</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/SOP_Transferencia.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> SOP - Transferencia</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/SOP_Desacople.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> SOP - Desacople y Retiro</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estandar Acople Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Acople</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estandar Transferencia Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Transferencia</button>
+                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estandar Desacople Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Desacople</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Carga y Descarga del Joloda (Operador).pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Carga/Descarga MH</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Conexion del Furgon Personal MH.pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Conexión Furgón MH</button>
                     <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Conexion del Joloda . Pilotos.pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Conexión Pilotos</button>
@@ -308,26 +310,31 @@
     </div>
 
     <div id="modalDevelopment" class="modal">
-        <div class="modal-content" style="height: auto; max-height: 90vh;">
+        <div class="modal-content" style="height: auto; max-height: 90vh; max-width: 800px;">
             <div class="modal-header">
                 <h2 style="color: var(--green); margin: 0; text-shadow: 0 0 10px rgba(0,255,136,0.3);">Joloda Team Development Plan</h2>
                 <span class="close" onclick="cerrarModal('modalDevelopment')">&times;</span>
             </div>
-            <div class="team-grid">
-                <div class="team-member"><img src="./img Desarrollo/Edgar Raul Ical Toc.jpg" alt="Edgar Raul"><p>Edgar Raul Ical Toc</p></div>
-                <div class="team-member"><img src="./img Desarrollo/Ingrid Analy Gonzalez Cruz.jpg" alt="Ingrid Analy"><p>Ingrid Analy Gonzalez</p></div>
-                <div class="team-member"><img src="./img Desarrollo/Josue Samuel Oxon.jpg" alt="Josue Samuel"><p>Josue Samuel Oxon</p></div>
-                <div class="team-member"><img src="./img Desarrollo/Lesly Mishel Garcia Larios.jpg" alt="Lesly Mishel"><p>Lesly Mishel Garcia</p></div>
-                <div class="team-member"><img src="./img Desarrollo/Rodolfo Antonio Rodriguez Roche.jpg" alt="Rodolfo Antonio"><p>Rodolfo A. Rodriguez</p></div>
-                <div class="team-member"><img src="./img Desarrollo/Rosa Angelica Car Chajon.jpg" alt="Rosa Angelica"><p>Rosa Angelica Car</p></div>
-                <div class="team-member"><img src="./img Desarrollo/Suleima Patricia Garcia.jpg" alt="Suleima Patricia"><p>Suleima Patricia Garcia</p></div>
-                <div class="team-member"><img src="./img Desarrollo/Yensi Anali Meda Davila.jpg" alt="Yensi Anali"><p>Yensi Anali Meda</p></div>
+            
+            <p style="color: #8892b0; text-align: left; font-size: 14px; margin-bottom: 25px;">
+                Ruta de desarrollo integral para el personal. El cumplimiento de estas 5 capacidades es requerido para alcanzar la certificación oficial como Operador Joloda.
+            </p>
+
+            <div style="background: rgba(0,0,0,0.3); padding: 30px; border-radius: 12px; border: 1px solid rgba(0, 255, 136, 0.2);">
+                <h3 style="color: var(--green); margin-top: 0; border-bottom: 1px solid rgba(0,255,136,0.2); padding-bottom: 10px;"><i class="fas fa-tasks"></i> Capacidades Requeridas para Certificación</h3>
+                <ul style="text-align: left; color: #cbd5e1; line-height: 1.8; font-size: 15px; list-style-type: none; padding-left: 0; margin-top: 20px;">
+                    <li style="margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-left: 4px solid var(--blue);"><i class="fas fa-file-signature" style="color: var(--blue); width: 30px;"></i> <strong>1.</strong> Elaborar Rutinas Estándar.</li>
+                    <li style="margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-left: 4px solid var(--orange);"><i class="fas fa-wrench" style="color: var(--orange); width: 30px;"></i> <strong>2.</strong> Conocimiento básico de mantenimiento de equipo Joloda.</li>
+                    <li style="margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-left: 4px solid var(--red);"><i class="fas fa-microchip" style="color: var(--red); width: 30px;"></i> <strong>3.</strong> Diagnóstico de equipo y estado de sensores.</li>
+                    <li style="margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-left: 4px solid var(--green);"><i class="fas fa-sync" style="color: var(--green); width: 30px;"></i> <strong>4.</strong> Revisión 360 del equipo.</li>
+                    <li style="margin-bottom: 0; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-left: 4px solid #a855f7;"><i class="fas fa-project-diagram" style="color: #a855f7; width: 30px;"></i> <strong>5.</strong> Seguimiento a cadena de ayuda y cumplimiento de planificación.</li>
+                </ul>
             </div>
         </div>
     </div>
 
     <div id="modalCompetencias" class="modal">
-        <div class="modal-content" style="max-width: 1250px;">
+        <div class="modal-content" style="max-width: 1300px;">
             <div class="modal-header">
                 <h2 style="color: var(--blue); margin: 0; text-shadow: var(--neon-glow);">Competencies & Skills Matrix</h2>
                 <span class="close" onclick="cerrarModal('modalCompetencias')">&times;</span>
@@ -335,15 +342,17 @@
             
             <div class="dual-matrix-container">
                 <div class="matrix-section">
-                    <h3><i class="fas fa-medal" style="color:var(--blue);"></i> Certified Operator Skills</h3>
+                    <h3><i class="fas fa-medal" style="color:var(--blue);"></i> Team Certificado Joloda</h3>
                     <div style="overflow-x: auto;">
                         <table class="schedule-table" style="min-width: 500px; text-align: center;">
-                            <thead><tr><th style="text-align: left;">Operator</th><th>Troubleshooting</th><th>Zone Mastery</th><th>Panel Control</th><th>SOP Creation</th><th>Level</th></tr></thead>
+                            <thead><tr><th style="text-align: left;">Operator</th><th>Troubleshooting</th><th>Zone Mastery</th><th>Panel Control</th><th>LUP Creation</th><th>Level</th></tr></thead>
                             <tbody>
                                 <tr><td style="text-align: left; font-weight: bold; color: #fff;">Juan Carlos Damian</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge certified">Certified</span></td></tr>
-                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Marbel Augusto Rivera</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><span class="cert-badge cert-badge certified" style="background:rgba(0, 212, 255, 0.1); color:var(--blue); border-color:var(--blue);">Master</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Marbel Augusto Rivera</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><span class="cert-badge certified" style="background:rgba(0, 212, 255, 0.1); color:var(--blue); border-color:var(--blue);">Master</span></td></tr>
                                 <tr><td style="text-align: left; font-weight: bold; color: #fff;">Joel David Ajuchan</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge certified">Certified</span></td></tr>
-                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Yendi Lorena Rueda</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><span class="cert-badge training">In Progress</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Rene Vidal Ramirez</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><span class="cert-badge certified">Certified</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Williams Marroquin</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge certified">Certified</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold; color: #fff;">Yendi Lorena Rueda</td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><span class="cert-badge certified">Certified</span></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -357,9 +366,12 @@
                             <tbody>
                                 <tr><td style="text-align: left; font-weight: bold;">Edgar Raul Ical</td><td><span style="color:#8892b0; font-size:11px;">Montacargas</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge training">50%</span></td></tr>
                                 <tr><td style="text-align: left; font-weight: bold;">Josue Samuel Oxon</td><td><span style="color:#8892b0; font-size:11px;">Montacargas</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><span class="cert-badge certified">Cert.</span></td></tr>
-                                <tr><td style="text-align: left; font-weight: bold;">Ingrid Analy Gonzalez</td><td><span style="color:#8892b0; font-size:11px;">Picker</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge training">50%</span></td></tr>
                                 <tr><td style="text-align: left; font-weight: bold;">Rodolfo Rodriguez</td><td><span style="color:#8892b0; font-size:11px;">Montacargas</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><span class="cert-badge training" style="color:#8892b0; border-color:#8892b0;">25%</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold;">Ingrid Analy Gonzalez</td><td><span style="color:#8892b0; font-size:11px;">Picker</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge training">50%</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold;">Lesly Mishel Garcia</td><td><span style="color:#8892b0; font-size:11px;">Picker</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><span class="cert-badge training" style="color:#8892b0; border-color:#8892b0;">10%</span></td></tr>
                                 <tr><td style="text-align: left; font-weight: bold;">Rosa Angelica Car</td><td><span style="color:#8892b0; font-size:11px;">Picker</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><span class="cert-badge training" style="color:var(--green); border-color:var(--green);">80%</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold;">Suleima Patricia Garcia</td><td><span style="color:#8892b0; font-size:11px;">Picker</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-cog icon-process"></i></td><td><span class="cert-badge training">50%</span></td></tr>
+                                <tr><td style="text-align: left; font-weight: bold;">Yensi Anali Meda</td><td><span style="color:#8892b0; font-size:11px;">Picker</span></td><td><i class="fas fa-check-circle icon-check"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><i class="fas fa-circle icon-pending"></i></td><td><span class="cert-badge training" style="color:#8892b0; border-color:#8892b0;">10%</span></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -394,6 +406,7 @@
                             <div class="step-item"><span class="step-number">2</span><i class="fas fa-undo-alt step-icon"></i> Twist red E-Stop button to release.</div>
                             <div class="step-item"><span class="step-number">3</span><i class="fas fa-power-off step-icon" style="color: var(--blue);"></i> Press <strong>Blue Button (RESET)</strong> to rearm panel.</div>
                         </div>
+                        <div class="sop-reference">Ref: Rutina Estándar Acople / Transferencia</div>
                     </div>
                 </div>
 
@@ -410,6 +423,7 @@
                             <div class="step-item"><span class="step-number">2</span><i class="fas fa-truck step-icon"></i> Request driver to <strong>re-align against stoppers</strong>.</div>
                             <div class="step-item"><span class="step-number">3</span><i class="fas fa-check-double step-icon" style="color: var(--green);"></i> Verify green interlock lights before proceeding.</div>
                         </div>
+                        <div class="sop-reference">Ref: Rutina Estándar Acople y Conexión</div>
                     </div>
                 </div>
 
@@ -426,6 +440,7 @@
                             <div class="step-item"><span class="step-number">2</span><i class="fas fa-eye-slash step-icon"></i> Inspect and clean floor sensor in affected zone.</div>
                             <div class="step-item"><span class="step-number">3</span><i class="fas fa-play-circle step-icon" style="color: var(--green);"></i> Press Blue Reset and resume step-by-step.</div>
                         </div>
+                        <div class="sop-reference">Ref: Rutina Estándar Transferencia de Producto</div>
                     </div>
                 </div>
             </div>

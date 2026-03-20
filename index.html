@@ -89,7 +89,7 @@
         .cert-badge.training { background: rgba(255, 170, 0, 0.1); color: var(--orange); border-color: var(--orange);}
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* ================= ESTILOS VISUALES PARA ACTION PLANS (NUEVO REFINADO) ================= */
+        /* ================= ESTILOS VISUALES PARA ACTION PLANS ================= */
         .action-plans-view { display: flex; flex-direction: column; gap: 25px; margin-top: 20px;}
         
         .visual-plan-item { 
@@ -102,9 +102,9 @@
         /* IZQUIERDA: Mapeo Visual Falla */
         .mapped-failure { 
             position: relative; background: #000; display: flex; align-items: center; justify-content: center;
-            border-right: 1px solid #333;
+            border-right: 1px solid #333; overflow: hidden; padding: 10px;
         }
-        .mapped-failure img { max-width: 100%; max-height: 250px; object-fit: contain;}
+        .mapped-failure img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px;}
         
         /* Efectos de Error Mapeados (Mapeo Gráfico) */
         .error-marker {
@@ -124,7 +124,7 @@
         /* Lista Gráfica de Pasos SOP */
         .visual-steps-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px;}
         .step-item { display: flex; align-items: center; gap: 15px; background: #1a1a1a; padding: 12px; border-radius: 8px; border: 1px solid #222; font-size: 13px; color: #ddd;}
-        .step-number { background: #00d4ff30; color: var(--blue); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 1px solid var(--blue);}
+        .step-number { background: #00d4ff30; color: var(--blue); min-width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 1px solid var(--blue);}
         .step-icon { color: var(--orange); font-size: 1.1rem; width: 20px; text-align: center;}
         
         .sop-reference { font-size: 11px; color: #555; font-style: italic; margin-top: auto; padding-top: 10px; border-top: 1px solid #222;}
@@ -132,7 +132,7 @@
         /* ADAPTACIÓN CELULAR */
         @media only screen and (max-width: 900px) {
             .visual-plan-item { grid-template-columns: 1fr; }
-            .mapped-failure { border-right: none; border-bottom: 1px solid #333; padding: 20px;}
+            .mapped-failure { border-right: none; border-bottom: 1px solid #333; padding: 20px; height: 250px;}
         }
 
     </style>
@@ -324,16 +324,15 @@
             </div>
             
             <p style="color: #aaa; text-align: left; font-size: 14px; margin-bottom: 25px;">
-                Guía interactiva para no solo reaccionar ante una falla, sino entender la causa (image) y aprender la solución estándar (action).
+                Guía interactiva para no solo reaccionar ante una falla, sino entender la causa visual y aplicar la solución estándar.
             </p>
 
             <div class="action-plans-view">
                 
                 <div class="visual-plan-item">
                     <div class="mapped-failure">
-                        <i class="fas fa-hand-pointer fa-4x" style="color: var(--red);"></i>
+                        <img src="./Img Estandar/Activacion de Parada de Emergencia.jpeg" alt="E-Stop Activado">
                         <span class="error-marker" style="width: 80px; height: 80px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%;"></span>
-                        <p style="position: absolute; bottom: 10px; color: var(--red); font-weight: bold; font-size: 12px;">E-STOP PRESIONADO</p>
                     </div>
                     <div class="plan-instructions">
                         <div class="plan-header"><i class="fas fa-exclamation-triangle"></i> Falla 1: Parada de Emergencia / Reset de Seguridad</div>
@@ -349,15 +348,12 @@
 
                 <div class="visual-plan-item">
                     <div class="mapped-failure">
-                        <div style="position: relative;">
-                            <img src="./Img Estandar/image_9cf2fa.png" alt="Mapeo Sensores Alineacion">
-                            <span class="error-marker" style="width: 60px; height: 40px; top: 40%; left: 63%;"></span>
-                            <p style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); color: #aaa; font-weight: bold; font-size: 11px; width: 100%; text-align: center; background: rgba(0,0,0,0.5); padding: 5px;">Mapeo: Alineación con Sensores de Tope</p>
-                        </div>
+                        <img src="./Img Estandar/Desface y abertura en enrampar furgon y andem.jpeg" alt="Gap entre furgón y andén">
+                        <span class="error-marker" style="width: 100px; height: 60px; top: 50%; left: 60%; transform: translate(-50%, -50%);"></span>
                     </div>
                     <div class="plan-instructions">
                         <div class="plan-header"><i class="fas fa-uncheck-circle"></i> Falla 2: Error de Interlock Físico (Gap Furgón)</div>
-                        <p><strong>Causa Aprendida:</strong> El furgón no acopló correctamente contra los sensores del tope, rompiendo el interbloqueo físico.</p>
+                        <p><strong>Causa Aprendida:</strong> El furgón no acopló correctamente contra los sensores del tope, dejando una abertura que rompe el interbloqueo físico.</p>
                         <div class="visual-steps-list">
                             <div class="step-item"><span class="step-number">1</span><i class="fas fa-desktop step-icon"></i> Confirmar sensor fallido en HMI.</div>
                             <div class="step-item"><span class="step-number">2</span><i class="fas fa-truck step-icon"></i> Solicitar al piloto <strong>re-alinear contra topes</strong>.</div>
@@ -369,15 +365,15 @@
 
                 <div class="visual-plan-item">
                     <div class="mapped-failure">
-                        <img src="./Img Desarrollo/image_9c81a1.png" alt="HMI Error Screen Mapped">
-                        <span class="error-marker" style="width: 250px; height: 180px; top: 25px; left: 45px;"></span>
+                        <img src="./Img Estandar/Falla de Sensor de Piso.jpeg" alt="HMI Error Screen Mapped">
+                        <span class="error-marker" style="width: 250px; height: 180px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 8px;"></span>
                     </div>
                     <div class="plan-instructions">
                         <div class="plan-header"><i class="fas fa-bacon"></i> Falla 3: Atasco / Falla de Sensores en Transferencia</div>
-                        <p><strong>Causa Aprendida:</strong> La rampa se detiene por un error de lectura en los sensores de carga (palet torcido o sucio).</p>
+                        <p><strong>Causa Aprendida:</strong> La rampa se detiene por un error de lectura en los sensores de carga (indicado en la pantalla táctil HMI).</p>
                         <div class="visual-steps-list">
                             <div class="step-item"><span class="step-number">1</span><i class="fas fa-barcode step-icon"></i> Leer código de Zona de sensor fallido en HMI.</div>
-                            <div class="step-item"><span class="step-number">2</span><i class="fas fa-eye-slash step-icon"></i> Inspeccionar/Limpiar sensor en Zona (E1, E2...).</div>
+                            <div class="step-item"><span class="step-number">2</span><i class="fas fa-eye-slash step-icon"></i> Inspeccionar/Limpiar sensor en piso/banda.</div>
                             <div class="step-item"><span class="step-number">3</span><i class="fas fa-play-circle step-icon" style="color: var(--green);"></i> Rearmar (Pulsar Azul) y reanudar secuencia.</div>
                         </div>
                         <div class="sop-reference">Ref: SOP Transferencia de Producto</div>
@@ -388,7 +384,7 @@
             
             <div style="margin-top: 30px; background: #1a1a1a; padding: 15px; border-radius: 8px; border: 1px solid #333; text-align: left;">
                 <p style="color: var(--green); font-weight: bold; margin: 0 0 10px 0;">💡 Resumen de Aprendizaje:</p>
-                <p style="color: #ccc; font-size: 13px; margin: 0;">Al compactar y mapear visualmente las fallas operativas más comunes de CD Bárcenas, el equipo de Operaciones ha mejorado su tiempo de respuesta y reducido el tiempo de inactividad de la rampa por errores menores. La clave no es reaccionar, es entender la causa visual y aplicar el SOP estándar.</p>
+                <p style="color: #ccc; font-size: 13px; margin: 0;">Al compactar y mapear visualmente las fallas operativas más comunes, el equipo de Operaciones mejora su tiempo de respuesta. La clave no es solo reaccionar, es entender la causa visual y aplicar el SOP estándar.</p>
             </div>
         </div>
     </div>

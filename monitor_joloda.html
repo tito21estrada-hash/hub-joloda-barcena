@@ -185,10 +185,8 @@
         <span id="last-update">Sincronizando...</span>
     </div>
 
- <script>
-    var scriptDatos = document.createElement('script');
-    scriptDatos.src = "datos_live.js?v=" + new Date().getTime();
-    document.head.appendChild(scriptDatos);
+<script>
+    document.write('<script src="datos_live.js?v=' + new Date().getTime() + '"><\/script>');
 </script>
     <script>
         const allTrips = window.liveData || [];

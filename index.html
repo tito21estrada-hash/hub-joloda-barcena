@@ -107,12 +107,11 @@
         .cert-badge.training { background: rgba(255, 170, 0, 0.1); color: var(--orange); border: 1px solid var(--orange);}
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Estilos Action Plans (Mapeo Visual CORREGIDO para evitar imágenes comprimidas) */
+        /* Estilos Action Plans (Mapeo Visual) */
         .action-plans-view { display: flex; flex-direction: column; gap: 25px; padding: 15px;}
         .visual-plan-item { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; display: grid; grid-template-columns: 400px 1fr; transition: 0.3s; align-items: stretch; }
         .visual-plan-item:hover { border-color: var(--orange); box-shadow: 0 5px 20px rgba(255, 170, 0, 0.15); }
         
-        /* Imagen sin compresión */
         .mapped-failure { position: relative; background: #000; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgba(255,255,255,0.05); padding: 15px; }
         .mapped-failure img { width: 100%; height: auto; max-height: 280px; object-fit: contain; border-radius: 8px; display: block;}
         
@@ -618,9 +617,8 @@
         function abrirMonitor() { cerrarTodosModales(); document.getElementById('towerFullscreen').classList.add('active'); }
         function cerrarMonitor() { document.getElementById('towerFullscreen').classList.remove('active'); }
 
-        // ================= FUNCIÓN CORREGIDA PARA CERRAR Y ABRIR MODALES =================
         function abrirModal(id) { 
-            cerrarTodosModales(); // GARANTIZA QUE NO SE ABRAN DOS VENTANAS A LA VEZ
+            cerrarTodosModales();
             document.getElementById(id).style.display = "block"; 
         }
 
@@ -634,7 +632,6 @@
             document.getElementById('pdfFrameStandards').src = "";
         }
 
-        // Clic fuera del modal para cerrarlo
         window.onclick = function(event) {
             if (event.target.className === "modal") { cerrarTodosModales(); }
         }
@@ -643,10 +640,7 @@
         function abrirModalKpi() { abrirModal('modalKpiPreview'); }
         function abrirModalDevPlan() { abrirModal('modalDevelopment'); }
         function abrirModalCompetencias() { abrirModal('modalCompetencias'); }
-        function abrirModalHelp() { 
-            abrirModal('modalHelp'); 
-            switchHelpTab('pdf');
-        }
+        function abrirModalHelp() { abrirModal('modalHelp'); switchHelpTab('pdf'); }
         function abrirModalTimeWindow() { abrirModal('modalTimeWindow'); }
 
         function cargarPDF(frameId, btn, ruta) {
@@ -656,7 +650,6 @@
             document.getElementById(frameId).src = ruta;
         }
 
-        // Lógica de Pestañas en Help Chain Modal
         function switchHelpTab(tab) {
             const btnPdf = document.getElementById('btn-help-pdf');
             const btnActions = document.getElementById('btn-help-actions');
@@ -724,7 +717,6 @@
             }
         }
 
-        // ================= MAGIA DE PRESENTACIÓN =================
         let secretCardsHidden = true;
         function toggleSecretCards() {
             const devPlanCard = document.getElementById('card-dev-plan');

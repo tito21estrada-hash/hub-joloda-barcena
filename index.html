@@ -481,7 +481,11 @@
         </div>
     </div>
 
-    <script src="datos_live.js"></script>
+   <script>
+    var scriptDatos = document.createElement('script');
+    scriptDatos.src = "datos_live.js?v=" + new Date().getTime();
+    document.head.appendChild(scriptDatos);
+</script>
 
     <script>
         const ops = [

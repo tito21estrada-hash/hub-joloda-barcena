@@ -7,7 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg: #070a11; --card: #121820; --green: #00ff88; --blue: #00d4ff; --red: #ff3366; --orange: #ffaa00; --text: #e0e6ed;
+            --bg: #070a11; --card: #121820; --green: #00ff88; --blue: #00d4ff; --red: #ff3366; --orange: #ffaa00; --purple: #a855f7; --text: #e0e6ed;
             --neon-glow: 0 0 15px rgba(0, 212, 255, 0.3);
         }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; text-align: center; overflow-x: hidden; }
@@ -74,22 +74,15 @@
         .btn-launch-tower { background: var(--blue); color: #000; font-size: 1.2rem; padding: 18px 40px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; text-transform: uppercase; box-shadow: var(--neon-glow); transition: 0.3s; width: 80%; max-width: 400px; align-self: center; margin-bottom: 20px; letter-spacing: 1px;}
         .btn-launch-tower:hover { background: #00ff88; box-shadow: 0 0 30px rgba(0, 255, 136, 0.6); transform: translateY(-3px);}
 
-        /* Visor de PDF Interno */
+        /* Menús Laterales de Modales */
         .standards-container { display: flex; flex: 1; gap: 20px; height: calc(100% - 60px); min-height: 400px; }
-        .standards-menu { width: 260px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding-right: 10px; }
+        .standards-menu { width: 280px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding-right: 10px; }
         .pdf-viewer-area { flex: 1; background: #000; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; position: relative;}
         .pdf-viewer-area iframe { width: 100%; height: 100%; border: none; background: #fff;}
 
         .doc-btn { background-color: rgba(255,255,255,0.03); color: var(--text); padding: 16px; text-align: left; text-decoration: none; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s ease; cursor: pointer; font-size: 13px; }
         .doc-btn:hover { border-color: var(--orange); background-color: rgba(255, 170, 0, 0.05); }
         .doc-btn.active { background-color: rgba(0, 212, 255, 0.1); color: var(--blue); font-weight: bold; border-color: var(--blue); box-shadow: inset 4px 0 0 var(--blue);}
-
-        /* Grid de Equipo Cibernético */
-        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 25px; margin-top: 20px; padding: 10px; justify-items: center; align-items: start; }
-        .team-member { text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; }
-        .team-member img { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid var(--green); margin-bottom: 15px; transition: 0.4s; background: #222; box-shadow: 0 5px 15px rgba(0,0,0,0.5);}
-        .team-member:hover img { transform: scale(1.15) translateY(-5px); box-shadow: 0 10px 25px rgba(0, 255, 136, 0.4); }
-        .team-member p { font-size: 13px; margin: 0; line-height: 1.4; color: #e0e6ed; font-weight: bold; }
 
         /* ================= ESTILOS JOLODA: TABLAS Y MATRICES ================= */
         .schedule-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; background: rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden;}
@@ -115,7 +108,7 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* Estilos Action Plans (Mapeo Visual) */
-        .action-plans-view { display: flex; flex-direction: column; gap: 25px; margin-top: 10px;}
+        .action-plans-view { display: flex; flex-direction: column; gap: 25px; padding: 15px;}
         .visual-plan-item { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; display: grid; grid-template-columns: 350px 1fr; transition: 0.3s; }
         .visual-plan-item:hover { border-color: var(--orange); box-shadow: 0 5px 20px rgba(255, 170, 0, 0.15); }
         .mapped-failure { position: relative; background: #000; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgba(255,255,255,0.05); overflow: hidden; padding: 15px;}
@@ -135,19 +128,6 @@
         .step-icon { color: var(--orange); font-size: 1.1rem; width: 20px; text-align: center;}
         .sop-reference { font-size: 11px; color: #64748b; font-style: italic; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);}
 
-        /* Time Window INTERACTIVA */
-        .time-window-container { flex: 1; display: flex; flex-direction: column; gap: 20px; overflow: hidden; }
-        .filter-bar { display: flex; gap: 15px; background: rgba(0,0,0,0.4); padding: 15px 20px; border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.2); justify-content: start; flex-wrap: wrap; align-items: end; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);}
-        .filter-group { display: flex; flex-direction: column; text-align: left; gap: 8px; }
-        .filter-group label { font-size: 11px; color: var(--blue); text-transform: uppercase; font-weight: bold; letter-spacing: 1px;}
-        .joloda-select, .joloda-date { background: #0f172a; color: #fff; border: 1px solid #334155; border-radius: 6px; padding: 12px 15px; font-family: 'Segoe UI', sans-serif; font-size: 13px; outline: none; transition: 0.3s;}
-        .joloda-select:focus, .joloda-date:focus { border-color: var(--blue); box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);}
-        
-        .btn-update { background: transparent; color: var(--green); border: 1px solid var(--green); border-radius: 6px; padding: 12px 25px; font-weight: bold; cursor: pointer; transition: 0.3s; letter-spacing: 1px;}
-        .btn-update:hover { background: var(--green); color: #000; box-shadow: 0 0 15px rgba(0, 255, 136, 0.4); }
-        
-        .time-tables { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 25px; padding-right: 10px;}
-
         /* ADAPTACIÓN CELULAR */
         @media only screen and (max-width: 900px) {
             header { flex-direction: column; text-align: center; gap: 15px; }
@@ -161,8 +141,6 @@
             .visual-plan-item { grid-template-columns: 1fr; }
             .mapped-failure { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 20px; height: 200px;}
             .schedule-table { font-size: 11px; }
-            .filter-bar { flex-direction: column; align-items: stretch; }
-            .btn-update { align-self: stretch; margin-top: 5px;}
         }
     </style>
 </head>
@@ -214,19 +192,19 @@
             <div class="card" onclick="abrirModalHelp('HelpChain')" style="border-color: rgba(255, 51, 102, 0.4);">
                 <i class="fas fa-bullhorn" style="font-size:3.5rem;color:var(--red); text-shadow: 0 0 15px rgba(255, 51, 102, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--red); margin-bottom:0; font-size: 1.4rem;">Help Chain</h3>
-                <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">ESCALATION PROTOCOL</span>
+                <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">ESCALATION & ACTION PLANS</span>
             </div>
             
-            <div class="card" onclick="abrirModalPlans('ActionPlans')" style="border-color: rgba(255, 170, 0, 0.4);">
-                <i class="fas fa-tools" style="font-size:3.5rem;color:var(--orange); text-shadow: 0 0 15px rgba(255, 170, 0, 0.3);"></i>
-                <h3 style="margin-top:20px; color:var(--orange); margin-bottom:0; font-size: 1.4rem;">Action Plans</h3>
-                <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">TROUBLESHOOTING</span>
+            <div class="card" onclick="window.open('https://planner.cloud.microsoft/webui/plan/iAiz4GCKNEWENlUCBRjES5YAF1hL/view/board?tid=12a3af23-a769-4654-847f-958f3d479f4a', '_blank')" style="border-color: rgba(168, 85, 247, 0.4);">
+                <i class="fas fa-tasks" style="font-size:3.5rem;color:var(--purple); text-shadow: 0 0 15px rgba(168, 85, 247, 0.3);"></i>
+                <h3 style="margin-top:20px; color:var(--purple); margin-bottom:0; font-size: 1.4rem;">Planes de Acción</h3>
+                <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">TEAMS PLANNER</span>
             </div>
             
             <div id="card-dev-plan" class="card center-last" onclick="abrirModalDevPlan('DevelopmentPlan')" style="border-color: rgba(0, 255, 136, 0.4);">
                 <i class="fas fa-seedling" style="font-size:3.5rem;color:var(--green); text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--green); margin-bottom:0; font-size: 1.4rem;">Development Plan</h3>
-                <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">TEAM GROWTH</span>
+                <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">RUTAS DE CERTIFICACIÓN</span>
             </div>
 
             <div class="card secret-card hidden-card" onclick="abrirModalTimeWindow('TimeWindow')" style="border-color: rgba(0, 255, 136, 0.4);">
@@ -298,19 +276,88 @@
     </div>
 
     <div id="modalHelp" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 1250px;">
             <div class="modal-header">
-                <h2 style="color: var(--red); margin: 0;">Operational Help Chain</h2>
+                <h2 style="color: var(--red); margin: 0; text-shadow: 0 0 15px rgba(255, 51, 102, 0.3);">Help Chain & Troubleshooting</h2>
                 <span class="close" onclick="cerrarModal('modalHelp')">&times;</span>
             </div>
-            <div style="flex:1; background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
-                <iframe src="Cadena de Ayuda/Cadena de Ayuda para eventos de Ramapa Joloda.pdf" style="width: 100%; height: 100%; border: none;"></iframe>
+            
+            <div class="standards-container">
+                <div class="standards-menu" style="width: 280px;">
+                    <button id="btn-help-pdf" class="doc-btn active" onclick="switchHelpTab('pdf')">
+                        <i class="fas fa-bullhorn" style="margin-right:8px; color:var(--red);"></i> Escalation Protocol (PDF)
+                    </button>
+                    <button id="btn-help-actions" class="doc-btn" onclick="switchHelpTab('actions')">
+                        <i class="fas fa-tools" style="margin-right:8px; color:var(--orange);"></i> Action Plans (Fallas)
+                    </button>
+                </div>
+                
+                <div class="pdf-viewer-area" style="overflow-y: auto;">
+                    
+                    <iframe id="helpPdfFrame" src="Cadena de Ayuda/Cadena de Ayuda para eventos de Ramapa Joloda.pdf" style="width: 100%; height: 100%; border: none; background: #fff;"></iframe>
+                    
+                    <div id="helpActionPlans" style="display: none;">
+                        <div class="action-plans-view">
+                            <div class="visual-plan-item">
+                                <div class="mapped-failure">
+                                    <img src="./Img Estandar/Activacion de Parada de Emergencia.jpeg" alt="E-Stop Activado">
+                                    <span class="error-marker" style="width: 80px; height: 80px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%;"></span>
+                                </div>
+                                <div class="plan-instructions">
+                                    <div class="plan-header"><i class="fas fa-exclamation-triangle"></i> 1. Safety Reset (E-Stop)</div>
+                                    <p><strong>Condición:</strong> Parada de emergencia activada. Rampa detenida.</p>
+                                    <div class="visual-steps-list">
+                                        <div class="step-item"><span class="step-number">1</span><i class="fas fa-search step-icon"></i> Verificar y clear la condición insegura.</div>
+                                        <div class="step-item"><span class="step-number">2</span><i class="fas fa-undo-alt step-icon"></i> Desenclavar Botón Rojo (girar).</div>
+                                        <div class="step-item"><span class="step-number">3</span><i class="fas fa-power-off step-icon" style="color: var(--blue);"></i> Pulsar <strong>Botón Azul (RESET)</strong> para rearmar.</div>
+                                    </div>
+                                    <div class="sop-reference">Ref: Rutina Estándar Acople / Transferencia</div>
+                                </div>
+                            </div>
+
+                            <div class="visual-plan-item">
+                                <div class="mapped-failure">
+                                    <img src="./Img Estandar/Desface y abertura en enrampar furgon y andem.jpeg" alt="Gap Furgon">
+                                    <span class="error-marker" style="width: 100px; height: 60px; top: 50%; left: 60%; transform: translate(-50%, -50%);"></span>
+                                </div>
+                                <div class="plan-instructions">
+                                    <div class="plan-header"><i class="fas fa-compress-arrows-alt"></i> 2. Error de Interlock Físico (Gap)</div>
+                                    <p><strong>Condición:</strong> Furgón mal acoplado contra sensores de tope. Sistema no permite transferencia.</p>
+                                    <div class="visual-steps-list">
+                                        <div class="step-item"><span class="step-number">1</span><i class="fas fa-desktop step-icon"></i> Identificar sensor fallido en HMI.</div>
+                                        <div class="step-item"><span class="step-number">2</span><i class="fas fa-truck step-icon"></i> Solicitar al piloto <strong>re-alinear contra topes</strong>.</div>
+                                        <div class="step-item"><span class="step-number">3</span><i class="fas fa-check-double step-icon" style="color: var(--green);"></i> Confirmar luces verdes de interlock.</div>
+                                    </div>
+                                    <div class="sop-reference">Ref: Rutina Estándar Acople y Conexión</div>
+                                </div>
+                            </div>
+
+                            <div class="visual-plan-item">
+                                <div class="mapped-failure">
+                                    <img src="./Img Estandar/Falla de Sensor de Piso.jpeg" alt="HMI Error">
+                                    <span class="error-marker" style="width: 250px; height: 180px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 8px;"></span>
+                                </div>
+                                <div class="plan-instructions">
+                                    <div class="plan-header"><i class="fas fa-bacon"></i> 3. Atasco / Falla Sensor Transferencia</div>
+                                    <p><strong>Condición:</strong> Transferencia detenida a medio ciclo por error de lectura de sensor de palet.</p>
+                                    <div class="visual-steps-list">
+                                        <div class="step-item"><span class="step-number">1</span><i class="fas fa-barcode step-icon"></i> Leer código de Zona de sensor en HMI.</div>
+                                        <div class="step-item"><span class="step-number">2</span><i class="fas fa-eye-slash step-icon"></i> Inspeccionar y limpiar sensor en piso de la zona.</div>
+                                        <div class="step-item"><span class="step-number">3</span><i class="fas fa-play-circle step-icon" style="color: var(--green);"></i> Rearmar (Botón Azul) y reanudar paso a paso.</div>
+                                    </div>
+                                    <div class="sop-reference">Ref: Rutina Estándar Transferencia de Producto</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 
     <div id="modalDevelopment" class="modal">
-        <div class="modal-content" style="height: auto; max-height: 90vh; max-width: 800px;">
+        <div class="modal-content" style="height: auto; max-height: 90vh; max-width: 900px;">
             <div class="modal-header">
                 <h2 style="color: var(--green); margin: 0; text-shadow: 0 0 10px rgba(0,255,136,0.3);">Joloda Team Development Plan</h2>
                 <span class="close" onclick="cerrarModal('modalDevelopment')">&times;</span>
@@ -320,15 +367,43 @@
                 Ruta de desarrollo integral para el personal. El cumplimiento de estas 5 capacidades es requerido para alcanzar la certificación oficial como Operador Joloda.
             </p>
 
-            <div style="background: rgba(0,0,0,0.3); padding: 30px; border-radius: 12px; border: 1px solid rgba(0, 255, 136, 0.2);">
-                <h3 style="color: var(--green); margin-top: 0; border-bottom: 1px solid rgba(0,255,136,0.2); padding-bottom: 10px;"><i class="fas fa-tasks"></i> Capacidades Requeridas para Certificación</h3>
-                <ul style="text-align: left; color: #cbd5e1; line-height: 1.8; font-size: 15px; list-style-type: none; padding-left: 0; margin-top: 20px;">
-                    <li style="margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-left: 4px solid var(--blue);"><i class="fas fa-file-signature" style="color: var(--blue); width: 30px;"></i> <strong>1.</strong> Elaborar Rutinas Estándar.</li>
-                    <li style="margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-left: 4px solid var(--orange);"><i class="fas fa-wrench" style="color: var(--orange); width: 30px;"></i> <strong>2.</strong> Conocimiento básico de mantenimiento de equipo Joloda.</li>
-                    <li style="margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-left: 4px solid var(--red);"><i class="fas fa-microchip" style="color: var(--red); width: 30px;"></i> <strong>3.</strong> Diagnóstico de equipo y estado de sensores.</li>
-                    <li style="margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-left: 4px solid var(--green);"><i class="fas fa-sync" style="color: var(--green); width: 30px;"></i> <strong>4.</strong> Revisión 360 del equipo.</li>
-                    <li style="margin-bottom: 0; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-left: 4px solid #a855f7;"><i class="fas fa-project-diagram" style="color: #a855f7; width: 30px;"></i> <strong>5.</strong> Seguimiento a cadena de ayuda y cumplimiento de planificación.</li>
-                </ul>
+            <div style="background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid rgba(0, 255, 136, 0.2); overflow: hidden;">
+                <table class="schedule-table" style="margin-top: 0; border-radius: 0;">
+                    <thead>
+                        <tr>
+                            <th style="text-align: left; font-size: 14px;"><i class="fas fa-tasks"></i> Capacidades Requeridas para Certificación</th>
+                            <th style="text-align: center;">Cantidad de Miembros</th>
+                            <th style="text-align: center;">Cuándo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left;"><i class="fas fa-file-signature" style="color: var(--blue); width: 25px;"></i> 1. Elaborar Rutinas Estándar</td>
+                            <td style="text-align: center; font-weight: bold; color: var(--text);">8</td>
+                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--blue); color:var(--blue);">Abril</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;"><i class="fas fa-wrench" style="color: var(--orange); width: 25px;"></i> 2. Conocimiento básico de mantenimiento de equipo Joloda</td>
+                            <td style="text-align: center; font-weight: bold; color: var(--text);">8</td>
+                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--orange); color:var(--orange);">Mayo</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;"><i class="fas fa-microchip" style="color: var(--red); width: 25px;"></i> 3. Diagnóstico de equipo y estado de sensores</td>
+                            <td style="text-align: center; font-weight: bold; color: var(--text);">8</td>
+                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--red); color:var(--red);">Junio</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;"><i class="fas fa-sync" style="color: var(--green); width: 25px;"></i> 4. Revisión 360 del equipo</td>
+                            <td style="text-align: center; font-weight: bold; color: var(--text);">8</td>
+                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--green); color:var(--green);">Junio</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;"><i class="fas fa-satellite-dish" style="color: var(--purple); width: 25px;"></i> 5. Uso de Torre Control Joloda</td>
+                            <td style="text-align: center; font-weight: bold; color: var(--text);">8</td>
+                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--purple); color:var(--purple);">Abril</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -381,68 +456,6 @@
                 <span><i class="fas fa-check-circle icon-check"></i> Validated</span>
                 <span><i class="fas fa-cog icon-process"></i> In Progress</span>
                 <span><i class="fas fa-circle icon-pending"></i> Pending</span>
-            </div>
-        </div>
-    </div>
-
-    <div id="modalActionPlans" class="modal">
-        <div class="modal-content" style="height: auto; max-height: 95vh; max-width: 1050px;">
-            <div class="modal-header">
-                <h2 style="color: var(--orange); margin: 0; text-shadow: 0 0 15px rgba(255, 170, 0, 0.3);">Operational Action Plans (Troubleshooting)</h2>
-                <span class="close" onclick="cerrarModal('modalActionPlans')">&times;</span>
-            </div>
-            
-            <div class="action-plans-view">
-                <div class="visual-plan-item">
-                    <div class="mapped-failure">
-                        <img src="./Img Estandar/Activacion de Parada de Emergencia.jpeg" alt="E-Stop Activado">
-                        <span class="error-marker" style="width: 80px; height: 80px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%;"></span>
-                    </div>
-                    <div class="plan-instructions">
-                        <div class="plan-header"><i class="fas fa-exclamation-triangle"></i> 1. Safety Reset (E-Stop)</div>
-                        <p><strong>Condition:</strong> Emergency Stop button engaged. System halted.</p>
-                        <div class="visual-steps-list">
-                            <div class="step-item"><span class="step-number">1</span><i class="fas fa-search step-icon"></i> Verify and clear the unsafe condition.</div>
-                            <div class="step-item"><span class="step-number">2</span><i class="fas fa-undo-alt step-icon"></i> Twist red E-Stop button to release.</div>
-                            <div class="step-item"><span class="step-number">3</span><i class="fas fa-power-off step-icon" style="color: var(--blue);"></i> Press <strong>Blue Button (RESET)</strong> to rearm panel.</div>
-                        </div>
-                        <div class="sop-reference">Ref: Rutina Estándar Acople / Transferencia</div>
-                    </div>
-                </div>
-
-                <div class="visual-plan-item">
-                    <div class="mapped-failure">
-                        <img src="./Img Estandar/Desface y abertura en enrampar furgon y andem.jpeg" alt="Gap Furgon">
-                        <span class="error-marker" style="width: 100px; height: 60px; top: 50%; left: 60%; transform: translate(-50%, -50%);"></span>
-                    </div>
-                    <div class="plan-instructions">
-                        <div class="plan-header"><i class="fas fa-compress-arrows-alt"></i> 2. Physical Interlock Error (Gap)</div>
-                        <p><strong>Condition:</strong> Truck not properly docked against stopper sensors. System prevents transfer.</p>
-                        <div class="visual-steps-list">
-                            <div class="step-item"><span class="step-number">1</span><i class="fas fa-desktop step-icon"></i> Identify failing sensor on HMI screen.</div>
-                            <div class="step-item"><span class="step-number">2</span><i class="fas fa-truck step-icon"></i> Request driver to <strong>re-align against stoppers</strong>.</div>
-                            <div class="step-item"><span class="step-number">3</span><i class="fas fa-check-double step-icon" style="color: var(--green);"></i> Verify green interlock lights before proceeding.</div>
-                        </div>
-                        <div class="sop-reference">Ref: Rutina Estándar Acople y Conexión</div>
-                    </div>
-                </div>
-
-                <div class="visual-plan-item">
-                    <div class="mapped-failure">
-                        <img src="./Img Estandar/Falla de Sensor de Piso.jpeg" alt="HMI Error">
-                        <span class="error-marker" style="width: 250px; height: 180px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 8px;"></span>
-                    </div>
-                    <div class="plan-instructions">
-                        <div class="plan-header"><i class="fas fa-bacon"></i> 3. Transfer Jam / Sensor Fault</div>
-                        <p><strong>Condition:</strong> Transfer stops mid-cycle due to pallet sensor error (crooked pallet/dirt).</p>
-                        <div class="visual-steps-list">
-                            <div class="step-item"><span class="step-number">1</span><i class="fas fa-barcode step-icon"></i> Read specific Zone Error Code on HMI.</div>
-                            <div class="step-item"><span class="step-number">2</span><i class="fas fa-eye-slash step-icon"></i> Inspect and clean floor sensor in affected zone.</div>
-                            <div class="step-item"><span class="step-number">3</span><i class="fas fa-play-circle step-icon" style="color: var(--green);"></i> Press Blue Reset and resume step-by-step.</div>
-                        </div>
-                        <div class="sop-reference">Ref: Rutina Estándar Transferencia de Producto</div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -516,7 +529,6 @@
             {n: 'Yendi Lorena Rueda Carrera', img: 'img/Yendi Lorena Rueda Carrera.png'}
         ];
 
-        // LÓGICA HTTP Master Sync
         const SYNC_CHANNEL = "nestle_joloda_barcenas_master_v12";
         const MY_ID = Math.random().toString(36).substring(2, 9);
         let eventSource;
@@ -560,7 +572,6 @@
                 case 'OPEN_HELP': abrirModal('modalHelp'); break;
                 case 'OPEN_DEVPLAN': abrirModal('modalDevelopment'); break;
                 case 'OPEN_COMPETENCIAS': abrirModal('modalCompetencias'); break;
-                case 'OPEN_PLANS': abrirModal('modalActionPlans'); break;
                 case 'OPEN_TIME': abrirModal('modalTimeWindow'); break;
                 case 'CERRAR_MODALES': cerrarTodosModales(); break;
             }
@@ -593,8 +604,11 @@
         function abrirModalKpi() { abrirModal('modalKpiPreview'); }
         function abrirModalDevPlan() { abrirModal('modalDevelopment'); }
         function abrirModalCompetencias() { abrirModal('modalCompetencias'); }
-        function abrirModalHelp() { abrirModal('modalHelp'); }
-        function abrirModalPlans() { abrirModal('modalActionPlans'); } 
+        function abrirModalHelp() { 
+            abrirModal('modalHelp'); 
+            // Reiniciar a pestaña PDF por defecto
+            switchHelpTab('pdf');
+        }
         function abrirModalTimeWindow() { abrirModal('modalTimeWindow'); }
 
         function abrirModal(id) { document.getElementById(id).style.display = "block"; }
@@ -618,6 +632,26 @@
             container.querySelectorAll('.doc-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             document.getElementById(frameId).src = ruta;
+        }
+
+        // Lógica de Pestañas en Help Chain Modal
+        function switchHelpTab(tab) {
+            const btnPdf = document.getElementById('btn-help-pdf');
+            const btnActions = document.getElementById('btn-help-actions');
+            const framePdf = document.getElementById('helpPdfFrame');
+            const containerActions = document.getElementById('helpActionPlans');
+
+            if (tab === 'pdf') {
+                btnPdf.classList.add('active');
+                btnActions.classList.remove('active');
+                framePdf.style.display = 'block';
+                containerActions.style.display = 'none';
+            } else {
+                btnPdf.classList.remove('active');
+                btnActions.classList.add('active');
+                framePdf.style.display = 'none';
+                containerActions.style.display = 'block';
+            }
         }
 
         function filtrarVentanaHoraria() {
@@ -668,21 +702,19 @@
             }
         }
 
-        // ================= MAGIA DE PRESENTACIÓN (EL BOTÓN SECRETO) =================
+        // ================= MAGIA DE PRESENTACIÓN =================
         let secretCardsHidden = true;
         function toggleSecretCards() {
             const devPlanCard = document.getElementById('card-dev-plan');
             const hiddenCards = document.querySelectorAll('.secret-card');
 
             if (secretCardsHidden) {
-                // Mostrar las tarjetas ocultas
                 hiddenCards.forEach(card => card.classList.remove('hidden-card'));
-                devPlanCard.classList.remove('center-last'); // Quita el centrado para que vuelvan a ser 9 en cuadrícula
+                devPlanCard.classList.remove('center-last'); 
                 secretCardsHidden = false;
             } else {
-                // Volver a ocultar las tarjetas
                 hiddenCards.forEach(card => card.classList.add('hidden-card'));
-                devPlanCard.classList.add('center-last'); // Vuelve a centrar Development Plan
+                devPlanCard.classList.add('center-last'); 
                 secretCardsHidden = true;
             }
         }

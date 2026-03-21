@@ -12,14 +12,14 @@
         }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; text-align: center; overflow-x: hidden; }
         
-        /* HEADER (High-Tech) */
+        /* HEADER */
         header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 212, 255, 0.2); padding: 15px 20px; margin-bottom: 30px; background: linear-gradient(90deg, rgba(18,24,32,0) 0%, rgba(18,24,32,0.8) 50%, rgba(18,24,32,0) 100%); }
         .clock-box { background: rgba(0,0,0,0.5); padding: 10px 25px; border-radius: 8px; border: 1px solid var(--blue); box-shadow: var(--neon-glow); backdrop-filter: blur(5px);}
         #remote-ind { font-size: 0.75rem; color: var(--red); display: block; margin-top: 5px; font-weight: bold; text-transform: uppercase; transition: 0.3s; letter-spacing: 1px;}
         #remote-ind.online { color: var(--green); text-shadow: 0 0 8px var(--green);}
         #remote-ind.reconnect { color: var(--orange); }
 
-        /* GRID PRINCIPAL Cibernético */
+        /* GRID PRINCIPAL */
         .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1250px; margin: 0 auto; transition: 0.5s; }
         
         .card { 
@@ -32,13 +32,11 @@
         .card:hover::before { left: 150%; }
         .card:hover, .card:active { border-color: var(--blue); transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,212,255,0.2); }
 
-        /* CLASES MÁGICAS PARA EL MODO PRESENTACIÓN */
+        /* CLASES MÁGICAS */
         .hidden-card { display: none !important; }
-        @media (min-width: 901px) {
-            .center-last { grid-column: 2; }
-        }
+        @media (min-width: 901px) { .center-last { grid-column: 2; } }
 
-        /* VISTAS Y ANIMACIONES */
+        /* VISTAS */
         .view { display: none; animation: fadeIn 0.5s ease-out; } 
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
@@ -50,31 +48,31 @@
         .btn-back { background: #1a222c; color: var(--blue); padding: 12px 30px; border-radius: 50px; cursor: pointer; margin-bottom: 30px; display: inline-block; border: 1px solid var(--blue); font-weight: bold; transition: 0.3s; letter-spacing: 1px;}
         .btn-back:hover { background: var(--blue); color: #000; box-shadow: var(--neon-glow); }
 
-        /* Monitor Joloda Monitor Inmersivo */
+        /* Monitor Joloda */
         #towerFullscreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10000; background: #0b1116; display: none; }
         #towerFullscreen.active { display: block; animation: slideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         .btn-close-monitor { position: absolute; top: 15px; right: 25px; background: rgba(20,20,20,0.8); color: var(--red); padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; z-index: 10001; border: 1px solid var(--red); transition: 0.2s; backdrop-filter: blur(5px); }
 
-        /* KPI Card compacta avanzada */
+        /* KPI Card compacta */
         .tower-dash-card { width: 100%; background: rgba(0,0,0,0.4); border-radius: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; box-sizing: border-box; text-align: left;}
         .kpi-row-card { display: flex; justify-content: space-between; margin: 6px 0; font-size: 0.85rem; font-weight: bold;}
 
-        /* ================= ESTILOS MODALES REFINADOS (GLASSMORPHISM) ================= */
+        /* ESTILOS MODALES */
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(4, 7, 12, 0.85); backdrop-filter: blur(10px); }
         .modal-content { background-color: rgba(18, 24, 32, 0.95); margin: 2% auto; padding: 30px; border: 1px solid var(--blue); border-radius: 16px; width: 92%; max-width: 1100px; color: white; box-shadow: 0 0 40px rgba(0, 212, 255, 0.15); height: 92vh; display: flex; flex-direction: column; box-sizing: border-box; overflow-y: auto; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 212, 255, 0.3); padding-bottom: 15px; margin-bottom: 20px;}
         .close { color: #8892b0; font-size: 32px; font-weight: bold; cursor: pointer; transition: 0.3s;}
         .close:hover { color: var(--red); transform: rotate(90deg);}
 
-        /* KPI Preview Cibernético */
+        /* KPI Preview */
         .kpi-big-display { text-align: center; margin: 30px 0; flex: 1; display: flex; flex-direction: column; justify-content: center; }
         .kpi-big-value { font-size: 8.5rem; color: var(--green); font-weight: bold; margin: 0; text-shadow: 0 0 40px rgba(0,255,136,0.4); line-height: 1;}
         .kpi-big-label { font-size: 1.5rem; color: #8892b0; text-transform: uppercase; letter-spacing: 3px; margin-top: 10px;}
         .btn-launch-tower { background: var(--blue); color: #000; font-size: 1.2rem; padding: 18px 40px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; text-transform: uppercase; box-shadow: var(--neon-glow); transition: 0.3s; width: 80%; max-width: 400px; align-self: center; margin-bottom: 20px; letter-spacing: 1px;}
         .btn-launch-tower:hover { background: #00ff88; box-shadow: 0 0 30px rgba(0, 255, 136, 0.6); transform: translateY(-3px);}
 
-        /* Menús Laterales de Modales */
+        /* Menús Laterales */
         .standards-container { display: flex; flex: 1; gap: 20px; height: calc(100% - 60px); min-height: 400px; }
         .standards-menu { width: 280px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding-right: 10px; }
         .pdf-viewer-area { flex: 1; background: #000; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; position: relative;}
@@ -84,7 +82,7 @@
         .doc-btn:hover { border-color: var(--orange); background-color: rgba(255, 170, 0, 0.05); }
         .doc-btn.active { background-color: rgba(0, 212, 255, 0.1); color: var(--blue); font-weight: bold; border-color: var(--blue); box-shadow: inset 4px 0 0 var(--blue);}
 
-        /* ================= ESTILOS JOLODA: TABLAS Y MATRICES ================= */
+        /* TABLAS Y MATRICES */
         .schedule-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; background: rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden;}
         .schedule-table th, .schedule-table td { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 14px; text-align: left; }
         .schedule-table th { background-color: rgba(0, 212, 255, 0.1); color: var(--blue); font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;}
@@ -92,7 +90,7 @@
         .schedule-table tr:last-child td { border-bottom: none; }
         .no-data { text-align: center !important; color: var(--red); padding: 30px !important; font-style: italic; letter-spacing: 1px;}
 
-        /* Dual Matrix en Competencies */
+        /* Dual Matrix */
         .dual-matrix-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 10px;}
         .matrix-section { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 20px;}
         .matrix-section h3 { margin-top: 0; color: var(--orange); border-bottom: 1px solid rgba(255, 170, 0, 0.3); padding-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 10px;}
@@ -102,23 +100,20 @@
         .icon-process { color: var(--orange); animation: spin 4s linear infinite;}
         .icon-pending { color: #334155; }
         .cert-badge { background: #1e293b; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;}
-        .cert-badge.master { background: rgba(0, 212, 255, 0.1); color: var(--blue); border: 1px solid var(--blue);}
         .cert-badge.certified { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid var(--green);}
         .cert-badge.training { background: rgba(255, 170, 0, 0.1); color: var(--orange); border: 1px solid var(--orange);}
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Estilos Action Plans (Mapeo Visual) */
+        /* Action Plans Visuales */
         .action-plans-view { display: flex; flex-direction: column; gap: 25px; padding: 15px;}
         .visual-plan-item { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; display: grid; grid-template-columns: 400px 1fr; transition: 0.3s; align-items: stretch; }
         .visual-plan-item:hover { border-color: var(--orange); box-shadow: 0 5px 20px rgba(255, 170, 0, 0.15); }
-        
         .mapped-failure { position: relative; background: #000; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgba(255,255,255,0.05); padding: 15px; }
         .mapped-failure img { width: 100%; height: auto; max-height: 280px; object-fit: contain; border-radius: 8px; display: block;}
         
         .error-marker { position: absolute; border: 2px solid var(--red); border-radius: 6px; animation: errorBlink 1.5s infinite; box-shadow: 0 0 15px rgba(255, 68, 68, 0.5); background: rgba(255, 68, 68, 0.15); backdrop-filter: blur(2px);}
         @keyframes errorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-        .visual-plan-item:hover .error-marker { animation: none; border-color: var(--orange); box-shadow: 0 0 15px rgba(255, 170, 0, 0.5); background: rgba(255, 170, 0, 0.15);}
-
+        
         .plan-instructions { padding: 25px; text-align: left; display: flex; flex-direction: column; gap: 12px; justify-content: center;}
         .plan-header { margin: 0; color: var(--orange); font-size: 1.25rem; font-weight: bold; display: flex; align-items: center; gap: 10px;}
         .plan-instructions p { margin: 0; font-size: 13px; color: #94a3b8; line-height: 1.6;}
@@ -135,11 +130,9 @@
         .filter-group { display: flex; flex-direction: column; text-align: left; gap: 8px; }
         .filter-group label { font-size: 11px; color: var(--blue); text-transform: uppercase; font-weight: bold; letter-spacing: 1px;}
         .joloda-select, .joloda-date { background: #0f172a; color: #fff; border: 1px solid #334155; border-radius: 6px; padding: 12px 15px; font-family: 'Segoe UI', sans-serif; font-size: 13px; outline: none; transition: 0.3s;}
-        .joloda-select:focus, .joloda-date:focus { border-color: var(--blue); box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);}
         
         .btn-update { background: transparent; color: var(--green); border: 1px solid var(--green); border-radius: 6px; padding: 12px 25px; font-weight: bold; cursor: pointer; transition: 0.3s; letter-spacing: 1px;}
         .btn-update:hover { background: var(--green); color: #000; box-shadow: 0 0 15px rgba(0, 255, 136, 0.4); }
-        
         .time-tables { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 25px; padding-right: 10px;}
 
         /* ADAPTACIÓN CELULAR */
@@ -153,7 +146,7 @@
             .modal-content { width: 95%; margin: 5% auto; padding: 20px; height: 95vh;}
             .dual-matrix-container { grid-template-columns: 1fr; }
             .visual-plan-item { grid-template-columns: 1fr; }
-            .mapped-failure { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 20px; height: auto;}
+            .mapped-failure { padding: 20px; height: auto;}
             .schedule-table { font-size: 11px; }
             .filter-bar { flex-direction: column; align-items: stretch; }
             .btn-update { align-self: stretch; margin-top: 5px;}
@@ -164,7 +157,7 @@
 
     <header>
         <div>
-            <h1 onclick="toggleSecretCards()" style="color: var(--green); margin:0; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,255,136,0.3); cursor: pointer;" title="Doble clic para menú oculto">MEJORA CONTINUA - TEAM JOLODA</h1>
+            <h1 onclick="sendAction('TOGGLE_SECRET')" style="color: var(--green); margin:0; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,255,136,0.3); cursor: pointer;" title="Doble clic para menú oculto">MEJORA CONTINUA - TEAM JOLODA</h1>
             <small style="color: #8892b0; letter-spacing: 1px;">CD BÁRCENAS | ADVANCED OPERATIONS</small>
         </div>
         <div class="clock-box" onclick="window.location.reload();" title="Toca para refrescar conexión">
@@ -182,13 +175,13 @@
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">TEAM CERTIFIED</span>
             </div>
             
-            <div class="card" onclick="abrirModalStandards('Standards')" style="border-color: rgba(255, 170, 0, 0.4);">
+            <div class="card" onclick="sendAction('OPEN_STANDARDS')" style="border-color: rgba(255, 170, 0, 0.4);">
                 <i class="fas fa-file-contract" style="font-size:3.5rem;color:var(--orange); text-shadow: 0 0 15px rgba(255, 170, 0, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--orange); margin-bottom:0; font-size: 1.4rem;">Standards</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">RUTINA ESTÁNDAR & LUP</span>
             </div>
             
-            <div class="card" onclick="abrirModalKpi('Kpi')" style="border-color: rgba(0, 212, 255, 0.4);">
+            <div class="card" onclick="sendAction('OPEN_KPI')" style="border-color: rgba(0, 212, 255, 0.4);">
                 <div class="tower-dash-card">
                     <div class="kpi-row-card"><span style="color:#8892b0;">Cumplimiento Viajes</span><span style="color:var(--green)">98%</span></div>
                     <div class="kpi-row-card"><span style="color:#8892b0;">T. Ciclo CD Bárcenas</span><span style="color:var(--blue)">19m</span></div>
@@ -199,13 +192,13 @@
                 <span style="color:#8892b0; font-size:0.8rem; margin-top:5px; letter-spacing: 1px;">LIVE DASHBOARD</span>
             </div>
             
-            <div class="card" onclick="abrirModalCompetencias('Competencies')" style="border-color: rgba(0, 212, 255, 0.4);">
+            <div class="card" onclick="sendAction('OPEN_COMPETENCIAS')" style="border-color: rgba(0, 212, 255, 0.4);">
                 <i class="fas fa-award" style="font-size:3.5rem;color:var(--blue); text-shadow: var(--neon-glow);"></i>
                 <h3 style="margin-top:20px; color:var(--blue); margin-bottom:0; font-size: 1.4rem;">Competencies</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">SKILLS MATRIX</span>
             </div>
             
-            <div class="card" onclick="abrirModalHelp('HelpChain')" style="border-color: rgba(255, 51, 102, 0.4);">
+            <div class="card" onclick="sendAction('OPEN_HELP')" style="border-color: rgba(255, 51, 102, 0.4);">
                 <i class="fas fa-bullhorn" style="font-size:3.5rem;color:var(--red); text-shadow: 0 0 15px rgba(255, 51, 102, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--red); margin-bottom:0; font-size: 1.4rem;">Help Chain</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">ESCALATION & Troubleshooting</span>
@@ -217,13 +210,13 @@
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">TEAMS PLANNER</span>
             </div>
             
-            <div id="card-dev-plan" class="card center-last" onclick="abrirModalDevPlan('DevelopmentPlan')" style="border-color: rgba(0, 255, 136, 0.4);">
+            <div id="card-dev-plan" class="card center-last" onclick="sendAction('OPEN_DEVPLAN')" style="border-color: rgba(0, 255, 136, 0.4);">
                 <i class="fas fa-seedling" style="font-size:3.5rem;color:var(--green); text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--green); margin-bottom:0; font-size: 1.4rem;">Development Plan</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">RUTAS DE CERTIFICACIÓN</span>
             </div>
 
-            <div class="card secret-card hidden-card" onclick="abrirModalTimeWindow('TimeWindow')" style="border-color: rgba(0, 255, 136, 0.4);">
+            <div class="card secret-card hidden-card" onclick="sendAction('OPEN_TIME')" style="border-color: rgba(0, 255, 136, 0.4);">
                 <i class="fas fa-clock" style="font-size:3.5rem;color:var(--green); text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--green); margin-bottom:0; font-size: 1.4rem;">Time Window</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">LIVE ARRIVALS</span>
@@ -234,7 +227,6 @@
                 <h3 style="margin-top:20px; color:var(--orange); margin-bottom:0; font-size: 1.4rem;">Impacto TDC (VDE)</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">VALUE CREATION</span>
             </div>
-
         </div>
     </div>
 
@@ -245,7 +237,7 @@
     </div>
     
     <div id="towerFullscreen">
-        <div class="btn-close-monitor" onclick="cerrarMonitor()">✖ CLOSE MONITOR</div>
+        <div class="btn-close-monitor" onclick="sendAction('CLOSE_MONITOR')">✖ CLOSE MONITOR</div>
         <iframe src="monitor_joloda.html" style="width: 100%; height: 100%; border: none;"></iframe>
     </div>
 
@@ -253,7 +245,7 @@
         <div class="modal-content" style="height: auto; max-height: 90vh; max-width: 800px;">
             <div class="modal-header">
                 <h2 style="color: var(--blue); margin: 0; text-shadow: var(--neon-glow);">Resumen de KPIs Joloda</h2>
-                <span class="close" onclick="cerrarModal('modalKpiPreview')">&times;</span>
+                <span class="close" onclick="sendAction('CERRAR_MODALES')">&times;</span>
             </div>
             <div style="text-align: center; margin: 30px 0;">
                 <p class="kpi-big-value">98%</p>
@@ -264,7 +256,7 @@
                     <div><span style="font-size:2.2rem; color:var(--green); font-weight:bold;">0</span><br><span style="color:#8892b0; font-size: 11px; text-transform: uppercase;">Alertas Activas</span></div>
                 </div>
             </div>
-            <button class="btn-launch-tower" onclick="abrirMonitor()">🚀 LAUNCH FULL DASHBOARD</button>
+            <button class="btn-launch-tower" onclick="sendAction('OPEN_MONITOR')">🚀 LAUNCH FULL DASHBOARD</button>
         </div>
     </div>
 
@@ -272,18 +264,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 style="color: var(--orange); margin: 0;">Rutina Estándar & LUP</h2>
-                <span class="close" onclick="cerrarModal('modalStandards')">&times;</span>
+                <span class="close" onclick="sendAction('CERRAR_MODALES')">&times;</span>
             </div>
             <div class="standards-container">
                 <div class="standards-menu">
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estandar Acople Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Acople</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estandar Transferencia Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Transferencia</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/Rutina Estandar Desacople Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Desacople</button>
+                    <button class="doc-btn" onclick="sendAction('LOAD_PDF', '0|Estandar/Rutina Estandar Acople Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Acople</button>
+                    <button class="doc-btn" onclick="sendAction('LOAD_PDF', '1|Estandar/Rutina Estandar Transferencia Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Transferencia</button>
+                    <button class="doc-btn" onclick="sendAction('LOAD_PDF', '2|Estandar/Rutina Estandar Desacople Joloda.pdf')"><i class="fas fa-file-pdf" style="margin-right:8px; color:var(--red);"></i> Rutina Estándar - Desacople</button>
                     
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Carga y Descarga del Joloda (Operador).pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Carga/Descarga MH</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Conexion del Furgon Personal MH.pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Conexión Furgón MH</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Conexion del Joloda . Pilotos.pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Conexión Pilotos</button>
-                    <button class="doc-btn" onclick="cargarPDF('pdfFrameStandards', this, 'Estandar/LUP-MH-Desactivacion del Sensor de Cortina.pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Sensor Cortina</button>
+                    <button class="doc-btn" onclick="sendAction('LOAD_PDF', '3|Estandar/LUP-MH-Carga y Descarga del Joloda (Operador).pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Carga/Descarga MH</button>
+                    <button class="doc-btn" onclick="sendAction('LOAD_PDF', '4|Estandar/LUP-MH-Conexion del Furgon Personal MH.pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Conexión Furgón MH</button>
+                    <button class="doc-btn" onclick="sendAction('LOAD_PDF', '5|Estandar/LUP-MH-Conexion del Joloda . Pilotos.pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Conexión Pilotos</button>
+                    <button class="doc-btn" onclick="sendAction('LOAD_PDF', '6|Estandar/LUP-MH-Desactivacion del Sensor de Cortina.pdf')"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--blue);"></i> LUP - Sensor Cortina</button>
                 </div>
                 <div class="pdf-viewer-area">
                     <iframe id="pdfFrameStandards" src="" title="SOP Viewer"></iframe>
@@ -296,21 +288,20 @@
         <div class="modal-content" style="max-width: 1250px;">
             <div class="modal-header">
                 <h2 style="color: var(--red); margin: 0; text-shadow: 0 0 15px rgba(255, 51, 102, 0.3);">Help Chain & Troubleshooting</h2>
-                <span class="close" onclick="cerrarModal('modalHelp')">&times;</span>
+                <span class="close" onclick="sendAction('CERRAR_MODALES')">&times;</span>
             </div>
             
             <div class="standards-container">
                 <div class="standards-menu" style="width: 280px;">
-                    <button id="btn-help-pdf" class="doc-btn active" onclick="switchHelpTab('pdf')">
+                    <button id="btn-help-pdf" class="doc-btn active" onclick="sendAction('SWITCH_TAB', 'pdf')">
                         <i class="fas fa-bullhorn" style="margin-right:8px; color:var(--red);"></i> Escalation Protocol (PDF)
                     </button>
-                    <button id="btn-help-actions" class="doc-btn" onclick="switchHelpTab('actions')">
+                    <button id="btn-help-actions" class="doc-btn" onclick="sendAction('SWITCH_TAB', 'actions')">
                         <i class="fas fa-tools" style="margin-right:8px; color:var(--orange);"></i> Action Plans (Fallas)
                     </button>
                 </div>
                 
                 <div class="pdf-viewer-area" style="overflow-y: auto;">
-                    
                     <iframe id="helpPdfFrame" src="Cadena de Ayuda/Cadena de Ayuda para eventos de Ramapa Joloda.pdf" style="width: 100%; height: 100%; border: none; background: #fff;"></iframe>
                     
                     <div id="helpActionPlans" style="display: none;">
@@ -367,7 +358,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -377,48 +367,18 @@
         <div class="modal-content" style="height: auto; max-height: 90vh; max-width: 900px;">
             <div class="modal-header">
                 <h2 style="color: var(--green); margin: 0; text-shadow: 0 0 10px rgba(0,255,136,0.3);">Joloda Team Development Plan</h2>
-                <span class="close" onclick="cerrarModal('modalDevelopment')">&times;</span>
+                <span class="close" onclick="sendAction('CERRAR_MODALES')">&times;</span>
             </div>
-            
-            <p style="color: #8892b0; text-align: left; font-size: 14px; margin-bottom: 25px;">
-                Ruta de desarrollo integral para el personal. El cumplimiento de estas 5 capacidades es requerido para alcanzar la certificación oficial como Operador Joloda.
-            </p>
-
+            <p style="color: #8892b0; text-align: left; font-size: 14px; margin-bottom: 25px;">Ruta de desarrollo integral para el personal. El cumplimiento de estas 5 capacidades es requerido para alcanzar la certificación oficial como Operador Joloda.</p>
             <div style="background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid rgba(0, 255, 136, 0.2); overflow: hidden;">
                 <table class="schedule-table" style="margin-top: 0; border-radius: 0;">
-                    <thead>
-                        <tr>
-                            <th style="text-align: left; font-size: 14px;"><i class="fas fa-tasks"></i> Capacidades Requeridas para Certificación</th>
-                            <th style="text-align: center;">Cantidad de Miembros</th>
-                            <th style="text-align: center;">Cuándo</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th style="text-align: left; font-size: 14px;"><i class="fas fa-tasks"></i> Capacidades Requeridas para Certificación</th><th style="text-align: center;">Cantidad de Miembros</th><th style="text-align: center;">Cuándo</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td style="text-align: left;"><i class="fas fa-file-signature" style="color: var(--blue); width: 25px;"></i> 1. Elaborar Rutinas Estándar</td>
-                            <td style="text-align: center; font-weight: bold; color: var(--text);">8</td>
-                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--blue); color:var(--blue);">Abril</span></td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;"><i class="fas fa-wrench" style="color: var(--orange); width: 25px;"></i> 2. Conocimiento básico de mantenimiento de equipo Joloda</td>
-                            <td style="text-align: center; font-weight: bold; color: var(--text);">8</td>
-                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--orange); color:var(--orange);">Mayo</span></td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;"><i class="fas fa-microchip" style="color: var(--red); width: 25px;"></i> 3. Diagnóstico de equipo y estado de sensores</td>
-                            <td style="text-align: center; font-weight: bold; color: var(--text);">8</td>
-                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--red); color:var(--red);">Mayo</span></td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;"><i class="fas fa-sync" style="color: var(--green); width: 25px;"></i> 4. Revisión 360 del equipo</td>
-                            <td style="text-align: center; font-weight: bold; color: var(--text);">8</td>
-                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--green); color:var(--green);">Mayo</span></td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;"><i class="fas fa-satellite-dish" style="color: var(--purple); width: 25px;"></i> 5. Uso de Torre Control Joloda</td>
-                            <td style="text-align: center; font-weight: bold; color: var(--text);">8</td>
-                            <td style="text-align: center;"><span class="cert-badge" style="border-color:var(--purple); color:var(--purple);">Abril</span></td>
-                        </tr>
+                        <tr><td style="text-align: left;"><i class="fas fa-file-signature" style="color: var(--blue); width: 25px;"></i> 1. Elaborar Rutinas Estándar</td><td style="text-align: center; font-weight: bold; color: var(--text);">8</td><td style="text-align: center;"><span class="cert-badge" style="border-color:var(--blue); color:var(--blue);">Abril</span></td></tr>
+                        <tr><td style="text-align: left;"><i class="fas fa-wrench" style="color: var(--orange); width: 25px;"></i> 2. Conocimiento básico de mantenimiento de equipo Joloda</td><td style="text-align: center; font-weight: bold; color: var(--text);">8</td><td style="text-align: center;"><span class="cert-badge" style="border-color:var(--orange); color:var(--orange);">Mayo</span></td></tr>
+                        <tr><td style="text-align: left;"><i class="fas fa-microchip" style="color: var(--red); width: 25px;"></i> 3. Diagnóstico de equipo y estado de sensores</td><td style="text-align: center; font-weight: bold; color: var(--text);">8</td><td style="text-align: center;"><span class="cert-badge" style="border-color:var(--red); color:var(--red);">Mayo</span></td></tr>
+                        <tr><td style="text-align: left;"><i class="fas fa-sync" style="color: var(--green); width: 25px;"></i> 4. Revisión 360 del equipo</td><td style="text-align: center; font-weight: bold; color: var(--text);">8</td><td style="text-align: center;"><span class="cert-badge" style="border-color:var(--green); color:var(--green);">Mayo</span></td></tr>
+                        <tr><td style="text-align: left;"><i class="fas fa-satellite-dish" style="color: var(--purple); width: 25px;"></i> 5. Uso de Torre Control Joloda</td><td style="text-align: center; font-weight: bold; color: var(--text);">8</td><td style="text-align: center;"><span class="cert-badge" style="border-color:var(--purple); color:var(--purple);">Abril</span></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -429,9 +389,8 @@
         <div class="modal-content" style="max-width: 1300px;">
             <div class="modal-header">
                 <h2 style="color: var(--blue); margin: 0; text-shadow: var(--neon-glow);">Competencies & Skills Matrix</h2>
-                <span class="close" onclick="cerrarModal('modalCompetencias')">&times;</span>
+                <span class="close" onclick="sendAction('CERRAR_MODALES')">&times;</span>
             </div>
-            
             <div class="dual-matrix-container">
                 <div class="matrix-section">
                     <h3><i class="fas fa-medal" style="color:var(--blue);"></i> Team Certificado Joloda</h3>
@@ -449,7 +408,6 @@
                         </table>
                     </div>
                 </div>
-
                 <div class="matrix-section">
                     <h3 style="color: var(--green); border-bottom-color: rgba(0,255,136,0.3);"><i class="fas fa-level-up-alt"></i> Transition Plan (Pickers/Forklift)</h3>
                     <div style="overflow-x: auto;">
@@ -481,7 +439,7 @@
         <div class="modal-content" style="background: rgba(8, 12, 18, 0.95);">
             <div class="modal-header">
                 <h2 style="color: var(--green); margin: 0; text-shadow: 0 0 10px rgba(0,255,136,0.4);"><i class="fas fa-satellite-dish"></i> Time Window / Live Arrivals</h2>
-                <span class="close" onclick="cerrarModal('modalTimeWindow')">&times;</span>
+                <span class="close" onclick="sendAction('CERRAR_MODALES')">&times;</span>
             </div>
             <div class="time-window-container">
                 <div class="filter-bar">
@@ -497,7 +455,7 @@
                         <label>Arrival Date</label>
                         <input type="date" id="datePickerWindow" class="joloda-date">
                     </div>
-                    <button class="btn-update" onclick="filtrarVentanaHoraria()">
+                    <button class="btn-update" onclick="let n=document.getElementById('nodeSelectWindow').value; let d=document.getElementById('datePickerWindow').value; sendAction('SYNC_TIME', n+'|'+d);">
                         <i class="fas fa-sync-alt" style="margin-right: 5px;"></i> SYNC DATA
                     </button>
                 </div>
@@ -560,10 +518,14 @@
                 try {
                     const data = JSON.parse(e.data);
                     if (data.event === 'message') {
+                        // Extraemos el comando y el remitente
                         const parts = data.message.split('|');
+                        const senderId = parts.pop(); // El último siempre es el ID
                         const cmd = parts[0];
-                        const senderId = parts[1];
-                        if (senderId !== MY_ID) { executeCmd(cmd); }
+                        const payload = parts.length > 1 ? parts.slice(1).join('|') : ''; // El resto es data extra (si hay)
+                        
+                        // Si el comando NO lo envié yo mismo, lo ejecuto
+                        if (senderId !== MY_ID) { executeCmd(cmd, payload); }
                     }
                 } catch(err) {}
             };
@@ -573,83 +535,85 @@
             };
         }
 
-        function sendAction(cmd) {
-            executeCmd(cmd);
-            fetch(`https://ntfy.sh/${SYNC_CHANNEL}`, { method: 'POST', body: `${cmd}|${MY_ID}` }).catch(e => console.log(e));
+        // Envia el comando al servidor
+        function sendAction(cmd, payload = '') {
+            const message = payload ? `${cmd}|${payload}` : cmd;
+            executeCmd(cmd, payload); // Ejecuta en mi pantalla
+            fetch(`https://ntfy.sh/${SYNC_CHANNEL}`, { method: 'POST', body: `${message}|${MY_ID}` }).catch(e => console.log(e)); // Ejecuta en la TV
         }
 
-        function executeCmd(cmd) {
+        // MOTOR DE EJECUCIÓN (Corre localmente y cuando recibe comando de la red)
+        function executeCmd(cmd, payload) {
             switch(cmd) {
+                // Menú Principal
                 case 'CMD_GENTE': showView('peopleView'); break;
                 case 'CMD_HOME': cerrarMonitor(); cerrarTodosModales(); showView('homeView'); break;
-                case 'OPEN_MONITOR': abrirMonitor(); break;
-                case 'CLOSE_MONITOR': cerrarMonitor(); break;
-                case 'OPEN_KPI_PREVIEW': abrirModal('modalKpiPreview'); break;
+                
+                // Monitor Pantalla Completa
+                case 'OPEN_MONITOR': abrirModal('towerFullscreen'); break;
+                case 'CLOSE_MONITOR': document.getElementById('towerFullscreen').classList.remove('active'); break;
+                
+                // Modales Generales
+                case 'OPEN_KPI': abrirModal('modalKpiPreview'); break;
                 case 'OPEN_STANDARDS': abrirModal('modalStandards'); break;
-                case 'OPEN_HELP': abrirModal('modalHelp'); break;
+                case 'OPEN_HELP': abrirModal('modalHelp'); switchHelpTab('pdf'); break;
                 case 'OPEN_DEVPLAN': abrirModal('modalDevelopment'); break;
                 case 'OPEN_COMPETENCIAS': abrirModal('modalCompetencias'); break;
                 case 'OPEN_TIME': abrirModal('modalTimeWindow'); break;
                 case 'CERRAR_MODALES': cerrarTodosModales(); break;
+                
+                // Funciones Interactivas de las Sub-pestañas
+                case 'LOAD_PDF':
+                    if(payload) {
+                        let p = payload.split('|');
+                        let index = parseInt(p[0]);
+                        let ruta = p[1];
+                        let btns = document.querySelectorAll('#modalStandards .doc-btn');
+                        btns.forEach(b => b.classList.remove('active'));
+                        if(btns[index]) btns[index].classList.add('active');
+                        document.getElementById('pdfFrameStandards').src = ruta;
+                    }
+                    break;
+                case 'SWITCH_TAB': switchHelpTab(payload); break;
+                case 'SYNC_TIME':
+                    if(payload) {
+                        let f = payload.split('|');
+                        document.getElementById('nodeSelectWindow').value = f[0];
+                        document.getElementById('datePickerWindow').value = f[1];
+                        filtrarVentanaHoraria();
+                    }
+                    break;
+                case 'TOGGLE_SECRET': toggleSecretCards(); break;
             }
             window.scrollTo(0, 0);
         }
 
+        // Funciones base de vistas
         function showView(id) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
-        function initData() {
-            const pre = document.getElementById('p-dots');
-            const list = document.getElementById('op-list');
-            ops.forEach(o => {
-                pre.innerHTML += `<img src="${o.img}">`;
-                list.innerHTML += `<div class="card"><img src="${o.img}" style="width:110px;height:110px;border-radius:50%;border:3px solid var(--green);margin-bottom:15px;object-fit:cover;"><h3>${o.n}</h3></div>`;
-            });
-            initRemoteControl();
-            document.getElementById('datePickerWindow').valueAsDate = new Date();
-        }
-
-        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-US', {hour12:false}); }, 1000);
-        window.onload = initData;
-
-        function abrirMonitor() { cerrarTodosModales(); document.getElementById('towerFullscreen').classList.add('active'); }
-        function cerrarMonitor() { document.getElementById('towerFullscreen').classList.remove('active'); }
-
         function abrirModal(id) { 
-            cerrarTodosModales();
-            document.getElementById(id).style.display = "block"; 
-        }
-
-        function cerrarModal(id) {
-            document.getElementById(id).style.display = "none";
-            if(id === 'modalStandards') { document.getElementById('pdfFrameStandards').src = ""; }
+            cerrarTodosModales(); // Apaga todo antes de abrir para evitar errores
+            if(id === 'towerFullscreen'){
+                document.getElementById(id).classList.add('active');
+            } else {
+                document.getElementById(id).style.display = "block"; 
+            }
         }
 
         function cerrarTodosModales() {
             document.querySelectorAll('.modal').forEach(m => m.style.display = "none");
             document.getElementById('pdfFrameStandards').src = "";
+            document.getElementById('towerFullscreen').classList.remove('active');
         }
 
         window.onclick = function(event) {
-            if (event.target.className === "modal") { cerrarTodosModales(); }
+            if (event.target.className === "modal") { sendAction('CERRAR_MODALES'); }
         }
 
-        function abrirModalStandards() { abrirModal('modalStandards'); document.getElementById('pdfFrameStandards').src = ""; }
-        function abrirModalKpi() { abrirModal('modalKpiPreview'); }
-        function abrirModalDevPlan() { abrirModal('modalDevelopment'); }
-        function abrirModalCompetencias() { abrirModal('modalCompetencias'); }
-        function abrirModalHelp() { abrirModal('modalHelp'); switchHelpTab('pdf'); }
-        function abrirModalTimeWindow() { abrirModal('modalTimeWindow'); }
-
-        function cargarPDF(frameId, btn, ruta) {
-            const container = btn.parentElement;
-            container.querySelectorAll('.doc-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById(frameId).src = ruta;
-        }
-
+        // Funciones Internas
         function switchHelpTab(tab) {
             const btnPdf = document.getElementById('btn-help-pdf');
             const btnActions = document.getElementById('btn-help-actions');
@@ -732,6 +696,22 @@
                 secretCardsHidden = true;
             }
         }
+
+        // Inicializador OnLoad
+        function initData() {
+            const pre = document.getElementById('p-dots');
+            const list = document.getElementById('op-list');
+            ops.forEach(o => {
+                pre.innerHTML += `<img src="${o.img}">`;
+                list.innerHTML += `<div class="card"><img src="${o.img}" style="width:110px;height:110px;border-radius:50%;border:3px solid var(--green);margin-bottom:15px;object-fit:cover;"><h3>${o.n}</h3></div>`;
+            });
+            initRemoteControl();
+            document.getElementById('datePickerWindow').valueAsDate = new Date();
+        }
+
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-US', {hour12:false}); }, 1000);
+        window.onload = initData;
+
     </script>
 </body>
 </html>

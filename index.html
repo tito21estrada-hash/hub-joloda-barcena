@@ -12,14 +12,14 @@
         }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; text-align: center; overflow-x: hidden; }
         
-        /* HEADER */
+        /* HEADER (High-Tech) */
         header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 212, 255, 0.2); padding: 15px 20px; margin-bottom: 30px; background: linear-gradient(90deg, rgba(18,24,32,0) 0%, rgba(18,24,32,0.8) 50%, rgba(18,24,32,0) 100%); }
         .clock-box { background: rgba(0,0,0,0.5); padding: 10px 25px; border-radius: 8px; border: 1px solid var(--blue); box-shadow: var(--neon-glow); backdrop-filter: blur(5px);}
         #remote-ind { font-size: 0.75rem; color: var(--red); display: block; margin-top: 5px; font-weight: bold; text-transform: uppercase; transition: 0.3s; letter-spacing: 1px;}
         #remote-ind.online { color: var(--green); text-shadow: 0 0 8px var(--green);}
         #remote-ind.reconnect { color: var(--orange); }
 
-        /* GRID PRINCIPAL */
+        /* GRID PRINCIPAL Cibernético */
         .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1250px; margin: 0 auto; transition: 0.5s; }
         
         .card { 
@@ -32,11 +32,13 @@
         .card:hover::before { left: 150%; }
         .card:hover, .card:active { border-color: var(--blue); transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,212,255,0.2); }
 
-        /* CLASES MÁGICAS */
+        /* CLASES MÁGICAS PARA EL MODO PRESENTACIÓN */
         .hidden-card { display: none !important; }
-        @media (min-width: 901px) { .center-last { grid-column: 2; } }
+        @media (min-width: 901px) {
+            .center-last { grid-column: 2; }
+        }
 
-        /* VISTAS */
+        /* VISTAS Y ANIMACIONES */
         .view { display: none; animation: fadeIn 0.5s ease-out; } 
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
@@ -45,34 +47,34 @@
         .preview-top img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--green); object-fit: cover; filter: grayscale(20%); transition: 0.3s;}
         .card:hover .preview-top img { filter: grayscale(0%); box-shadow: 0 0 10px var(--green);}
         
-        .btn-back { background: #1a222c; color: var(--blue); padding: 12px 30px; border-radius: 50px; cursor: pointer; margin-bottom: 30px; display: inline-block; border: 1px solid var(--blue); font-weight: bold; transition: 0.3s; letter-spacing: 1px;}
+        .btn-back { position: relative; z-index: 100; background: #1a222c; color: var(--blue); padding: 12px 30px; border-radius: 50px; cursor: pointer; margin-bottom: 30px; display: inline-block; border: 1px solid var(--blue); font-weight: bold; transition: 0.3s; letter-spacing: 1px;}
         .btn-back:hover { background: var(--blue); color: #000; box-shadow: var(--neon-glow); }
 
-        /* Monitor Joloda */
+        /* Monitor Joloda Monitor Inmersivo */
         #towerFullscreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10000; background: #0b1116; display: none; }
         #towerFullscreen.active { display: block; animation: slideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         .btn-close-monitor { position: absolute; top: 15px; right: 25px; background: rgba(20,20,20,0.8); color: var(--red); padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; z-index: 10001; border: 1px solid var(--red); transition: 0.2s; backdrop-filter: blur(5px); }
 
-        /* KPI Card compacta */
+        /* KPI Card compacta avanzada */
         .tower-dash-card { width: 100%; background: rgba(0,0,0,0.4); border-radius: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; box-sizing: border-box; text-align: left;}
         .kpi-row-card { display: flex; justify-content: space-between; margin: 6px 0; font-size: 0.85rem; font-weight: bold;}
 
-        /* ESTILOS MODALES */
+        /* ================= ESTILOS MODALES REFINADOS (GLASSMORPHISM) ================= */
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(4, 7, 12, 0.85); backdrop-filter: blur(10px); }
         .modal-content { background-color: rgba(18, 24, 32, 0.95); margin: 2% auto; padding: 30px; border: 1px solid var(--blue); border-radius: 16px; width: 92%; max-width: 1100px; color: white; box-shadow: 0 0 40px rgba(0, 212, 255, 0.15); height: 92vh; display: flex; flex-direction: column; box-sizing: border-box; overflow-y: auto; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 212, 255, 0.3); padding-bottom: 15px; margin-bottom: 20px;}
         .close { color: #8892b0; font-size: 32px; font-weight: bold; cursor: pointer; transition: 0.3s;}
         .close:hover { color: var(--red); transform: rotate(90deg);}
 
-        /* KPI Preview */
+        /* KPI Preview Cibernético */
         .kpi-big-display { text-align: center; margin: 30px 0; flex: 1; display: flex; flex-direction: column; justify-content: center; }
         .kpi-big-value { font-size: 8.5rem; color: var(--green); font-weight: bold; margin: 0; text-shadow: 0 0 40px rgba(0,255,136,0.4); line-height: 1;}
         .kpi-big-label { font-size: 1.5rem; color: #8892b0; text-transform: uppercase; letter-spacing: 3px; margin-top: 10px;}
         .btn-launch-tower { background: var(--blue); color: #000; font-size: 1.2rem; padding: 18px 40px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; text-transform: uppercase; box-shadow: var(--neon-glow); transition: 0.3s; width: 80%; max-width: 400px; align-self: center; margin-bottom: 20px; letter-spacing: 1px;}
         .btn-launch-tower:hover { background: #00ff88; box-shadow: 0 0 30px rgba(0, 255, 136, 0.6); transform: translateY(-3px);}
 
-        /* Menús Laterales */
+        /* Menús Laterales de Modales */
         .standards-container { display: flex; flex: 1; gap: 20px; height: calc(100% - 60px); min-height: 400px; }
         .standards-menu { width: 280px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding-right: 10px; }
         .pdf-viewer-area { flex: 1; background: #000; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; position: relative;}
@@ -82,7 +84,7 @@
         .doc-btn:hover { border-color: var(--orange); background-color: rgba(255, 170, 0, 0.05); }
         .doc-btn.active { background-color: rgba(0, 212, 255, 0.1); color: var(--blue); font-weight: bold; border-color: var(--blue); box-shadow: inset 4px 0 0 var(--blue);}
 
-        /* TABLAS Y MATRICES */
+        /* ================= ESTILOS JOLODA: TABLAS Y MATRICES ================= */
         .schedule-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; background: rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden;}
         .schedule-table th, .schedule-table td { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 14px; text-align: left; }
         .schedule-table th { background-color: rgba(0, 212, 255, 0.1); color: var(--blue); font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;}
@@ -90,7 +92,7 @@
         .schedule-table tr:last-child td { border-bottom: none; }
         .no-data { text-align: center !important; color: var(--red); padding: 30px !important; font-style: italic; letter-spacing: 1px;}
 
-        /* Dual Matrix */
+        /* Dual Matrix en Competencies */
         .dual-matrix-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 10px;}
         .matrix-section { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 20px;}
         .matrix-section h3 { margin-top: 0; color: var(--orange); border-bottom: 1px solid rgba(255, 170, 0, 0.3); padding-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 10px;}
@@ -100,20 +102,23 @@
         .icon-process { color: var(--orange); animation: spin 4s linear infinite;}
         .icon-pending { color: #334155; }
         .cert-badge { background: #1e293b; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;}
+        .cert-badge.master { background: rgba(0, 212, 255, 0.1); color: var(--blue); border: 1px solid var(--blue);}
         .cert-badge.certified { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid var(--green);}
         .cert-badge.training { background: rgba(255, 170, 0, 0.1); color: var(--orange); border: 1px solid var(--orange);}
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Action Plans Visuales */
+        /* Estilos Action Plans (Mapeo Visual Corregido) */
         .action-plans-view { display: flex; flex-direction: column; gap: 25px; padding: 15px;}
         .visual-plan-item { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; display: grid; grid-template-columns: 400px 1fr; transition: 0.3s; align-items: stretch; }
         .visual-plan-item:hover { border-color: var(--orange); box-shadow: 0 5px 20px rgba(255, 170, 0, 0.15); }
+        
         .mapped-failure { position: relative; background: #000; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgba(255,255,255,0.05); padding: 15px; }
         .mapped-failure img { width: 100%; height: auto; max-height: 280px; object-fit: contain; border-radius: 8px; display: block;}
         
         .error-marker { position: absolute; border: 2px solid var(--red); border-radius: 6px; animation: errorBlink 1.5s infinite; box-shadow: 0 0 15px rgba(255, 68, 68, 0.5); background: rgba(255, 68, 68, 0.15); backdrop-filter: blur(2px);}
         @keyframes errorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-        
+        .visual-plan-item:hover .error-marker { animation: none; border-color: var(--orange); box-shadow: 0 0 15px rgba(255, 170, 0, 0.5); background: rgba(255, 170, 0, 0.15);}
+
         .plan-instructions { padding: 25px; text-align: left; display: flex; flex-direction: column; gap: 12px; justify-content: center;}
         .plan-header { margin: 0; color: var(--orange); font-size: 1.25rem; font-weight: bold; display: flex; align-items: center; gap: 10px;}
         .plan-instructions p { margin: 0; font-size: 13px; color: #94a3b8; line-height: 1.6;}
@@ -130,9 +135,11 @@
         .filter-group { display: flex; flex-direction: column; text-align: left; gap: 8px; }
         .filter-group label { font-size: 11px; color: var(--blue); text-transform: uppercase; font-weight: bold; letter-spacing: 1px;}
         .joloda-select, .joloda-date { background: #0f172a; color: #fff; border: 1px solid #334155; border-radius: 6px; padding: 12px 15px; font-family: 'Segoe UI', sans-serif; font-size: 13px; outline: none; transition: 0.3s;}
+        .joloda-select:focus, .joloda-date:focus { border-color: var(--blue); box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);}
         
         .btn-update { background: transparent; color: var(--green); border: 1px solid var(--green); border-radius: 6px; padding: 12px 25px; font-weight: bold; cursor: pointer; transition: 0.3s; letter-spacing: 1px;}
         .btn-update:hover { background: var(--green); color: #000; box-shadow: 0 0 15px rgba(0, 255, 136, 0.4); }
+        
         .time-tables { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 25px; padding-right: 10px;}
 
         /* ADAPTACIÓN CELULAR */
@@ -146,7 +153,7 @@
             .modal-content { width: 95%; margin: 5% auto; padding: 20px; height: 95vh;}
             .dual-matrix-container { grid-template-columns: 1fr; }
             .visual-plan-item { grid-template-columns: 1fr; }
-            .mapped-failure { padding: 20px; height: auto;}
+            .mapped-failure { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 20px; height: auto;}
             .schedule-table { font-size: 11px; }
             .filter-bar { flex-direction: column; align-items: stretch; }
             .btn-update { align-self: stretch; margin-top: 5px;}
@@ -204,7 +211,7 @@
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">ESCALATION & Troubleshooting</span>
             </div>
             
-            <div class="card" onclick="window.location.href='https://planner.cloud.microsoft/webui/plan/iAiz4GCKNEWENlUCBRjES5YAF1hL/view/board?tid=12a3af23-a769-4654-847f-958f3d479f4a'" style="border-color: rgba(168, 85, 247, 0.4);">
+            <div class="card" onclick="sendAction('OPEN_PLANNER')" style="border-color: rgba(168, 85, 247, 0.4);">
                 <i class="fas fa-tasks" style="font-size:3.5rem;color:var(--purple); text-shadow: 0 0 15px rgba(168, 85, 247, 0.3);"></i>
                 <h3 style="margin-top:20px; color:var(--purple); margin-bottom:0; font-size: 1.4rem;">Planes de Acción</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">TEAMS PLANNER</span>
@@ -227,6 +234,7 @@
                 <h3 style="margin-top:20px; color:var(--orange); margin-bottom:0; font-size: 1.4rem;">Impacto TDC (VDE)</h3>
                 <span style="color:#8892b0; font-size:0.8rem; margin-top: 5px; letter-spacing: 1px;">VALUE CREATION</span>
             </div>
+
         </div>
     </div>
 
@@ -302,7 +310,8 @@
                 </div>
                 
                 <div class="pdf-viewer-area" style="overflow-y: auto;">
-                    <iframe id="helpPdfFrame" src="Cadena de Ayuda/Cadena de Ayuda para eventos de Ramapa Joloda.pdf" style="width: 100%; height: 100%; border: none; background: #fff;"></iframe>
+                    
+                    <iframe id="helpPdfFrame" src="" style="width: 100%; height: 100%; border: none; background: #fff;"></iframe>
                     
                     <div id="helpActionPlans" style="display: none;">
                         <div class="action-plans-view">
@@ -507,6 +516,9 @@
         const SYNC_CHANNEL = "nestle_joloda_barcenas_master_v12";
         const MY_ID = Math.random().toString(36).substring(2, 9);
         let eventSource;
+        
+        // Variable mágica que determina si estamos en la TV o en el Celular
+        const isMonitor = window.innerWidth > 900;
 
         function initRemoteControl() {
             eventSource = new EventSource(`https://ntfy.sh/${SYNC_CHANNEL}/sse`);
@@ -522,7 +534,7 @@
                         const parts = data.message.split('|');
                         const senderId = parts.pop(); // El último siempre es el ID
                         const cmd = parts[0];
-                        const payload = parts.length > 1 ? parts.slice(1).join('|') : ''; // El resto es data extra (si hay)
+                        const payload = parts.length > 1 ? parts.slice(1).join('|') : '';
                         
                         // Si el comando NO lo envié yo mismo, lo ejecuto
                         if (senderId !== MY_ID) { executeCmd(cmd, payload); }
@@ -542,12 +554,12 @@
             fetch(`https://ntfy.sh/${SYNC_CHANNEL}`, { method: 'POST', body: `${message}|${MY_ID}` }).catch(e => console.log(e)); // Ejecuta en la TV
         }
 
-        // MOTOR DE EJECUCIÓN (Corre localmente y cuando recibe comando de la red)
+        // MOTOR DE EJECUCIÓN INTELIGENTE (Corre localmente y cuando recibe comando de la red)
         function executeCmd(cmd, payload) {
             switch(cmd) {
                 // Menú Principal
                 case 'CMD_GENTE': showView('peopleView'); break;
-                case 'CMD_HOME': cerrarMonitor(); cerrarTodosModales(); showView('homeView'); break;
+                case 'CMD_HOME': cerrarTodosModales(); showView('homeView'); break;
                 
                 // Monitor Pantalla Completa
                 case 'OPEN_MONITOR': abrirModal('towerFullscreen'); break;
@@ -556,13 +568,20 @@
                 // Modales Generales
                 case 'OPEN_KPI': abrirModal('modalKpiPreview'); break;
                 case 'OPEN_STANDARDS': abrirModal('modalStandards'); break;
-                case 'OPEN_HELP': abrirModal('modalHelp'); switchHelpTab('pdf'); break;
+                case 'OPEN_HELP': 
+                    abrirModal('modalHelp'); 
+                    switchHelpTab('pdf'); 
+                    // Solo el monitor carga el PDF de Help Chain para evitar que el cel lo descargue
+                    if(isMonitor){ document.getElementById('helpPdfFrame').src = "Cadena de Ayuda/Cadena de Ayuda para eventos de Ramapa Joloda.pdf"; }
+                    break;
                 case 'OPEN_DEVPLAN': abrirModal('modalDevelopment'); break;
                 case 'OPEN_COMPETENCIAS': abrirModal('modalCompetencias'); break;
                 case 'OPEN_TIME': abrirModal('modalTimeWindow'); break;
                 case 'CERRAR_MODALES': cerrarTodosModales(); break;
+                case 'TOGGLE_SECRET': toggleSecretCards(); break;
                 
-                // Funciones Interactivas de las Sub-pestañas
+                // --- COMANDOS QUE DIFERENCIAN ENTRE TV Y CELULAR ---
+                
                 case 'LOAD_PDF':
                     if(payload) {
                         let p = payload.split('|');
@@ -571,10 +590,16 @@
                         let btns = document.querySelectorAll('#modalStandards .doc-btn');
                         btns.forEach(b => b.classList.remove('active'));
                         if(btns[index]) btns[index].classList.add('active');
-                        document.getElementById('pdfFrameStandards').src = ruta;
+                        
+                        // SOLO LA TV CARGA EL PDF (Evita que el celular te pida descargarlo)
+                        if (isMonitor) { 
+                            document.getElementById('pdfFrameStandards').src = ruta;
+                        }
                     }
                     break;
+                    
                 case 'SWITCH_TAB': switchHelpTab(payload); break;
+                
                 case 'SYNC_TIME':
                     if(payload) {
                         let f = payload.split('|');
@@ -583,7 +608,16 @@
                         filtrarVentanaHoraria();
                     }
                     break;
-                case 'TOGGLE_SECRET': toggleSecretCards(); break;
+                    
+                case 'OPEN_PLANNER':
+                    if (isMonitor) { 
+                        // SOLO LA TV ABRE EL ENLACE EN UNA PESTAÑA NUEVA
+                        window.open('https://planner.cloud.microsoft/webui/plan/iAiz4GCKNEWENlUCBRjES5YAF1hL/view/board?tid=12a3af23-a769-4654-847f-958f3d479f4a', '_blank');
+                    } else {
+                        // El celular abre el enlace en la misma ventana para usar el botón "Atrás"
+                        window.location.href = 'https://planner.cloud.microsoft/webui/plan/iAiz4GCKNEWENlUCBRjES5YAF1hL/view/board?tid=12a3af23-a769-4654-847f-958f3d479f4a';
+                    }
+                    break;
             }
             window.scrollTo(0, 0);
         }
@@ -595,7 +629,7 @@
         }
 
         function abrirModal(id) { 
-            cerrarTodosModales(); // Apaga todo antes de abrir para evitar errores
+            cerrarTodosModales(); // Apaga todo antes de abrir para evitar conflictos
             if(id === 'towerFullscreen'){
                 document.getElementById(id).classList.add('active');
             } else {
@@ -605,10 +639,15 @@
 
         function cerrarTodosModales() {
             document.querySelectorAll('.modal').forEach(m => m.style.display = "none");
-            document.getElementById('pdfFrameStandards').src = "";
+            // Vaciamos los iframes solo si es monitor
+            if(isMonitor){
+                document.getElementById('pdfFrameStandards').src = "";
+                document.getElementById('helpPdfFrame').src = "";
+            }
             document.getElementById('towerFullscreen').classList.remove('active');
         }
 
+        // Clic fuera del modal para cerrarlo
         window.onclick = function(event) {
             if (event.target.className === "modal") { sendAction('CERRAR_MODALES'); }
         }

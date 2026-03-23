@@ -164,7 +164,7 @@
         .btn-restore { color: var(--blue); cursor: pointer; transition: 0.2s;}
         .btn-restore:hover { color: #fff; transform: scale(1.2);}
         
-        /* TIEMPO EN RAMPA (COLUMNA M) */
+        /* TIEMPO EN RAMPA */
         .cycle-time-tag { 
             font-size: 10px; font-family: monospace; font-weight: bold; 
             background: rgba(0,255,136,0.1); padding: 3px 6px; border-radius: 4px; 
@@ -349,11 +349,18 @@
             }
         }
 
-        // --- TRADUCTOR DE TIEMPOS DECIMALES DE EXCEL A HORAS:MINUTOS ---
+        // --- TRADUCTOR DE TIEMPOS DE EXCEL A HORAS ---
         function formatExcelTime(val) {
             if (!val) return "";
             let strVal = val.toString().trim();
-            // Si el número es un decimal crudo que manda Power Automate (ej: 0.006944) y no tiene formato de hora
+            
+            // Si el texto trae la T de formato Date (ej: 1899-12-31T00:15:00Z)
+            if (strVal.includes("T")) {
+                let parts = strVal.split("T")[1].split(":");
+                return `${parts[0]}:${parts[1]}`;
+            }
+            
+            // Si es un decimal puro de Excel
             if (!strVal.includes(":") && !isNaN(parseFloat(strVal))) {
                 let num = parseFloat(strVal);
                 if (num > 0 && num < 1) {
@@ -364,6 +371,12 @@
                 } else if (num === 0) {
                     return "00:00";
                 }
+            }
+            
+            // Si viene normal "00:15:00"
+            if (strVal.includes(":")) {
+                let parts = strVal.split(":");
+                return `${parts[0]}:${parts[1]}`;
             }
             return strVal;
         }
@@ -380,7 +393,7 @@
             let estatusExcel = normalizarStr(camion.statusText || camion.estatus || "");
             
             // PRIORIDAD 1: EXTRAER COLUMNA M CON EL TRADUCTOR DE DECIMALES
-            let tiempoRampaRaw = camion.tiempo_rampa || camion.tiempo_en_rampa || camion.rampa || camion["TIEMPO EN RAMPA (Inicio - Fin)"] || camion.cycleTime || "";
+            let tiempoRampaRaw = camion.tiempo_rampa || camion.tiempo_en_rampa || camion.rampa || camion.cycleTime || "";
             let rampaLimpio = formatExcelTime(tiempoRampaRaw);
             
             let tieneRampaReal = (rampaLimpio !== "" && rampaLimpio !== "00:00:00" && rampaLimpio !== "00:00" && rampaLimpio !== "0");
@@ -471,25 +484,37 @@
                 let matchDia = parseInt(cam.day) === parseInt(diaSeleccionado);
                 if(!matchMes || !matchDia) return false;
 
-                // --- AISLAMIENTO DE PESTAÑAS PURO (ADIÓS DUPLICADOS) ---
-                let locExcel = normalizar(cam.location || "");
+                // --- AISLAMIENTO PURO POR RUTAS (BLINDAJE TOTAL) ---
+                let rutaExcel = normalizar(cam.route || "");
                 let matchNodo = false;
                 
                 if (currentLoc === "CD BÁRCENAS") {
-                    matchNodo = locExcel.includes("BARCENAS") || locExcel.includes("CD");
+                    // Bárcenas ve todo lo que entra o sale de CD
+                    matchNodo = rutaExcel.includes("CD");
                 } else if (currentLoc === "FABRICA ZONA12") {
-                    // Ahora SOLO filtra por lo que mande Power Automate en 'location', ignorando la ruta.
-                    matchNodo = locExcel.includes("ZONA") && locExcel.includes("12");
+                    // Z12 SOLO ve lo que tiene Z12 en la ruta
+                    matchNodo = rutaExcel.includes("Z12");
                 } else if (currentLoc === "FABRICA ANTIGUA") {
-                    matchNodo = locExcel.includes("ANTIGUA");
-                } else {
-                    matchNodo = locExcel.includes(normalizar(currentLoc));
+                    // Antigua SOLO ve lo que tiene ANT en la ruta
+                    matchNodo = rutaExcel.includes("ANT");
                 }
                 if(!matchNodo) return false;
 
                 let matchSearch = normalizar(cam.unit).includes(search) || normalizar(cam.pilot).includes(search);
                 return matchSearch;
             });
+
+            // ESCUDO ANTI-CLONES
+            let unicos = [];
+            let seenIds = new Set();
+            datosFiltrados.forEach(cam => {
+                let uniqueKey = `${cam.unit}_${cam.time}_${cam.route}`;
+                if (!seenIds.has(uniqueKey)) {
+                    seenIds.add(uniqueKey);
+                    unicos.push(cam);
+                }
+            });
+            datosFiltrados = unicos; 
 
             document.getElementById('total-movs').innerText = `TOTAL MOVIMIENTOS: ${datosFiltrados.length}`;
 

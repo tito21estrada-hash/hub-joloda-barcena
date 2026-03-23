@@ -164,11 +164,11 @@
         .btn-restore { color: var(--blue); cursor: pointer; transition: 0.2s;}
         .btn-restore:hover { color: #fff; transform: scale(1.2);}
         
-        /* TIEMPO DE CICLO Y RAMPA */
+        /* TIEMPO EN RAMPA (COLUMNA M) */
         .cycle-time-tag { 
-            font-size: 9px; font-family: monospace; font-weight: bold; 
-            background: rgba(0,255,136,0.1); padding: 2px 5px; border-radius: 4px; 
-            color: var(--green); border: 1px solid rgba(0,255,136,0.2); margin-left: 3px;
+            font-size: 10px; font-family: monospace; font-weight: bold; 
+            background: rgba(0,255,136,0.1); padding: 3px 6px; border-radius: 4px; 
+            color: var(--green); border: 1px solid rgba(0,255,136,0.2); margin-left: 5px;
         }
 
         /* ================= FOOTER ================= */
@@ -349,7 +349,7 @@
             }
         }
 
-        // ================= EL CEREBRO BLINDADO (REVISIÓN DE FECHAS Y TIEMPO EN RAMPA) =================
+        // ================= EL CEREBRO BLINDADO: PRIORIDAD A COLUMNA M =================
         function calcularProgresoInteligente(camion, isCancelled) {
             if (isCancelled) {
                 return { pct: 0, text: "ANULADO", color: "#64748b", cycleTime: "", boxClass: "anulado", boxIcon: "fas fa-ban", boxText: "VIAJE ANULADO" };
@@ -358,38 +358,41 @@
             let prog = { pct: 10, text: "PROGRAMADO", color: "#00d4ff", cycleTime: "", boxClass: "a-tiempo", boxIcon: "fas fa-clock", boxText: "A TIEMPO" };
 
             const normalizarStr = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-            let estatusExcel = normalizarStr(camion.statusText);
+            let estatusExcel = normalizarStr(camion.statusText || camion.estatus || "");
             
-            let tiempoCicloExcel = camion.cycleTime || camion.tiempo_ciclo || ""; 
-            let rampaFinExcel = camion.rampaEnd || camion.tiempo_fin || "";
+            // PRIORIDAD 1: EXTRAER COLUMNA M (TIEMPO EN RAMPA) DE POWER AUTOMATE
+            let tiempoRampa = camion["TIEMPO EN RAMPA (Inicio - Fin)"] || camion.tiempo_rampa || camion.tiempo_en_rampa || camion.cycleTime || "";
+            let rampaLimpio = tiempoRampa.toString().trim();
             
-            // LECTURA DEL TIEMPO EN RAMPA
-            let tiempoRampaExcel = camion.tiempo_rampa || camion.tiempo_en_rampa || camion.rampa || camion["TIEMPO EN RAMPA (Inicio - Fin)"] || "";
-            
-            // Construir etiquetas visuales si existen los datos
-            let rampaBadge = (tiempoRampaExcel && tiempoRampaExcel !== "00:00:00" && tiempoRampaExcel !== "00:00") 
-                ? `<span class="cycle-time-tag" style="color:var(--orange); border-color:var(--orange);"><i class="fas fa-truck-loading"></i> Rampa: ${tiempoRampaExcel}</span>` : "";
+            // Verificamos si existe un tiempo real de ciclo (mayor a 00:00:00)
+            let tieneRampaReal = (rampaLimpio !== "" && rampaLimpio !== "00:00:00" && rampaLimpio !== "00:00");
 
-            // 1. PRIORIDAD EXCEL: Si el Excel dice TERMINADO
-            if (estatusExcel.includes("TERMINA") || estatusExcel.includes("COMPLET") || estatusExcel.includes("CONCLU") || rampaFinExcel !== "") {
+            // Si hay Tiempo en Rampa registrado, O el estatus dice TERMINADO -> EL VIAJE MURIÓ Y ESTÁ AL 100%
+            if (tieneRampaReal || estatusExcel.includes("TERMINA") || estatusExcel.includes("COMPLET") || estatusExcel.includes("CONCLU")) {
                 prog.pct = 100;
                 prog.text = "TERMINADO";
                 prog.color = "var(--green)";
                 prog.boxClass = "a-tiempo";
                 prog.boxIcon = "fas fa-check-double";
-                prog.boxText = "VIAJE CUMPLIDO";
                 
-                let cicloBadge = tiempoCicloExcel ? `<span class="cycle-time-tag"><i class="fas fa-stopwatch"></i> Ciclo: ${tiempoCicloExcel}</span>` : "";
-                prog.cycleTime = rampaBadge + cicloBadge;
-                return prog; 
+                // Mantenemos visible si el Excel decía Retraso, pero marcándolo verde como completado
+                prog.boxText = estatusExcel !== "" ? estatusExcel : "VIAJE CUMPLIDO"; 
+                if(estatusExcel.includes("RETRASO")) { prog.boxClass = "retraso"; prog.color = "var(--red)"; }
+
+                // Pinta la pastilla con el tiempo de la Columna M
+                prog.cycleTime = tieneRampaReal 
+                    ? `<span class="cycle-time-tag"><i class="fas fa-stopwatch"></i> Rampa: ${rampaLimpio}</span>` 
+                    : `<span class="cycle-time-tag"><i class="fas fa-check"></i> Ciclo Cerrado</span>`;
+                
+                return prog; // Salimos de la función, NO se simula nada.
             }
 
-            // 2. SIMULACIÓN INTELIGENTE (Basada en la Fecha y Hora REALES)
+            // 2. SIMULACIÓN INTELIGENTE (Solo si el viaje sigue vivo)
             if (camion.time && camion.time !== "00:00") {
                 const ahora = new Date();
                 let [horaMetaStr, minMetaStr] = camion.time.split(':');
                 
-                // Mapeo de Mes
+                // Aseguramos que la simulación lea el mes y día correctos del Excel para no matar viajes del futuro
                 const mesesMap = {"ENERO":0, "FEBRERO":1, "MARZO":2, "ABRIL":3, "MAYO":4, "JUNIO":5, "JULIO":6, "AGOSTO":7, "SEPTIEMBRE":8, "OCTUBRE":9, "NOVIEMBRE":10, "DICIEMBRE":11};
                 let mesIndex = mesesMap[normalizarStr(camion.month)];
                 if(mesIndex === undefined) mesIndex = ahora.getMonth();
@@ -401,27 +404,29 @@
 
                 let difMinutos = (ahora - fechaMeta) / (1000 * 60);
 
-                // Validar si el viaje es del FUTURO (Mañana, 24 de marzo, etc.)
+                // Validar si el viaje es del FUTURO (mañana, la próxima semana)
                 if (difMinutos < -60) {
-                    // Es un viaje programado para el futuro o faltan más de 60 mins. Queda en 10%.
                     prog.pct = 10; prog.text = "PROGRAMADO"; prog.color = "var(--blue)";
                     prog.boxClass = "pendiente"; prog.boxIcon = "fas fa-clock"; prog.boxText = "A TIEMPO";
                 }
-                // Validaciones para viajes de HOY que ya pasaron
+                // Si ya pasó el tiempo meta de hoy (ej: más de 60 mins)
                 else if (difMinutos > tiempoMetaRampa) { 
                     prog.pct = 100; prog.text = "TERMINADO"; prog.color = "var(--green)";
                     prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check-double"; prog.boxText = "VIAJE CUMPLIDO";
-                    prog.cycleTime = rampaBadge + `<span class="cycle-time-tag" style="color:var(--orange); border-color:var(--orange);"><i class="fas fa-magic"></i> Ciclo Est.</span>`;
-                } else if (difMinutos > (tiempoMetaRampa / 3)) { 
+                    prog.cycleTime = `<span class="cycle-time-tag" style="color:var(--orange); border-color:var(--orange); background:rgba(255,170,0,0.1);"><i class="fas fa-magic"></i> Ciclo Est.</span>`;
+                } 
+                // Si va a la mitad del tiempo (operando)
+                else if (difMinutos > (tiempoMetaRampa / 3)) { 
                     prog.pct = 75; prog.text = "EN RAMPA"; prog.color = "var(--orange)";
                     prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-truck-loading"; prog.boxText = "OPERANDO";
-                    prog.cycleTime = rampaBadge;
-                } else if (difMinutos >= -60 && difMinutos <= (tiempoMetaRampa / 3)) {
+                } 
+                // Si acaba de llegar o está por llegar (Patio)
+                else if (difMinutos >= -60 && difMinutos <= (tiempoMetaRampa / 3)) {
                     prog.pct = 40; prog.text = "EN PATIO / TRÁNSITO"; prog.color = "var(--blue)";
                     prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check"; prog.boxText = "A TIEMPO";
                 }
                 
-                // Sobreescribir color si Excel detecta Retraso (En Excel prevalece)
+                // Sobreescribir color de caja si el Excel acusa Retraso antes de que termine
                 if (estatusExcel.includes("RETRASO") || estatusExcel.includes("CRITICO")) {
                      prog.boxClass = "retraso"; prog.boxIcon = "fas fa-exclamation-triangle"; prog.boxText = estatusExcel;
                      prog.color = "var(--red)"; 
@@ -449,22 +454,28 @@
             const normalizar = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 
             let datosFiltrados = window.liveData.filter(cam => {
-                // LIMPIEZA: No mostrar viajes vacíos, sin hora meta o con 00:00 (Arregla Antigua)
+                // LIMPIEZA DE SEGURIDAD (Ignorar filas vacías de Excel)
                 if(!cam.time || cam.time === "00:00" || !cam.unit) return false;
 
                 let matchMes = normalizar(cam.month) === normalizar(mesSeleccionado);
                 let matchDia = parseInt(cam.day) === parseInt(diaSeleccionado);
                 if(!matchMes || !matchDia) return false;
 
-                let locExcel = normalizar(cam.location);
+                // --- BLOQUEADOR DE SEGURIDAD PARA LAS PESTAÑAS ---
+                let locExcel = normalizar(cam.location || "");
+                let rutaExcel = normalizar(cam.route || "");
                 let matchNodo = false;
                 
                 if (currentLoc === "CD BÁRCENAS") {
                     matchNodo = locExcel.includes("BARCENAS") || locExcel.includes("CD");
                 } else if (currentLoc === "FABRICA ZONA12") {
-                    matchNodo = (locExcel.includes("ZONA") && locExcel.includes("12"));
+                    // Solo permite viajes que digan ZONA 12 o cuya ruta involucre a Z12
+                    matchNodo = (locExcel.includes("ZONA") && locExcel.includes("12")) || rutaExcel.includes("Z12");
+                    if(rutaExcel.includes("ANT")) matchNodo = false; // MATA EL VIRUS DE ANTIGUA
                 } else if (currentLoc === "FABRICA ANTIGUA") {
-                    matchNodo = locExcel.includes("ANTIGUA");
+                    // Solo permite viajes de Antigua
+                    matchNodo = locExcel.includes("ANTIGUA") || rutaExcel.includes("ANT");
+                    if(rutaExcel.includes("Z12")) matchNodo = false; // MATA EL VIRUS DE ZONA 12
                 } else {
                     matchNodo = locExcel.includes(normalizar(currentLoc));
                 }

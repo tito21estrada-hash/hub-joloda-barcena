@@ -6,34 +6,23 @@
     <title>Torre de Control Joloda</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* ================= VARIABLES Y FONDOS CIBERNÉTICOS ================= */
+        /* ================= VARIABLES Y FONDOS ================= */
         :root {
-            --bg: #0b1116; 
-            --header-bg: #0f1721; 
-            --card-bg: #151d28;
-            --green: #00ff88; 
-            --blue: #00d4ff; 
-            --red: #ff4d4d; 
-            --orange: #ffaa00; 
-            --text: #e2e8f0;
-            --border: #1e293b;
-            --purple: #a855f7;
+            --bg: #0b1116; --header-bg: #0f1721; --card-bg: #151d28;
+            --green: #00ff88; --blue: #00d4ff; --red: #ff4d4d; --orange: #ffaa00; --text: #e2e8f0;
+            --border: #1e293b; --purple: #a855f7;
             --neon-glow: 0 0 15px rgba(0, 212, 255, 0.3);
         }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
         
-        /* ================= HEADER REDISEÑADO (COMPACTO) ================= */
+        /* ================= HEADER ================= */
         header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: var(--header-bg); 
-            padding: 10px 30px; 
-            border-bottom: 1px solid var(--blue); 
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+            display: flex; justify-content: space-between; align-items: center; 
+            background: var(--header-bg); padding: 10px 30px; 
+            border-bottom: 1px solid var(--blue); box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
         }
         .header-title { display: flex; align-items: center; gap: 15px;}
-        .header-title img { height: 35px; margin-right: 5px; filter: drop-shadow(0 0 5px rgba(0,212,255,0.4));} /* LOGO CON GLOW */
+        .header-title img { height: 35px; margin-right: 5px; filter: drop-shadow(0 0 5px rgba(0,212,255,0.4));}
         .header-title h1 { margin: 0; font-size: 1.3rem; color: #fff; letter-spacing: 2px;}
         
         .header-info { display: flex; align-items: center; gap: 15px; }
@@ -41,124 +30,58 @@
         .header-date { color: #8892b0; font-size: 12px; text-transform: uppercase; margin-bottom: 3px; display: block;}
         .header-totals { color: var(--orange); font-weight: bold; font-size: 13px;}
         
-        /* BOTÓN CERRAR REDUCIDO */
         .btn-close-monitor { 
-            background: rgba(255, 77, 77, 0.1); 
-            color: var(--red); 
-            padding: 8px 15px; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            border: 1px solid var(--red); 
-            transition: 0.2s; 
-            display: flex; 
-            align-items: center; 
-            gap: 5px; 
-            font-size: 12px;
+            background: rgba(255, 77, 77, 0.1); color: var(--red); padding: 8px 15px; 
+            border-radius: 4px; font-weight: bold; cursor: pointer; border: 1px solid var(--red); 
+            transition: 0.2s; display: flex; align-items: center; gap: 5px; font-size: 12px;
         }
-        .btn-close-monitor:hover { 
-            background: var(--red); 
-            color: #000; 
-            box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
-        }
+        .btn-close-monitor:hover { background: var(--red); color: #000; box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);}
 
-        /* ================= CONTROLES Y FILTROS ================= */
+        /* ================= TABS Y FILTROS ================= */
         .controls-bar { 
-            display: flex; 
-            justify-content: space-between; 
-            padding: 10px 30px; 
-            background: rgba(15, 23, 33, 0.7); 
-            border-bottom: 1px solid var(--border); 
-            align-items: center;
+            display: flex; justify-content: space-between; padding: 10px 30px; 
+            background: rgba(15, 23, 33, 0.7); border-bottom: 1px solid var(--border); align-items: center;
         }
         .tabs { display: flex; gap: 8px; align-items: center;}
         .tab { 
-            background: transparent; 
-            color: #64748b; 
-            border: 1px solid transparent; 
-            padding: 6px 15px; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            font-size: 12px;
+            background: transparent; color: #64748b; border: 1px solid transparent; 
+            padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; 
+            transition: 0.3s; font-size: 12px;
         }
         .tab:hover { color: #fff; }
         .tab.active { 
-            background: rgba(0, 212, 255, 0.1); 
-            color: var(--blue); 
-            border: 1px solid var(--blue); 
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+            background: rgba(0, 212, 255, 0.1); color: var(--blue); 
+            border: 1px solid var(--blue); box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
         }
         
         .search-box { position: relative; margin-left: 10px; }
         .search-box input { 
-            background: #0b1116; 
-            border: 1px solid #334155; 
-            padding: 6px 10px 6px 30px; 
-            border-radius: 20px; 
-            color: #fff; 
-            outline: none; 
-            width: 180px; 
-            transition: 0.3s; 
-            font-size: 12px;
+            background: #0b1116; border: 1px solid #334155; padding: 6px 10px 6px 30px; 
+            border-radius: 20px; color: #fff; outline: none; width: 180px; transition: 0.3s; font-size: 12px;
         }
         .search-box input:focus { border-color: var(--blue); width: 230px;}
         .search-box i { position: absolute; left: 10px; top: 8px; color: #64748b; font-size: 12px;}
 
         .action-filters { display: flex; gap: 8px; align-items: center;}
         .meta-pills { 
-            display: flex; 
-            gap: 5px; 
-            align-items: center; 
-            margin-right: 10px; 
-            background: rgba(255,255,255,0.03); 
-            padding: 3px 6px; 
-            border-radius: 6px; 
-            border: 1px solid #334155;
+            display: flex; gap: 5px; align-items: center; margin-right: 10px; 
+            background: rgba(255,255,255,0.03); padding: 3px 6px; border-radius: 6px; border: 1px solid #334155;
         }
         .meta-pills span { 
-            padding: 4px 8px; 
-            border-radius: 4px; 
-            font-size: 11px; 
-            cursor:pointer; 
-            color: #8892b0; 
-            font-weight: bold; 
-            transition: 0.2s;
+            padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor:pointer; 
+            color: #8892b0; font-weight: bold; transition: 0.2s;
         }
-        .meta-pills span.active-meta { 
-            background: var(--orange); 
-            color: #000; 
-            box-shadow: 0 0 8px rgba(255,170,0,0.4);
-        }
+        .meta-pills span.active-meta { background: var(--orange); color: #000; box-shadow: 0 0 8px rgba(255,170,0,0.4);}
         
         .btn-action { 
-            padding: 8px 15px; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            border: none; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            transition: 0.3s; 
-            font-size: 12px;
+            padding: 8px 15px; border-radius: 4px; font-weight: bold; border: none; 
+            cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; font-size: 12px;
         }
         .btn-llamar { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid var(--green);}
         .btn-llamar:hover { background: var(--green); color: #000;}
         
-        /* BOTÓN DE REPORTE CON LOGO DE WHATSAPP MEJORADO */
-        .btn-reporte { 
-            background: rgba(0, 230, 118, 0.1); /* Color suave de WA */
-            color: #00e676; /* Color WA */
-            border: 1px solid #00e676;
-            transition: 0.3s;
-        }
-        .btn-reporte:hover { 
-            background: #00e676; /* Fondo WA */
-            color: #fff;
-            box-shadow: 0 0 15px rgba(0, 230, 118, 0.6);
-        }
+        .btn-reporte { background: rgba(0, 230, 118, 0.1); color: #00e676; border: 1px solid #00e676; transition: 0.3s;}
+        .btn-reporte:hover { background: #00e676; color: #fff; box-shadow: 0 0 15px rgba(0, 230, 118, 0.6);}
         
         .btn-kpis { background: rgba(168, 85, 247, 0.1); color: var(--purple); border: 1px solid var(--purple);}
         .btn-kpis:hover { background: var(--purple); color: #fff; box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);}
@@ -167,62 +90,34 @@
         .btn-icon:hover { background: var(--blue); color: #000;}
         
         .select-date { 
-            background: #0b1116; 
-            color: #fff; 
-            border: 1px solid #334155; 
-            padding: 6px 8px; 
-            border-radius: 4px; 
-            outline: none; 
-            font-weight: bold; 
-            font-size: 12px;
+            background: #0b1116; color: #fff; border: 1px solid #334155; 
+            padding: 6px 8px; border-radius: 4px; outline: none; font-weight: bold; font-size: 12px;
         }
         .select-date:focus { border-color: var(--blue);}
 
-        /* ================= GRID DE TARJETAS REDISEÑADO (SIN LINEA LARGA) ================= */
+        /* ================= GRID DE TARJETAS ================= */
         .board-container { 
-            padding: 20px 30px; 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Formato Tarjeta */
-            gap: 20px; 
-            height: calc(100vh - 160px); 
-            overflow-y: auto;
-            align-content: start;
+            padding: 20px 30px; display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 20px; height: calc(100vh - 160px); overflow-y: auto; align-content: start;
         }
 
-        /* ================= TARJETA INDIVIDUAL MAESTRA (REDISEÑADA) ================= */
+        /* ================= TARJETA INDIVIDUAL ================= */
         .trip-card { 
-            background: var(--card-bg); 
-            border-radius: 12px; 
-            border: 1px solid var(--border); 
-            padding: 15px; 
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-            display: flex; 
-            flex-direction: column; 
-            gap: 12px; 
-            position: relative;
-            min-height: 200px;
+            background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); 
+            padding: 15px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; 
+            gap: 12px; position: relative; min-height: 200px;
         }
-        .trip-card:hover { 
-            border-color: var(--blue); 
-            transform: translateY(-5px); 
-            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.2);
-        }
-        .trip-card.anulado { 
-            opacity: 0.5; 
-            filter: grayscale(80%); 
-            border-color: #334155;
-        }
+        .trip-card:hover { border-color: var(--blue); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 212, 255, 0.2);}
+        .trip-card.anulado { opacity: 0.5; filter: grayscale(80%); border-color: #334155;}
         
-        /* Layout interno de la tarjeta */
         .card-top-row { display: flex; justify-content: space-between; align-items: start;}
         
-        /* Hora Meta a la izquierda */
         .hora-meta-display { text-align: left; }
         .hora-meta-display h2 { margin: 0; font-size: 1.8rem; color: #fff; text-shadow: var(--neon-glow); line-height: 1;}
         .hora-meta-display small { color: #64748b; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Iconos de Misión a la derecha */
         .mision-icon-box { display: flex; align-items: center; gap: 8px;}
         .mission-badge-icon { 
             font-size: 1.2rem; padding: 8px; border-radius: 8px; background: rgba(15,23,33,0.5); 
@@ -231,25 +126,19 @@
         .mission-badge-icon.carga { color: var(--orange); border-color: rgba(255, 170, 0, 0.3); background: rgba(255, 170, 0, 0.1);}
         .mission-badge-icon.descarga { color: var(--blue); border-color: rgba(0, 212, 255, 0.3); background: rgba(0, 212, 255, 0.1);}
         
-        /* Info central de la tarjeta */
         .card-center-row { display: flex; flex-direction: column; gap: 5px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;}
         .unit-pilot-info { display: flex; justify-content: space-between; align-items: center;}
         .unit-pilot-info h3 { margin: 0; color: var(--orange); font-size: 15px; display: flex; align-items: center; gap: 6px;}
         .plate-badge { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid var(--green); padding: 1px 6px; border-radius: 3px; font-family: monospace; font-size: 11px;}
         
         .pilot-contact-line { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #94a3b8; margin-top: 3px;}
-        .btn-call-small { 
-            color: var(--green); cursor: pointer; transition: 0.3s; font-size: 13px;
-        }
+        .btn-call-small { color: var(--green); cursor: pointer; transition: 0.3s; font-size: 13px;}
         .btn-call-small:hover { transform: scale(1.2); color: #fff;}
 
-        /* Ruta compacta */
         .route-line { font-size: 12px; color: var(--blue); font-weight: bold; margin-top: 5px; display: flex; align-items: center; gap: 6px;}
-        
-        /* Detalle de Misión */
         .mission-detail { font-size: 12px; color: #cbd5e1; margin-top: 3px; font-style: italic;}
 
-        /* ESTATUS Y PROGRESO GRUPAL (NUEVO LAYOUT COMPACTO) */
+        /* ESTATUS Y PROGRESO GRUPAL */
         .card-status-progreso-group { 
             display: flex; flex-direction: column; gap: 10px; 
             border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px; margin-top: auto;
@@ -263,27 +152,26 @@
         .status-box.pendiente { background: rgba(255, 255, 255, 0.03); color: #94a3b8; border: 1px solid rgba(255,255,255,0.05);}
         .status-box.anulado { background: rgba(255, 255, 255, 0.05); color: #64748b; border: 1px dashed #64748b;}
 
-        /* PROGRESS BAR COMPACTA */
+        /* PROGRESS BAR */
         .progreso-section-compact { display: flex; flex-direction: column; gap: 5px;}
         .prog-header-compact { display: flex; justify-content: space-between; font-size: 11px; font-weight: bold;}
         .prog-bar-bg-compact { width: 100%; height: 6px; background: #0b1116; border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);}
         .prog-bar-fill-compact { height: 100%; border-radius: 3px; transition: 1s ease-in-out;}
         
-        /* Botones Basurero */
         .trash-action-box { position: absolute; right: 10px; bottom: 10px; font-size: 14px;}
         .btn-trash { color: #64748b; cursor: pointer; transition: 0.2s;}
         .btn-trash:hover { color: var(--red); transform: scale(1.2) rotate(15deg);}
         .btn-restore { color: var(--blue); cursor: pointer; transition: 0.2s;}
         .btn-restore:hover { color: #fff; transform: scale(1.2);}
         
-        /* Tiempo de Ciclo */
+        /* TIEMPO DE CICLO Y RAMPA */
         .cycle-time-tag { 
-            font-size: 10px; font-family: monospace; font-weight: bold; 
-            background: rgba(0,255,136,0.1); padding: 2px 6px; border-radius: 4px; 
-            color: var(--green); border: 1px solid rgba(0,255,136,0.2); margin-left: 5px;
+            font-size: 9px; font-family: monospace; font-weight: bold; 
+            background: rgba(0,255,136,0.1); padding: 2px 5px; border-radius: 4px; 
+            color: var(--green); border: 1px solid rgba(0,255,136,0.2); margin-left: 3px;
         }
 
-        /* ================= FOOTER LEYENDA ================= */
+        /* ================= FOOTER ================= */
         footer { 
             display: flex; justify-content: space-between; padding: 10px 30px; 
             background: var(--header-bg); border-top: 1px solid var(--border); 
@@ -296,8 +184,6 @@
         /* ADAPTACIÓN MÓVIL */
         @media (max-width: 900px) {
             header { flex-direction: column; text-align: center; gap: 10px; padding: 10px;}
-            .header-title { flex-direction: column;}
-            .header-info { flex-direction: column;}
             .controls-bar { flex-direction: column; gap: 10px; padding: 10px;}
             .tabs { flex-wrap: wrap; justify-content: center;}
             .action-filters { flex-wrap: wrap; justify-content: center;}
@@ -305,18 +191,18 @@
             footer { flex-direction: column; gap: 10px; text-align: center;}
             .legend { justify-content: center; flex-wrap: wrap;}
         }
-
     </style>
 </head>
 <body>
 
     <header>
         <div class="header-title">
-            <img src="logo.png" alt="Logo Nestle Joloda"> <h1>TORRE DE CONTROL JOLODA</h1>
+            <img src="logo.png" alt="Logo Nestle Joloda">
+            <h1>TORRE DE CONTROL JOLODA</h1>
         </div>
         <div class="header-info">
             <div class="header-date-container">
-                <span class="header-date" id="header-date">LUNES, 23 DE MARZO DE 2026</span>
+                <span class="header-date" id="header-date">CARGANDO FECHA...</span>
                 <span class="header-totals" id="total-movs">TOTAL MOVIMIENTOS: 0</span>
             </div>
             <div class="btn-close-monitor" onclick="cerrarTorre()">
@@ -354,6 +240,7 @@
             <select id="select-mes" class="select-date" onchange="renderBoard()">
                 <option value="Marzo" selected>MARZO</option>
                 <option value="Abril">ABRIL</option>
+                <option value="Mayo">MAYO</option>
                 <option value="Febrero">FEBRERO</option>
             </select>
             <select id="select-dia" class="select-date" onchange="renderBoard()">
@@ -384,27 +271,19 @@
     </script>
 
     <script>
-        // ================= CONFIGURACIÓN Y ESTADO =================
+        // ================= CONFIGURACIÓN =================
         const POWER_BI_URL = "https://app.powerbi.com/groups/me/reports/9c8cf0e6-9c0d-4322-965a-2e6b742d32e2/775a8d9db97de015d1a6?experience=power-bi";
         
         let currentLoc = localStorage.getItem('joloda_v14_loc') || "CD BÁRCENAS";
         let tiempoMetaRampa = parseInt(localStorage.getItem('joloda_meta_time')) || 60;
         
-        // Reloj y Fecha Header
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('header-date').innerText = new Date().toLocaleDateString('es-ES', options).toUpperCase();
         setInterval(() => { document.getElementById('sync-time').innerText = "Última Sincronización: " + new Date().toLocaleTimeString(); }, 1000);
 
-        // ================= FUNCIONES DE INTERFAZ ORIGINALES =================
-        function cerrarTorre() {
-            window.parent.postMessage("CLOSE_MONITOR", "*");
-        }
+        function cerrarTorre() { window.parent.postMessage("CLOSE_MONITOR", "*"); }
+        function abrirPowerBI() { window.open(POWER_BI_URL, "_blank"); }
 
-        function abrirPowerBI() {
-            window.open(POWER_BI_URL, "_blank");
-        }
-
-        // --- RESTAURADO: REPORTE DE WHATSAPP MEJORADO (SIN LINEAS LARGAS) ---
         function generarReporteWA() {
             const mes = document.getElementById('select-mes').value.toUpperCase();
             const dia = document.getElementById('select-dia').value;
@@ -413,14 +292,11 @@
             let reporte = `*TORRE DE CONTROL JOLODA* 🛰️\n*Nodo:* ${currentLoc}\n*Fecha:* ${dia} de ${mes}\n*${total}*\n\n`;
             
             const tarjetas = document.querySelectorAll('.trip-card');
-            if(tarjetas.length === 0) {
-                alert("No hay datos visibles en la torre para generar el reporte.");
-                return;
-            }
+            if(tarjetas.length === 0) { alert("No hay datos visibles en la torre para generar el reporte."); return; }
             
             let viajesContados = 0;
             tarjetas.forEach((card) => {
-                if(card.classList.contains('anulado')) return; // Omite anulados
+                if(card.classList.contains('anulado')) return; 
                 
                 viajesContados++;
                 let hora = card.querySelector('h2').innerText;
@@ -432,12 +308,8 @@
                 reporte += `🚛 *${unidad}* | Meta: ${hora}\n  » Misión: ${mision}\n  » Estatus: ${estatus} (${pct})\n\n`;
             });
 
-            if(viajesContados === 0) {
-                alert("Todos los viajes visibles están anulados. No hay nada que reportar.");
-                return;
-            }
+            if(viajesContados === 0) { alert("Todos los viajes visibles están anulados."); return; }
             
-            // Link de WhatsApp API
             let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(reporte)}`;
             window.open(url, '_blank');
         }
@@ -453,14 +325,11 @@
         function setMeta(mins) {
             tiempoMetaRampa = mins;
             localStorage.setItem('joloda_meta_time', mins);
-            document.getElementById('meta-1').classList.remove('active-meta');
-            document.getElementById('meta-30').classList.remove('active-meta');
-            document.getElementById('meta-60').classList.remove('active-meta');
+            document.querySelectorAll('.meta-pills span').forEach(s => s.classList.remove('active-meta'));
             document.getElementById(`meta-${mins}`).classList.add('active-meta');
             renderBoard();
         }
 
-        // ================= FUNCIONES DE ANULACIÓN (LOCAL STORAGE) =================
         function anularViaje(unitId) {
             let motivo = prompt(`Motivo de anulación para el viaje de ${unitId}:`);
             if (motivo) {
@@ -480,28 +349,29 @@
             }
         }
 
-        // ================= EL CEREBRO BLINDADO (SOLUCIÓN ZONA 12 Y ANTIGUA) =================
+        // ================= EL CEREBRO BLINDADO (REVISIÓN DE FECHAS Y TIEMPO EN RAMPA) =================
         function calcularProgresoInteligente(camion, isCancelled) {
             if (isCancelled) {
                 return { pct: 0, text: "ANULADO", color: "#64748b", cycleTime: "", boxClass: "anulado", boxIcon: "fas fa-ban", boxText: "VIAJE ANULADO" };
             }
 
-            let prog = { pct: 10, text: "PROGRAMADO", color: "#00d4ff", cycleTime: "", boxClass: "a-tiempo", boxIcon: "fas fa-check", boxText: "A TIEMPO" };
+            let prog = { pct: 10, text: "PROGRAMADO", color: "#00d4ff", cycleTime: "", boxClass: "a-tiempo", boxIcon: "fas fa-clock", boxText: "A TIEMPO" };
 
-            // Normalizar textos para evitar errores de tildes o mayúsculas
             const normalizarStr = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-
-            let estatusRaw = camion.statusText || ""; // Tomado directamente del snippet de Aroldo
-            let estatusExcel = normalizarStr(estatusRaw);
+            let estatusExcel = normalizarStr(camion.statusText);
             
             let tiempoCicloExcel = camion.cycleTime || camion.tiempo_ciclo || ""; 
             let rampaFinExcel = camion.rampaEnd || camion.tiempo_fin || "";
+            
+            // LECTURA DEL TIEMPO EN RAMPA
+            let tiempoRampaExcel = camion.tiempo_rampa || camion.tiempo_en_rampa || camion.rampa || camion["TIEMPO EN RAMPA (Inicio - Fin)"] || "";
+            
+            // Construir etiquetas visuales si existen los datos
+            let rampaBadge = (tiempoRampaExcel && tiempoRampaExcel !== "00:00:00" && tiempoRampaExcel !== "00:00") 
+                ? `<span class="cycle-time-tag" style="color:var(--orange); border-color:var(--orange);"><i class="fas fa-truck-loading"></i> Rampa: ${tiempoRampaExcel}</span>` : "";
 
-            // --- PASO 1: PRIORIDAD ABSOLUTA AL EXCEL (ARREGLA ZONA 12) ---
-            // Si el Excel dice TERMINA, COMPLET, o trae tiempos de fin o ciclo, está AL 100%
-            if (estatusExcel.includes("TERMINA") || estatusExcel.includes("COMPLET") || estatusExcel.includes("CONCLU") || 
-                tiempoCicloExcel !== "" || rampaFinExcel !== "") {
-                
+            // 1. PRIORIDAD EXCEL: Si el Excel dice TERMINADO
+            if (estatusExcel.includes("TERMINA") || estatusExcel.includes("COMPLET") || estatusExcel.includes("CONCLU") || rampaFinExcel !== "") {
                 prog.pct = 100;
                 prog.text = "TERMINADO";
                 prog.color = "var(--green)";
@@ -509,50 +379,61 @@
                 prog.boxIcon = "fas fa-check-double";
                 prog.boxText = "VIAJE CUMPLIDO";
                 
-                // Mostrar el ciclo real si existe
-                prog.cycleTime = tiempoCicloExcel ? `(${tiempoCicloExcel})` : "";
-                return prog; // Salimos de la función, no simulamos nada
+                let cicloBadge = tiempoCicloExcel ? `<span class="cycle-time-tag"><i class="fas fa-stopwatch"></i> Ciclo: ${tiempoCicloExcel}</span>` : "";
+                prog.cycleTime = rampaBadge + cicloBadge;
+                return prog; 
             }
 
-            // --- PASO 2: SIMULACIÓN INTELIGENTE (SOLO SI NO ESTÁ TERMINADO EN EXCEL) ---
+            // 2. SIMULACIÓN INTELIGENTE (Basada en la Fecha y Hora REALES)
             if (camion.time && camion.time !== "00:00") {
                 const ahora = new Date();
                 let [horaMetaStr, minMetaStr] = camion.time.split(':');
                 
-                // Creamos fecha de hoy a la hora meta para comparar
+                // Mapeo de Mes
+                const mesesMap = {"ENERO":0, "FEBRERO":1, "MARZO":2, "ABRIL":3, "MAYO":4, "JUNIO":5, "JULIO":6, "AGOSTO":7, "SEPTIEMBRE":8, "OCTUBRE":9, "NOVIEMBRE":10, "DICIEMBRE":11};
+                let mesIndex = mesesMap[normalizarStr(camion.month)];
+                if(mesIndex === undefined) mesIndex = ahora.getMonth();
+
                 let fechaMeta = new Date();
+                fechaMeta.setMonth(mesIndex);
+                fechaMeta.setDate(parseInt(camion.day) || ahora.getDate());
                 fechaMeta.setHours(parseInt(horaMetaStr, 10), parseInt(minMetaStr, 10), 0, 0);
 
                 let difMinutos = (ahora - fechaMeta) / (1000 * 60);
 
-                if (difMinutos > tiempoMetaRampa) { 
-                    // Ya pasó el tiempo meta configurado: Asume Terminado por visualización
+                // Validar si el viaje es del FUTURO (Mañana, 24 de marzo, etc.)
+                if (difMinutos < -60) {
+                    // Es un viaje programado para el futuro o faltan más de 60 mins. Queda en 10%.
+                    prog.pct = 10; prog.text = "PROGRAMADO"; prog.color = "var(--blue)";
+                    prog.boxClass = "pendiente"; prog.boxIcon = "fas fa-clock"; prog.boxText = "A TIEMPO";
+                }
+                // Validaciones para viajes de HOY que ya pasaron
+                else if (difMinutos > tiempoMetaRampa) { 
                     prog.pct = 100; prog.text = "TERMINADO"; prog.color = "var(--green)";
                     prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check-double"; prog.boxText = "VIAJE CUMPLIDO";
-                    prog.cycleTime = `(1h 15m Est.)`;
+                    prog.cycleTime = rampaBadge + `<span class="cycle-time-tag" style="color:var(--orange); border-color:var(--orange);"><i class="fas fa-magic"></i> Ciclo Est.</span>`;
                 } else if (difMinutos > (tiempoMetaRampa / 3)) { 
-                    // En proceso de rampa
                     prog.pct = 75; prog.text = "EN RAMPA"; prog.color = "var(--orange)";
-                    prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check"; prog.boxText = "OPERANDO";
-                } else if (difMinutos > -30) {
-                    // Cerca de la hora o en patio
-                    prog.pct = 40; prog.text = "EN PATIO"; prog.color = "var(--blue)";
+                    prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-truck-loading"; prog.boxText = "OPERANDO";
+                    prog.cycleTime = rampaBadge;
+                } else if (difMinutos >= -60 && difMinutos <= (tiempoMetaRampa / 3)) {
+                    prog.pct = 40; prog.text = "EN PATIO / TRÁNSITO"; prog.color = "var(--blue)";
                     prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check"; prog.boxText = "A TIEMPO";
                 }
                 
-                // Sobreescribir color si Excel detecta Retraso antes de terminar
-                if (estatusExcel.includes("RETRASO")) {
-                     prog.boxClass = "retraso"; prog.boxIcon = "fas fa-exclamation-triangle"; prog.boxText = "RETRASO";
+                // Sobreescribir color si Excel detecta Retraso (En Excel prevalece)
+                if (estatusExcel.includes("RETRASO") || estatusExcel.includes("CRITICO")) {
+                     prog.boxClass = "retraso"; prog.boxIcon = "fas fa-exclamation-triangle"; prog.boxText = estatusExcel;
                      prog.color = "var(--red)"; 
                 }
             }
             return prog;
         }
 
-        // ================= MOTOR DE RENDERIZADO (FORMATO TARJETAimage_775b89.png) =================
+        // ================= MOTOR DE RENDERIZADO =================
         function renderBoard() {
             const container = document.getElementById('board-container');
-            container.innerHTML = ''; // Limpiar tablero
+            container.innerHTML = ''; 
             
             const mesSeleccionado = document.getElementById('select-mes').value.toUpperCase();
             const diaSeleccionado = document.getElementById('select-dia').value;
@@ -567,17 +448,14 @@
 
             const normalizar = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 
-            // --- FILTRO INTELIGENTE CON SOLUCIÓN PARA ZONA 12 Y ANTIGUA ---
             let datosFiltrados = window.liveData.filter(cam => {
-                // PASO 1: Limpieza de seguridad (No mostrar viajes vacíos o 00:00 - Arregla Antigua)
+                // LIMPIEZA: No mostrar viajes vacíos, sin hora meta o con 00:00 (Arregla Antigua)
                 if(!cam.time || cam.time === "00:00" || !cam.unit) return false;
 
-                // PASO 2: Filtros básicos de fecha
                 let matchMes = normalizar(cam.month) === normalizar(mesSeleccionado);
                 let matchDia = parseInt(cam.day) === parseInt(diaSeleccionado);
                 if(!matchMes || !matchDia) return false;
 
-                // PASO 3: Mapeo inteligente de nodos (A prueba de espacios/tildes)
                 let locExcel = normalizar(cam.location);
                 let matchNodo = false;
                 
@@ -592,9 +470,7 @@
                 }
                 if(!matchNodo) return false;
 
-                // PASO 4: Buscador
                 let matchSearch = normalizar(cam.unit).includes(search) || normalizar(cam.pilot).includes(search);
-                
                 return matchSearch;
             });
 
@@ -605,21 +481,16 @@
                 return;
             }
 
-            // Ordenar por hora meta
             datosFiltrados.sort((a,b) => a.time.localeCompare(b.time));
 
-            // --- GENERAR TARJETAS INDIVIDUALES (REDISEÑOimage_775b89.png) ---
             datosFiltrados.forEach((camion, index) => {
-                
                 let uid = `${camion.unit}_${camion.time}`.replace(/\s+/g, '');
                 let isCancelled = cancelledData[uid] !== undefined;
 
-                // Identificar Carga o Descarga
                 let esCarga = normalizar(camion.detail || camion.activity || "").includes("CARGA");
                 let badgeCls = esCarga ? "carga" : "descarga";
                 let badgeIco = esCarga ? "fas fa-box" : "fas fa-box-open";
                 
-                // Consultar al Cerebro Blindado
                 let pro = calcularProgresoInteligente(camion, isCancelled);
 
                 const card = document.createElement('div');
@@ -629,7 +500,6 @@
                     ? `<div class="trash-action-box"><i class="fas fa-undo-alt btn-restore" onclick="restaurarViaje('${uid}')" title="Restaurar Viaje"></i></div>` 
                     : `<div class="trash-action-box"><i class="fas fa-trash-alt btn-trash" onclick="anularViaje('${uid}')" title="Anular Viaje"></i></div>`;
 
-                // --- NUEVO HTML DE TARJETA COMPACTA ---
                 card.innerHTML = `
                     <div class="card-top-row">
                         <div class="hora-meta-display">
@@ -663,7 +533,7 @@
                         <div class="progreso-section-compact">
                             <div class="prog-header-compact">
                                 <span style="color:${pro.color};">${pro.pct}%</span>
-                                <span style="color:#e2e8f0;">${pro.text} <span class="cycle-time-tag">${pro.cycleTime}</span></span>
+                                <span style="color:#e2e8f0;">${pro.text} ${pro.cycleTime}</span>
                             </div>
                             <div class="prog-bar-bg-compact">
                                 <div class="prog-bar-fill-compact" style="width:${pro.pct}%; background:${pro.color}; ${pro.pct > 0 ? 'box-shadow: 0 0 10px '+pro.color : ''}"></div>
@@ -679,11 +549,11 @@
 
         // ================= INICIALIZACIÓN =================
         function initApp() {
-            // Llenar los días dinámicamente
             const selectDia = document.getElementById('select-dia');
             selectDia.innerHTML = '';
+            const hoy = new Date().getDate();
             for(let i=1; i<=31; i++) {
-                let selected = (i === 23) ? 'selected' : ''; // Dejé el 23 por defecto
+                let selected = (i === hoy) ? 'selected' : ''; 
                 selectDia.innerHTML += `<option value="${i}" ${selected}>${i}</option>`;
             }
 
@@ -693,14 +563,12 @@
 
             document.querySelectorAll('.tab').forEach(t => {
                 t.classList.remove('active');
-                // Ajuste para tildes en el selector visual
                 if(currentLoc.normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(t.innerText.replace("FABRICA ", "").normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) t.classList.add('active');
             });
 
             renderBoard();
         }
 
-        // Espera de seguridad para cargar 'datos_live.js'
         setTimeout(initApp, 600);
 
     </script>

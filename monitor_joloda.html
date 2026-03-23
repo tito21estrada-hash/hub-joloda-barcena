@@ -164,7 +164,7 @@
         .btn-restore { color: var(--blue); cursor: pointer; transition: 0.2s;}
         .btn-restore:hover { color: #fff; transform: scale(1.2);}
         
-        /* TIEMPO EN RAMPA */
+        /* TIEMPO EN RAMPA (COLUMNA M) */
         .cycle-time-tag { 
             font-size: 10px; font-family: monospace; font-weight: bold; 
             background: rgba(0,255,136,0.1); padding: 3px 6px; border-radius: 4px; 
@@ -349,7 +349,26 @@
             }
         }
 
-        // ================= EL CEREBRO BLINDADO: COLUMNA M =================
+        // --- TRADUCTOR DE TIEMPOS DECIMALES DE EXCEL A HORAS:MINUTOS ---
+        function formatExcelTime(val) {
+            if (!val) return "";
+            let strVal = val.toString().trim();
+            // Si el número es un decimal crudo que manda Power Automate (ej: 0.006944) y no tiene formato de hora
+            if (!strVal.includes(":") && !isNaN(parseFloat(strVal))) {
+                let num = parseFloat(strVal);
+                if (num > 0 && num < 1) {
+                    let totalMinutes = Math.round(num * 24 * 60);
+                    let h = Math.floor(totalMinutes / 60);
+                    let m = totalMinutes % 60;
+                    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+                } else if (num === 0) {
+                    return "00:00";
+                }
+            }
+            return strVal;
+        }
+
+        // ================= EL CEREBRO BLINDADO: PRIORIDAD A COLUMNA M =================
         function calcularProgresoInteligente(camion, isCancelled) {
             if (isCancelled) {
                 return { pct: 0, text: "ANULADO", color: "#64748b", cycleTime: "", boxClass: "anulado", boxIcon: "fas fa-ban", boxText: "VIAJE ANULADO" };
@@ -360,13 +379,12 @@
             const normalizarStr = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
             let estatusExcel = normalizarStr(camion.statusText || camion.estatus || "");
             
-            // PRIORIDAD 1: EXTRAER COLUMNA M (Buscando diferentes nombres que Power Automate le puede asignar)
-            let tiempoRampa = camion.tiempo_rampa || camion.tiempo_en_rampa || camion.rampa || camion["TIEMPO EN RAMPA (Inicio - Fin)"] || camion.cycleTime || "";
-            let rampaLimpio = tiempoRampa.toString().trim();
+            // PRIORIDAD 1: EXTRAER COLUMNA M CON EL TRADUCTOR DE DECIMALES
+            let tiempoRampaRaw = camion.tiempo_rampa || camion.tiempo_en_rampa || camion.rampa || camion["TIEMPO EN RAMPA (Inicio - Fin)"] || camion.cycleTime || "";
+            let rampaLimpio = formatExcelTime(tiempoRampaRaw);
             
-            let tieneRampaReal = (rampaLimpio !== "" && rampaLimpio !== "00:00:00" && rampaLimpio !== "00:00");
+            let tieneRampaReal = (rampaLimpio !== "" && rampaLimpio !== "00:00:00" && rampaLimpio !== "00:00" && rampaLimpio !== "0");
 
-            // Construir la pastilla visual si hay tiempo
             let rampaBadge = tieneRampaReal 
                 ? `<span class="cycle-time-tag" style="color:var(--orange); border-color:var(--orange);"><i class="fas fa-stopwatch"></i> Rampa: ${rampaLimpio}</span>` : "";
 
@@ -401,12 +419,10 @@
 
                 let difMinutos = (ahora - fechaMeta) / (1000 * 60);
 
-                // VIAJES DEL FUTURO: Se quedan en 10%
                 if (difMinutos < -60) {
                     prog.pct = 10; prog.text = "PROGRAMADO"; prog.color = "var(--blue)";
                     prog.boxClass = "pendiente"; prog.boxIcon = "fas fa-clock"; prog.boxText = "A TIEMPO";
                 }
-                // PASÓ EL TIEMPO META
                 else if (difMinutos > tiempoMetaRampa) { 
                     prog.pct = 100; prog.text = "TERMINADO"; prog.color = "var(--green)";
                     prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check-double"; prog.boxText = "VIAJE CUMPLIDO";
@@ -455,18 +471,17 @@
                 let matchDia = parseInt(cam.day) === parseInt(diaSeleccionado);
                 if(!matchMes || !matchDia) return false;
 
+                // --- AISLAMIENTO DE PESTAÑAS PURO (ADIÓS DUPLICADOS) ---
                 let locExcel = normalizar(cam.location || "");
-                let rutaExcel = normalizar(cam.route || "");
                 let matchNodo = false;
                 
                 if (currentLoc === "CD BÁRCENAS") {
                     matchNodo = locExcel.includes("BARCENAS") || locExcel.includes("CD");
                 } else if (currentLoc === "FABRICA ZONA12") {
-                    matchNodo = (locExcel.includes("ZONA") && locExcel.includes("12")) || rutaExcel.includes("Z12");
-                    if(rutaExcel.includes("ANT")) matchNodo = false; 
+                    // Ahora SOLO filtra por lo que mande Power Automate en 'location', ignorando la ruta.
+                    matchNodo = locExcel.includes("ZONA") && locExcel.includes("12");
                 } else if (currentLoc === "FABRICA ANTIGUA") {
-                    matchNodo = locExcel.includes("ANTIGUA") || rutaExcel.includes("ANT");
-                    if(rutaExcel.includes("Z12")) matchNodo = false; 
+                    matchNodo = locExcel.includes("ANTIGUA");
                 } else {
                     matchNodo = locExcel.includes(normalizar(currentLoc));
                 }
@@ -475,19 +490,6 @@
                 let matchSearch = normalizar(cam.unit).includes(search) || normalizar(cam.pilot).includes(search);
                 return matchSearch;
             });
-
-            // --- ESCUDO ANTI-CLONES (ELIMINA DUPLICADOS QUE MANDE POWER AUTOMATE) ---
-            let unicos = [];
-            let seenIds = new Set();
-            datosFiltrados.forEach(cam => {
-                let uniqueKey = `${cam.unit}_${cam.time}_${cam.route}`;
-                if (!seenIds.has(uniqueKey)) {
-                    seenIds.add(uniqueKey);
-                    unicos.push(cam);
-                }
-            });
-            datosFiltrados = unicos; // Reemplazamos la lista con la versión limpia
-            // ------------------------------------------------------------------------
 
             document.getElementById('total-movs').innerText = `TOTAL MOVIMIENTOS: ${datosFiltrados.length}`;
 

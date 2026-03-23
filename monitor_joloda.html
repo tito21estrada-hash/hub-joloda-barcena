@@ -3,200 +3,408 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joloda Smart Tower | Nestlé</title>
+    <title>Torre de Control Joloda</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* --- TEMA DARK JOLODA OFICIAL --- */
+        /* ================= VARIABLES ================= */
         :root {
-            --bg-color: #0b1116; --card-bg: #16202a; --neon-green: #00ff85;
-            --neon-blue: #4cc9f0; --neon-yellow: #fca311; --neon-red: #ff4d4d;
-            --text-main: #ffffff; --text-dim: #8b949e;
+            --bg: #0b1116; 
+            --header-bg: #0f1721; 
+            --card-bg: #151d28;
+            --green: #00ff88; 
+            --blue: #00d4ff; 
+            --red: #ff4d4d; 
+            --orange: #ffaa00; 
+            --text: #e2e8f0;
+            --border: #1e293b;
         }
-        body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; overflow-y: auto; }
+
+        /* ================= ESTILOS BASE ================= */
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            overflow-x: hidden; 
+        }
         
-        header { display: flex; flex-direction: column; gap: 15px; border-bottom: 2px solid var(--neon-blue); padding-bottom: 15px; margin-bottom: 20px; }
-        .top-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 10px; }
-        .logo-title-container { display: flex; align-items: center; }
-        .main-logo { height: 50px; width: auto; margin-right: 15px; }
-        h1 { margin: 0; text-transform: uppercase; font-size: 24px; background: -webkit-linear-gradient(45deg, var(--neon-blue), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px;}
+        /* ================= HEADER ================= */
+        header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--header-bg); 
+            padding: 15px 30px; 
+            border-bottom: 1px solid var(--blue); 
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+        }
+        .header-title { display: flex; align-items: center; gap: 15px;}
+        .header-title h1 { margin: 0; font-size: 1.5rem; color: #fff; letter-spacing: 2px;}
         
-        .time-container { text-align: right; }
-        #clock { font-family: 'Courier New', monospace; font-size: 36px; font-weight: bold; color: var(--neon-green); line-height: 1; text-shadow: 0 0 10px rgba(0, 255, 133, 0.3); }
-        #date-display { font-size: 14px; color: var(--text-dim); margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-        .movement-summary { font-size: 12px; color: var(--neon-yellow); font-weight: bold; margin-top: 5px; text-align: right; letter-spacing: 1px; }
-
-        .controls-row { display: flex; gap: 10px; width: 100%; justify-content: space-between; align-items: center; flex-wrap: wrap;}
-        .location-tabs { display: flex; gap: 5px; background: #0d1117; padding: 4px; border-radius: 6px; border: 1px solid #30363d; }
-        .tab-btn { background: transparent; border: none; color: var(--text-dim); padding: 8px 15px; cursor: pointer; font-weight: bold; font-size: 13px; border-radius: 4px; transition: all 0.3s; text-transform: uppercase;}
-        .tab-btn:hover { background: rgba(76, 201, 240, 0.1); color: #fff; }
-        .tab-btn.active { background: var(--neon-blue); color: #000; box-shadow: 0 0 15px rgba(76, 201, 240, 0.5); }
-
-        .action-btns { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-        .btn { border: none; padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; color: white; font-size: 11px; text-decoration: none; transition: transform 0.1s;}
-        .btn:active { transform: scale(0.95); }
-        .btn-whatsapp { background: #25D366; } .btn-whatsapp:hover { background: #128C7E; }
-        .btn-report { background: #075e54; border: 1px solid #25D366; }
-        .btn-dashboard { background: #b5179e; }
-        .btn-refresh { background: #1f6feb; }
-
-        .search-container { position: relative; }
-        .search-input { background: #0d1117; border: 1px solid #30363d; color: white; padding: 8px 30px 8px 10px; border-radius: 20px; width: 180px; font-size: 12px; transition: width 0.3s; }
-        .search-input:focus { width: 220px; outline: none; border-color: var(--neon-blue); }
-        .search-icon { position: absolute; right: 10px; top: 8px; color: #8b949e; width: 14px; }
-
-        .meta-config { display: flex; align-items: center; gap: 5px; background: #21262d; padding: 4px 8px; border-radius: 5px; border: 1px solid #30363d; }
-        .btn-meta { background: #30363d; color: #c9d1d9; border: 1px solid #555; padding: 4px 8px; cursor: pointer; border-radius: 3px; font-size: 10px; font-weight: bold; }
-        .btn-meta:hover { background: #555; color: white; }
-        .btn-meta.active-meta { background: var(--neon-yellow); color: #000; border-color: var(--neon-yellow); box-shadow: 0 0 5px var(--neon-yellow); }
-
-        /* GRID */
-        .flight-board { display: grid; grid-template-columns: 0.6fr 1.2fr 1.3fr 1fr 1.3fr 1.2fr; gap: 8px; margin-top: 15px; }
-        .header-row { display: contents; font-weight: bold; color: var(--neon-blue); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
-        .header-row div { padding: 10px; border-bottom: 2px solid #30363d; }
-        .trip-row { display: contents; }
-        .cell { background-color: var(--card-bg); padding: 8px 10px; display: flex; align-items: center; border-left: 3px solid transparent; margin-bottom: 4px; min-height: 70px; font-size: 13px; position: relative; border-radius: 0 4px 4px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .header-info { display: flex; align-items: center; gap: 20px; }
+        .header-date-container { text-align: right; }
+        .header-date { color: #8892b0; font-size: 14px; text-transform: uppercase; margin-bottom: 5px; display: block;}
+        .header-totals { color: var(--orange); font-weight: bold; font-size: 14px;}
         
-        .active-row .cell { background-color: #1c2b3a; border-bottom: 1px solid var(--neon-green); }
-        .active-row .cell:first-child { border-left: 4px solid var(--neon-green); }
-        .row-cancelled .cell { background-color: #121212 !important; color: #555 !important; border-bottom: 1px solid #333; }
-        .row-cancelled .cell:first-child { border-left: 3px solid #555; }
-        .cancelled-text { text-decoration: line-through; opacity: 0.6; }
-        .cancelled-reason { font-size: 10px; color: var(--neon-red); font-style: italic; display: block; margin-top: 2px; }
+        /* BOTÓN CERRAR (Se comunica con el Hub Padre) */
+        .btn-close-monitor { 
+            background: rgba(255, 77, 77, 0.1); 
+            color: var(--red); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            border: 1px solid var(--red); 
+            transition: 0.2s; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+        }
+        .btn-close-monitor:hover { 
+            background: var(--red); 
+            color: #000; 
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+        }
 
-        .time-cell { display: flex; flex-direction: column; justify-content: center; }
-        .time-main { font-family: 'Courier New', monospace; font-size: 18px; font-weight: bold; color: #fff; }
-        .mov-badge { font-size: 9px; background: #222; color: #aaa; padding: 2px 5px; border-radius: 3px; margin-top: 4px; width: fit-content; border: 1px solid #333; letter-spacing: 0.5px; }
-
-        .unit-info-container { display: flex; flex-direction: column; width: 100%; gap: 4px;}
-        .unit-top { display: flex; justify-content: space-between; align-items: center; }
-        .unit-link { font-weight: bold; color: var(--neon-yellow); font-size: 15px; text-decoration: none; display: flex; align-items: center; gap: 6px; }
-        .unit-link:hover { color: var(--neon-blue); text-shadow: 0 0 5px var(--neon-blue); }
-        .pilot-card { display: flex; flex-direction: column; gap: 2px; font-size: 11px; color: #ccc; margin-top: 2px; padding-top: 3px; border-top: 1px solid #333; }
-        .pilot-row { display: flex; align-items: center; gap: 6px; }
-        .pilot-icon { width: 12px; height: 12px; fill: #8b949e; }
-        .plate-badge { background: #333; color: #fff; padding: 1px 5px; border-radius: 3px; border: 1px solid #555; font-family: monospace; letter-spacing: 1px; font-size: 10px; color: var(--neon-green); }
-        .no-data { font-style: italic; color: #444; font-size: 10px; }
-        .btn-call-mini { background: #25D366; color: white; border: none; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-        .btn-call-mini:hover { background: #128C7E; transform: scale(1.1); }
-
-        .mission-container { display: flex; flex-direction: column; gap: 4px; }
-        .mission-badge { font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 4px; width: fit-content; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .type-carga { background: linear-gradient(90deg, rgba(252, 163, 17, 0.2) 0%, rgba(252, 163, 17, 0.05) 100%); color: var(--neon-yellow); border-left: 3px solid var(--neon-yellow); }
-        .type-descarga { background: linear-gradient(90deg, rgba(76, 201, 240, 0.2) 0%, rgba(76, 201, 240, 0.05) 100%); color: var(--neon-blue); border-left: 3px solid var(--neon-blue); }
-        .mission-text { font-size: 12px; line-height: 1.2; color: #e0e0e0; }
-
-        .badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; display: inline-block; margin-bottom: 2px; letter-spacing: 0.5px;}
-        .bg-late { background: rgba(255, 77, 77, 0.2); color: var(--neon-red); border: 1px solid var(--neon-red); }
-        .bg-ok { background: rgba(0, 255, 133, 0.15); color: var(--neon-green); border: 1px solid var(--neon-green); }
-        .bg-warn { background: rgba(252, 163, 17, 0.15); color: var(--neon-yellow); border: 1px solid var(--neon-yellow); animation: pulse 2s infinite;}
-        .cause-text { font-size: 11px; color: #ccc; margin-top: 4px; font-style: italic; border-left: 2px solid var(--neon-yellow); padding-left: 5px; }
-
-        .row-controls { display: flex; gap: 8px; align-items: center; width: 100%; }
-        .btn-trash { background: transparent; border: 1px solid #444; color: #666; cursor: pointer; padding: 4px 6px; border-radius: 4px; transition: all 0.2s; }
-        .btn-trash:hover { border-color: var(--neon-red); color: var(--neon-red); background: rgba(255, 77, 77, 0.1); }
-        .btn-play { background: #222; color: white; border: 1px solid #555; cursor: pointer; padding: 5px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-        .btn-play:hover { background: #333; border-color: #888; }
-
-        .progress-container { width: 100%; display: flex; flex-direction: column; gap: 4px; }
-        .progress-header { display: flex; justify-content: space-between; font-size: 10px; color: #ccc; font-weight: bold; }
-        .progress-track { width: 100%; height: 8px; background: #000; border-radius: 4px; overflow: hidden; border: 1px solid #333; }
-        .progress-fill { height: 100%; border-radius: 3px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-        .progress-striped { background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent); animation: progress-move 1s linear infinite; background-size: 1rem 1rem;}
+        /* ================= TABS Y FILTROS ================= */
+        .controls-bar { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 15px 30px; 
+            background: rgba(15, 23, 33, 0.7); 
+            border-bottom: 1px solid var(--border); 
+            align-items: center;
+        }
+        .tabs { display: flex; gap: 10px; align-items: center;}
+        .tab { 
+            background: transparent; 
+            color: #64748b; 
+            border: 1px solid transparent; 
+            padding: 8px 20px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s;
+        }
+        .tab:hover { color: #fff; }
+        .tab.active { 
+            background: rgba(0, 212, 255, 0.1); 
+            color: var(--blue); 
+            border: 1px solid var(--blue); 
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+        }
         
-        .timer-display { font-family: 'Courier New', monospace; font-size: 15px; font-weight: bold; color: var(--neon-yellow); background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; border: 1px solid #444; }
-        .timer-overdue { color: var(--neon-red); border-color: var(--neon-red); animation: blink 1s infinite; }
-        .truck-icon { width: 22px; height: 22px; margin-right: 8px; }
-        @keyframes progress-move { from { background-position: 1rem 0; } to { background-position: 0 0; } }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+        .search-box { position: relative; margin-left: 20px; }
+        .search-box input { 
+            background: #0b1116; 
+            border: 1px solid #334155; 
+            padding: 8px 15px 8px 35px; 
+            border-radius: 20px; 
+            color: #fff; 
+            outline: none; 
+            width: 250px;
+        }
+        .search-box i { position: absolute; left: 12px; top: 10px; color: #64748b; }
 
-        .footer-info { margin-top: 30px; display: flex; justify-content: space-between; color: var(--text-dim); font-size: 11px; border-top: 1px solid #30363d; padding-top: 10px; align-items: center;}
-        .legend { display: flex; gap: 15px; }
-        .legend span { display: flex; align-items: center; gap: 5px; }
-        .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .action-filters { display: flex; gap: 10px; align-items: center;}
+        .meta-pills { 
+            display: flex; 
+            gap: 5px; 
+            align-items: center; 
+            margin-right: 15px; 
+            background: rgba(255,255,255,0.03); 
+            padding: 4px 8px; 
+            border-radius: 6px; 
+            border: 1px solid #334155;
+        }
+        .meta-pills span { 
+            padding: 4px 10px; 
+            border-radius: 4px; 
+            font-size: 12px; 
+            cursor:pointer; 
+            color: #8892b0; 
+            font-weight: bold; 
+            transition: 0.2s;
+        }
+        .meta-pills span.active-meta { 
+            background: var(--orange); 
+            color: #000; 
+            box-shadow: 0 0 10px rgba(255,170,0,0.4);
+        }
+
+        .btn-action { 
+            padding: 8px 15px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            border: none; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            transition: 0.3s;
+            font-size: 12px;
+        }
+        .btn-llamar { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid var(--green);}
+        .btn-llamar:hover { background: var(--green); color: #000;}
+        .btn-reporte { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid #64748b;}
+        .btn-kpis { background: rgba(168, 85, 247, 0.1); color: var(--purple); border: 1px solid var(--purple);}
+        .btn-icon { background: rgba(0, 212, 255, 0.1); color: var(--blue); border: 1px solid var(--blue); padding: 8px 12px;}
+        .btn-icon:hover { background: var(--blue); color: #000;}
+        
+        .select-date { 
+            background: #0b1116; 
+            color: #fff; 
+            border: 1px solid #334155; 
+            padding: 8px 10px; 
+            border-radius: 4px; 
+            outline: none; 
+            font-weight: bold;
+        }
+
+        /* ================= COLUMNAS DE LA TABLA ================= */
+        .board-header { 
+            display: grid; 
+            grid-template-columns: 100px 250px 250px 200px 250px 1fr; 
+            padding: 15px 30px; 
+            font-size: 11px; 
+            font-weight: bold; 
+            color: var(--blue); 
+            text-transform: uppercase; 
+            border-bottom: 1px solid var(--border); 
+            letter-spacing: 1px;
+        }
+        .board-container { 
+            padding: 15px 30px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            height: calc(100vh - 250px); 
+            overflow-y: auto;
+        }
+
+        /* ================= TARJETA DE VIAJE (ROW) ================= */
+        .trip-card { 
+            background: var(--card-bg); 
+            border-radius: 8px; 
+            border: 1px solid var(--border); 
+            display: grid; 
+            grid-template-columns: 100px 250px 250px 200px 250px 1fr; 
+            align-items: center; 
+            transition: 0.3s; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .trip-card:hover { border-color: rgba(0, 212, 255, 0.4); background: #1a2230;}
+        
+        /* Estilo para tarjetas anuladas (basurero) */
+        .trip-card.anulado { 
+            opacity: 0.5; 
+            filter: grayscale(80%); 
+            border-color: #334155;
+        }
+        
+        .col-meta { text-align: center; border-right: 1px solid rgba(255,255,255,0.05); padding: 15px 10px; display: flex; flex-direction: column; justify-content: center;}
+        .col-meta h2 { margin: 0; font-size: 1.6rem; color: #fff;}
+        .col-meta small { color: #64748b; font-size: 10px; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 10px; margin-top: 5px;}
+
+        .col-unidad { padding: 15px; position: relative;}
+        .col-unidad h3 { margin: 0 0 5px 0; color: var(--orange); display: flex; align-items: center; gap: 5px; font-size: 15px;}
+        .col-unidad p { margin: 3px 0; font-size: 12px; color: #94a3b8; display: flex; align-items: center; gap: 8px;}
+        .plate-badge { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid var(--green); padding: 1px 6px; border-radius: 3px; font-family: monospace; font-size: 11px;}
+        
+        .btn-call-small { 
+            position: absolute; 
+            right: 15px; 
+            top: 15px; 
+            width: 30px; 
+            height: 30px; 
+            background: rgba(0,255,136,0.1); 
+            color: var(--green); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 1px solid var(--green); 
+            cursor: pointer; 
+            transition: 0.3s;
+        }
+        .btn-call-small:hover { background: var(--green); color: #000; transform: scale(1.1);}
+
+        .col-mision { padding: 15px; }
+        .mission-badge { background: #334155; color: #e2e8f0; font-size: 10px; padding: 3px 8px; border-radius: 3px; font-weight: bold; display: inline-block; margin-bottom: 8px;}
+        .mission-badge.carga { background: rgba(255, 170, 0, 0.15); color: var(--orange); border: 1px solid var(--orange);}
+        .mission-badge.descarga { background: rgba(0, 212, 255, 0.15); color: var(--blue); border: 1px solid var(--blue);}
+        .col-mision p { margin: 0; font-size: 13px; color: #cbd5e1; line-height: 1.4;}
+
+        .col-ruta { padding: 15px; color: var(--blue); font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 8px;}
+
+        .col-estatus { padding: 15px; }
+        .status-box { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 4px; font-weight: bold; font-size: 12px; letter-spacing: 0.5px;}
+        .status-box.a-tiempo { background: rgba(0, 255, 136, 0.15); color: var(--green); border: 1px solid var(--green);}
+        .status-box.retraso { background: rgba(255, 77, 77, 0.15); color: var(--red); border: 1px solid var(--red);}
+        .status-box.pendiente { background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid #334155;}
+        .status-box.anulado { background: rgba(255, 255, 255, 0.05); color: #64748b; border: 1px dashed #64748b;}
+
+        /* COLUMNA: CONTROL & PROGRESO */
+        .col-progreso { padding: 15px; display: flex; flex-direction: column; justify-content: center; gap: 8px; position: relative;}
+        .prog-header { display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: bold;}
+        .prog-bar-bg { width: 90%; height: 6px; background: #0b1116; border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);}
+        .prog-bar-fill { height: 100%; border-radius: 3px; transition: 1s ease-in-out;}
+        
+        .btn-trash { position: absolute; right: 15px; color: #64748b; cursor: pointer; transition: 0.2s; font-size: 14px;}
+        .btn-trash:hover { color: var(--red); transform: scale(1.2);}
+        .btn-restore { position: absolute; right: 15px; color: var(--blue); cursor: pointer; transition: 0.2s; font-size: 14px;}
+        .btn-restore:hover { color: #fff; transform: scale(1.2);}
+        
+        .cycle-time-label { 
+            font-size: 11px; 
+            font-family: monospace; 
+            font-weight: bold; 
+            background: rgba(0,255,136,0.1); 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            text-align: left; 
+            border: 1px solid rgba(0,255,136,0.3); 
+            display: inline-block; 
+            margin-top: 5px; 
+            color: var(--green);
+        }
+
+        /* ================= FOOTER ================= */
+        footer { display: flex; justify-content: space-between; padding: 15px 30px; background: var(--header-bg); border-top: 1px solid var(--border); font-size: 12px; color: #8892b0;}
+        .legend { display: flex; gap: 15px;}
+        .legend span { display: flex; align-items: center; gap: 5px;}
+        .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block;}
+
     </style>
 </head>
 <body>
 
     <header>
-        <div class="top-bar">
-            <div class="logo-title-container">
-                <img src="logo.png" alt="Logo" class="main-logo" onerror="this.style.display='none'">
-                <div><h1>TORRE DE CONTROL JOLODA</h1></div>
-            </div>
-            <div class="time-container">
-                <div id="clock">--:--:--</div>
-                <div id="date-display">Cargando fecha...</div>
-                <div id="move-summary" class="movement-summary">Calculando...</div>
-            </div>
+        <div class="header-title">
+            <i class="fas fa-satellite-dish" style="font-size: 1.8rem; color: var(--blue);"></i>
+            <h1>TORRE DE CONTROL JOLODA</h1>
         </div>
-
-        <div class="controls-row">
-            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-                 <div class="location-tabs">
-                    <button class="tab-btn active" onclick="setLoc('CD BÁRCENAS')">CD BÁRCENAS</button>
-                    <button class="tab-btn" onclick="setLoc('FÁBRICA ZONA 12')">ZONA 12</button>
-                    <button class="tab-btn" onclick="setLoc('FÁBRICA ANTIGUA')">ANTIGUA</button>
-                </div>
-                <div class="search-container">
-                    <input type="text" id="searchInput" class="search-input" placeholder="Buscar Unidad..." onkeyup="renderBoard()">
-                    <svg class="search-icon" fill="currentColor" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
-                </div>
+        <div class="header-info">
+            <div class="header-date-container">
+                <span class="header-date" id="header-date">CARGANDO FECHA...</span>
+                <span class="header-totals" id="total-movs">TOTAL MOVIMIENTOS: 0</span>
             </div>
-            
-            <div class="action-btns">
-                <div class="meta-config">
-                    <span style="color:#aaa; font-size:10px;">META:</span>
-                    <button class="btn-meta" onclick="setMetaTime(1)" id="meta-1">1m</button>
-                    <button class="btn-meta" onclick="setMetaTime(30)" id="meta-30">30m</button>
-                    <button class="btn-meta" onclick="setMetaTime(60)" id="meta-60">60m</button>
-                </div>
-                <button class="btn btn-whatsapp" onclick="abrirWhatsAppManual()">📞 LLAMAR</button>
-                <button class="btn btn-report" onclick="generarReporteGrupal()">📢 REPORTE</button>
-                <button class="btn btn-dashboard" onclick="openDashboard()">📊 KPIs</button>
-                <button class="btn btn-refresh" onclick="manualRefresh()">🔄</button>
-                
-                <div style="display:flex; gap:5px;">
-                    <select id="monthFilter" onchange="updateDaysAndRender()" style="background:#0d1117; color:var(--neon-blue); border:1px solid #444; padding:5px; border-radius:4px; font-size:12px; font-weight:bold;"></select>
-                    <select id="dayFilter" onchange="saveDaySelection()" style="background:#0d1117; color:white; border:1px solid #444; padding:5px; border-radius:4px; font-size:12px;"></select>
-                </div>
+            <div class="btn-close-monitor" onclick="cerrarTorre()">
+                <i class="fas fa-times"></i> CLOSE MONITOR
             </div>
         </div>
     </header>
 
-    <div class="flight-board" id="board">
-        <div class="header-row">
-            <div>Hora Meta</div>
-            <div>Unidad / Piloto</div>
-            <div>Misión / Movimiento</div>
-            <div>Ruta</div>
-            <div>Inteligencia / Estatus</div>
-            <div>Control & Progreso</div>
+    <div class="controls-bar">
+        <div class="tabs">
+            <button class="tab active" onclick="setLoc('CD BÁRCENAS', this)">CD BÁRCENAS</button>
+            <button class="tab" onclick="setLoc('FABRICA ZONA12', this)">ZONA 12</button>
+            <button class="tab" onclick="setLoc('FABRICA ANTIGUA', this)">ANTIGUA</button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Buscar Unidad..." onkeyup="renderBoard()">
+            </div>
+        </div>
+        <div class="action-filters">
+            <div class="meta-pills">
+                <span style="color:#64748b; background:transparent; cursor:default;">META:</span>
+                <span id="meta-1" onclick="setMeta(1)">1m</span>
+                <span id="meta-30" onclick="setMeta(30)">30m</span>
+                <span id="meta-60" class="active-meta" onclick="setMeta(60)">60m</span>
+            </div>
+            <button class="btn-action btn-llamar"><i class="fas fa-phone-alt"></i> LLAMAR</button>
+            <button class="btn-action btn-reporte" onclick="abrirPowerBI()"><i class="fas fa-chart-pie"></i> REPORTE</button>
+            <button class="btn-action btn-kpis"><i class="fas fa-chart-bar"></i> KPIs</button>
+            <button class="btn-action btn-icon" onclick="window.location.reload()" title="Refrescar Nube"><i class="fas fa-sync-alt"></i></button>
+            
+            <select id="select-mes" class="select-date" onchange="renderBoard()">
+                <option value="Marzo" selected>MARZO</option>
+                <option value="Febrero">FEBRERO</option>
+                <option value="Abril">ABRIL</option>
+            </select>
+            <select id="select-dia" class="select-date" onchange="renderBoard()">
+                <option value="23" selected>23</option>
+                <option value="21">21</option>
+                <option value="20">20</option>
+                <option value="15">15</option>
+            </select>
         </div>
     </div>
 
-    <div class="footer-info">
+    <div class="board-header">
+        <div>HORA META</div>
+        <div>UNIDAD / PILOTO</div>
+        <div>MISIÓN / MOVIMIENTO</div>
+        <div>RUTA</div>
+        <div>INTELIGENCIA / ESTATUS</div>
+        <div>CONTROL & PROGRESO</div>
+    </div>
+
+    <div class="board-container" id="board-container">
+        <div style="text-align:center; padding:50px; color:#64748b;">
+            <i class="fas fa-spinner fa-spin fa-2x" style="margin-bottom: 15px; color: var(--blue);"></i><br>
+            Esperando sincronización con Data Cloud Joloda...
+        </div>
+    </div>
+
+    <footer>
         <div class="legend">
-            <span><span class="dot" style="background:#00ff85"></span> En Rampa</span>
-            <span><span class="dot" style="background:#fca311"></span> En Patio</span>
-            <span><span class="dot" style="background:#4cc9f0"></span> Tránsito</span>
-            <span><span class="dot" style="background:#ff4d4d"></span> Retraso</span>
-            <span>🗑️ Anular</span>
+            <span><span class="dot" style="background:var(--green)"></span> En Rampa</span>
+            <span><span class="dot" style="background:var(--orange)"></span> En Patio</span>
+            <span><span class="dot" style="background:var(--blue)"></span> Tránsito</span>
+            <span><span class="dot" style="background:var(--red)"></span> Retraso</span>
+            <span><i class="fas fa-trash-alt" style="color:#64748b;"></i> Anular</span>
         </div>
-        <span id="last-update">Sincronizando...</span>
-    </div>
+        <div id="sync-time" style="font-family: monospace;">Sincronizando...</div>
+    </footer>
 
-<script>
-    document.write('<script src="datos_live.js?v=' + new Date().getTime() + '"><\/script>');
-</script>
     <script>
-        const allTrips = window.liveData || [];
-        const POWER_BI_URL = "https://app.powerbi.com/groups/me/reports/9c8cf0e6-9c0d-4322-965a-2e6b742d32e2/775a8d9db97de015d1a6?experience=power-bi"; 
-        
-        let currentLoc = localStorage.getItem('joloda_v14_loc') || "CD BÁRCENAS"; 
-        let tiempoMetaRampa = parseInt(localStorage.getItem('joloda_meta_time')) || 60;
+        document.write('<script src="datos_live.js?v=' + new Date().getTime() + '"><\/script>');
+    </script>
 
+    <script>
+        // ================= VARIABLES ORIGINALES Y CONFIGURACIÓN =================
+        const POWER_BI_URL = "https://app.powerbi.com/groups/me/reports/9c8cf0e6-9c0d-4322-965a-2e6b742d32e2/775a8d9db97de015d1a6?experience=power-bi";
+        
+        let currentLoc = localStorage.getItem('joloda_v14_loc') || "CD BÁRCENAS";
+        let tiempoMetaRampa = parseInt(localStorage.getItem('joloda_meta_time')) || 60;
+        
+        // Reloj y Fecha Header
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('header-date').innerText = new Date().toLocaleDateString('es-ES', options).toUpperCase();
+        setInterval(() => { document.getElementById('sync-time').innerText = "Última Sincronización: " + new Date().toLocaleTimeString(); }, 1000);
+
+        // ================= FUNCIONES DE INTERFAZ ORIGINALES =================
+        function cerrarTorre() {
+            window.parent.postMessage("CLOSE_MONITOR", "*");
+        }
+
+        function abrirPowerBI() {
+            window.open(POWER_BI_URL, "_blank");
+        }
+
+        function setLoc(loc, btnElement) {
+            currentLoc = loc;
+            localStorage.setItem('joloda_v14_loc', loc);
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            btnElement.classList.add('active');
+            renderBoard();
+        }
+
+        function setMeta(mins) {
+            tiempoMetaRampa = mins;
+            localStorage.setItem('joloda_meta_time', mins);
+            document.getElementById('meta-1').classList.remove('active-meta');
+            document.getElementById('meta-30').classList.remove('active-meta');
+            document.getElementById('meta-60').classList.remove('active-meta');
+            document.getElementById(`meta-${mins}`).classList.add('active-meta');
+            renderBoard();
+        }
+
+        // ================= FUNCIONES DE ANULACIÓN (LOCAL STORAGE) =================
         function anularViaje(unitId) {
-            let motivo = prompt(`Motivo de anulación para ${unitId}:`);
+            let motivo = prompt(`Motivo de anulación para el viaje de ${unitId}:`);
             if (motivo) {
                 let cancelledData = JSON.parse(localStorage.getItem('joloda_cancelled')) || {};
                 cancelledData[unitId] = motivo;
@@ -206,7 +414,7 @@
         }
 
         function restaurarViaje(unitId) {
-            if(confirm("¿RESTAURAR este viaje?")) {
+            if(confirm(`¿Estás seguro de RESTAURAR el viaje de ${unitId}?`)) {
                 let cancelledData = JSON.parse(localStorage.getItem('joloda_cancelled')) || {};
                 delete cancelledData[unitId];
                 localStorage.setItem('joloda_cancelled', JSON.stringify(cancelledData));
@@ -214,283 +422,173 @@
             }
         }
 
-        /* --- LÓGICA DE INTELIGENCIA PREDICTIVA Y POST-MORTEM OFICIAL --- */
-        function predecirEstado(trip) {
-            // 1. SI YA LLEGÓ Y HAY DATOS EN EXCEL (Post-mortem)
-            if (trip.detail && trip.detail !== "--" && trip.detail !== "" && trip.detail !== "00:00:00" && trip.detail !== "00:00") {
-                // Si hay diferencia (ej. 00:22), lo marca rojo como retraso confirmado.
-                return `<span class="badge bg-late">⚠️ RETRASO CONFIRMADO: ${trip.detail}</span>`;
-            } else if (trip.detail === "00:00:00" || trip.detail === "00:00") {
-                 return `<span class="badge bg-ok">✅ A TIEMPO</span>`;
+        // ================= EL NUEVO CEREBRO: PROGRESO Y TIEMPO DE CICLO =================
+        function calcularProgresoInteligente(camion, isCancelled) {
+            // Si está anulado en Local Storage, sobreescribe todo
+            if (isCancelled) {
+                return { pct: 0, text: "ANULADO", color: "#64748b", cycleTime: "", boxClass: "anulado", boxIcon: "fas fa-ban", boxText: "VIAJE ANULADO" };
             }
 
-            // 2. INTELIGENCIA PREDICTIVA (En vivo - operador no ha ingresado hora real)
-            if (trip.statusText === "TRÁNSITO" || trip.statusText === "PROGRAMADO") {
-                let ahora = new Date(); 
-                let [h, m] = trip.time.split(':'); 
-                let horaMeta = new Date(); 
-                horaMeta.setHours(h, m, 0);
+            let prog = { pct: 10, text: "PROGRAMADO", color: "#00d4ff", cycleTime: "", boxClass: "a-tiempo", boxIcon: "fas fa-check", boxText: "A TIEMPO" };
+
+            let estatus = (camion.statusText || "").toUpperCase();
+            let tiempoCiclo = camion.cycleTime || camion.tiempo_ciclo || camion.tiempo_total || ""; 
+            let rampaFinExcel = camion.rampaEnd || camion.tiempo_fin || "";
+
+            // 1. Terminado Real (Basado en datos de Excel)
+            if (estatus.includes("TERMINA") || estatus.includes("COMPLET") || tiempoCiclo !== "" || rampaFinExcel !== "") {
+                prog.pct = 100;
+                prog.text = "TERMINADO";
+                prog.color = "var(--green)";
+                prog.boxClass = "a-tiempo";
+                prog.boxIcon = "fas fa-check-double";
+                prog.boxText = "VIAJE CUMPLIDO";
+                prog.cycleTime = tiempoCiclo ? `<div class="cycle-time-label"><i class="fas fa-stopwatch"></i> Ciclo Real: ${tiempoCiclo}</div>` : `<div class="cycle-time-label"><i class="fas fa-stopwatch"></i> Ciclo Cerrado</div>`;
+                return prog;
+            }
+
+            // 2. Simulación Inteligente (Basado en el Reloj actual vs Hora Meta)
+            if (camion.time && camion.time !== "00:00") {
+                const ahora = new Date();
+                let [horaMetaStr, minMetaStr] = camion.time.split(':');
                 
-                if (ahora > horaMeta) {
-                    let diffMinutes = Math.floor((ahora - horaMeta) / 60000);
-                    if (diffMinutes > 0) return `<span class="badge bg-warn">⚠️ ALERTA EN VIVO: RETRASO (+${diffMinutes}m)</span>`;
-                } else {
-                    return `<span class="badge" style="color:#8b949e; border: 1px solid #30363d;">⏳ EN RUTA (A TIEMPO)</span>`;
+                let fechaMeta = new Date();
+                fechaMeta.setHours(parseInt(horaMetaStr, 10), parseInt(minMetaStr, 10), 0, 0);
+
+                let difMinutos = (ahora - fechaMeta) / (1000 * 60);
+
+                if (difMinutos > tiempoMetaRampa) { 
+                    prog.pct = 100; prog.text = "TERMINADO"; prog.color = "var(--green)";
+                    prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check-double"; prog.boxText = "VIAJE CUMPLIDO";
+                    prog.cycleTime = `<div class="cycle-time-label" style="color:var(--orange); border-color:var(--orange); background:rgba(255,170,0,0.1);"><i class="fas fa-magic"></i> Ciclo Est.: 1h 15m</div>`;
+                } else if (difMinutos > (tiempoMetaRampa / 3)) { 
+                    prog.pct = 75; prog.text = "EN RAMPA"; prog.color = "var(--orange)";
+                    prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check"; prog.boxText = "EN PROCESO";
+                } else if (difMinutos > -30) {
+                    prog.pct = 40; prog.text = "EN PATIO"; prog.color = "var(--blue)";
+                    prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check"; prog.boxText = "A TIEMPO";
+                }
+                
+                if (estatus.includes("RETRASO")) {
+                     prog.boxClass = "retraso"; prog.boxIcon = "fas fa-exclamation-triangle"; prog.boxText = "RETRASO CONFIRMADO";
+                     prog.color = "var(--red)"; 
                 }
             }
-            return `<span class="badge" style="color:#555">ESPERANDO DATOS</span>`;
+            return prog;
         }
 
+        // ================= MOTOR PRINCIPAL DE RENDERIZADO =================
         function renderBoard() {
-            const board = document.getElementById('board');
-            const selectedMonth = document.getElementById('monthFilter').value;
-            const selectedDay = document.getElementById('dayFilter').value;
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const container = document.getElementById('board-container');
+            container.innerHTML = ''; 
             
-            const trips = allTrips.filter(t => {
-                let m = t.month ? t.month.trim().toUpperCase() : "MES";
-                let d = t.day ? t.day.toString().trim() : "";
-                
-                return m === selectedMonth && 
-                       d === selectedDay &&
-                       t.location === currentLoc &&
-                       (t.unit.toLowerCase().includes(searchTerm) || 
-                        t.mission.toLowerCase().includes(searchTerm) ||
-                        (t.plate && t.plate.toLowerCase().includes(searchTerm)) ||
-                        (t.pilot && t.pilot.toLowerCase().includes(searchTerm)));
-            });
-
-            document.getElementById('move-summary').innerText = `TOTAL MOVIMIENTOS: ${trips.length}`;
-
-            const headers = board.firstElementChild; board.innerHTML = ''; board.appendChild(headers);
-
-            if (trips.length === 0) {
-                board.insertAdjacentHTML('beforeend', `<div style="grid-column:1/-1; padding:50px; text-align:center; color:#555;">🔍 No hay datos para mostrar en este día.</div>`); return;
-            }
-
+            const mesSeleccionado = document.getElementById('select-mes').value.toUpperCase();
+            const diaSeleccionado = document.getElementById('select-dia').value;
+            const search = document.getElementById('searchInput').value.toUpperCase();
+            
             let cancelledData = JSON.parse(localStorage.getItem('joloda_cancelled')) || {};
 
-            trips.forEach((trip, index) => {
-                let isCancelled = cancelledData[trip.unit] ? true : false;
-                let rowClass = "trip-row";
-                if (isCancelled) rowClass += " row-cancelled";
-                else if (trip.statusText === "EN RAMPA") rowClass += " active-row";
-
-                let truckIcon = getTruckSVG(trip.statusText);
-                
-                let missionTypeHtml = "";
-                let lowerMission = trip.mission.toLowerCase();
-                if (lowerMission.includes("carga") && !lowerMission.includes("descarga")) {
-                    missionTypeHtml = `<span class="mission-badge type-carga">📦 CARGA</span>`;
-                } else if (lowerMission.includes("descarga")) {
-                    missionTypeHtml = `<span class="mission-badge type-descarga">📥 DESCARGA</span>`;
-                } else {
-                    missionTypeHtml = `<span class="mission-badge" style="background:#333; color:#aaa; border-left:3px solid #555;">⏺️ OPERACIÓN</span>`;
-                }
-
-                let pilotHtml = "";
-                let callBtnHtml = "";
-                if(!isCancelled) {
-                    let hasPilot = trip.pilot && trip.pilot !== "" && trip.pilot !== "Sin Asignar";
-                    let hasPlate = trip.plate && trip.plate !== "";
-                    if (hasPilot || hasPlate) {
-                        pilotHtml = `<div class="pilot-card">
-                            ${hasPilot ? `<div class="pilot-row"><svg class="pilot-icon" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 1 4 1 1ZM3 14h10c.5 0 1-.5 1-1.5-.5-1.5-2.5-2-6-2-3.5 0-5.5.5-6 2-.5 1 .5 1.5 1 1.5Z"/></svg> <span>${trip.pilot}</span></div>` : ''}
-                            ${hasPlate ? `<div class="pilot-row"><svg class="pilot-icon" viewBox="0 0 16 16"><path d="M4.817 9a.5.5 0 0 1 .496.044L7.5 10.582l2.187-1.538a.5.5 0 0 1 .496-.044L13 10.455V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v4.455l2.817-1.455Z"/><path d="M3 13.5v-2h10v2a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5Z"/></svg> <span class="plate-badge">${trip.plate}</span></div>` : ''}
-                        </div>`;
-                    } else {
-                        pilotHtml = `<div class="pilot-card"><span class="no-data">Sin asignar</span></div>`;
-                    }
-                    if(trip.phone && trip.phone.length > 4) {
-                        callBtnHtml = `<button class="btn-call-mini" title="Llamar a ${trip.phone}" onclick="llamarPilotoDirecto('${trip.phone}')">📞</button>`;
-                    }
-                }
-
-                let unitDisplay = `
-                    <div class="unit-info-container">
-                        <div class="unit-top">
-                            <a href="${trip.gps}" target="_blank" class="unit-link" title="Ver en Mapa">
-                                ${trip.unit} <svg width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
-                            </a>
-                            ${callBtnHtml}
-                        </div>
-                        ${pilotHtml}
-                    </div>
-                `;
-
-                let controlContent = "";
-                if (isCancelled) {
-                    controlContent = `<button class="btn-trash" onclick="restaurarViaje('${trip.unit}')" style="width:100%">♻️ RESTAURAR</button>`;
-                } else if (trip.statusText === "EN RAMPA") {
-                    controlContent = getTimerHtml(trip.unit) + getTrashBtn(trip.unit);
-                } else {
-                    controlContent = getProgressBar(trip.statusText) + getTrashBtn(trip.unit);
-                }
-
-                let causaExcel = (trip.cause && trip.cause !== "" && !isCancelled) ? `<div class="cause-text">📝 ${trip.cause}</div>` : "";
-                let movCounter = `<div class="mov-badge">Mov ${index + 1} de ${trips.length}</div>`;
-
-                const html = `
-                    <div class="${rowClass}">
-                        <div class="cell time-cell ${isCancelled?'cancelled-text':''}">
-                            <span class="time-main">${trip.time}</span>
-                            ${!isCancelled ? movCounter : ''}
-                        </div>
-                        <div class="cell">${unitDisplay}</div>
-                        <div class="cell ${isCancelled?'cancelled-text':''}">
-                            <div class="mission-container">
-                                ${!isCancelled ? missionTypeHtml : ''}
-                                <span class="mission-text">${trip.mission}</span>
-                            </div>
-                        </div>
-                        <div class="cell" style="display:flex; align-items:center;">${truckIcon} <span class="${isCancelled?'cancelled-text':''}">${trip.route}</span></div>
-                        <div class="cell" style="display:block;">
-                            ${isCancelled ? `<span class="cancelled-reason">🚫 Anulado: ${cancelledData[trip.unit]}</span>` : predecirEstado(trip)}
-                            ${causaExcel}
-                        </div>
-                        <div class="cell row-controls">${controlContent}</div>
-                    </div>
-                `;
-                board.insertAdjacentHTML('beforeend', html);
-            });
-            document.getElementById('last-update').innerText = "Sincronizado: " + new Date().toLocaleTimeString();
-        }
-
-        function getTruckSVG(status) {
-            let fill = "#4cc9f0"; 
-            if (status === "EN RAMPA") fill = "#00ff85";
-            if (status === "EN PATIO") fill = "#ff4d4d";
-            return `<svg class="truck-icon" style="fill:${fill}" viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>`;
-        }
-
-        function getTrashBtn(unit) { return `<button class="btn-trash" title="Anular Viaje" onclick="anularViaje('${unit}')" style="margin-left:auto;">🗑️</button>`; }
-        
-        function getProgressBar(status) {
-            let pct = status === "COMPLETADO" ? 100 : (status === "EN PATIO" ? 60 : (status === "TRÁNSITO" ? 35 : 10));
-            let color = status === "COMPLETADO" ? "#00ff85" : (status === "EN PATIO" ? "#fca311" : "#4cc9f0");
-            let striped = status === "EN PATIO" ? "progress-striped" : "";
-            return `<div class="progress-container"><div class="progress-header"><strong style="color:${color}">${pct}%</strong><span>${status}</span></div><div class="progress-track"><div class="progress-fill ${striped}" style="width:${pct}%; background:${color};"></div></div></div>`;
-        }
-
-        function getTimerHtml(unitId) {
-            const key = `timer_${unitId}`; const startTime = localStorage.getItem(key);
-            if (!startTime) return `<button class="btn-play" onclick="toggleUnitTimer('${unitId}')">▶ INICIAR CARGA</button>`;
-            const now = Date.now(); const diffSeconds = Math.floor((now - parseInt(startTime)) / 1000);
-            const h = Math.floor(diffSeconds / 3600).toString().padStart(2,'0'); const m = Math.floor((diffSeconds % 3600) / 60).toString().padStart(2,'0'); const s = (diffSeconds % 60).toString().padStart(2,'0');
-            let timerClass = "timer-display"; if (diffSeconds > (tiempoMetaRampa * 60)) timerClass += " timer-overdue";
-            return `<div style="display:flex; align-items:center; width:100%; justify-content:space-between;"><span class="${timerClass}">${h}:${m}:${s}</span> <button class="btn-play" style="background:#444; border-color:#666; padding:4px 8px;" onclick="toggleUnitTimer('${unitId}')">⬛</button></div>`;
-        }
-        function toggleUnitTimer(unitId) { const key = `timer_${unitId}`; if (localStorage.getItem(key)) { if(confirm("¿Detener el cronómetro?")) localStorage.removeItem(key); } else { localStorage.setItem(key, Date.now()); } renderBoard(); }
-
-        function setLoc(loc) { currentLoc = loc; localStorage.setItem('joloda_v14_loc', loc); updateTabStyles(); renderBoard(); }
-        function updateTabStyles() { document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); if(b.innerText.includes(currentLoc.replace('FÁBRICA ',''))) b.classList.add('active'); }); }
-        function setMetaTime(m) { tiempoMetaRampa = m; localStorage.setItem('joloda_meta_time', m); document.querySelectorAll('.btn-meta').forEach(b => b.classList.remove('active-meta')); if(document.getElementById('meta-'+m)) document.getElementById('meta-'+m).classList.add('active-meta'); renderBoard(); }
-        function manualRefresh() { window.location.reload(); }
-        
-        function saveDaySelection() { 
-            localStorage.setItem('joloda_v16_day', document.getElementById('dayFilter').value); 
-            renderBoard(); 
-        }
-        
-        function openDashboard() { if (POWER_BI_URL.includes("XXXX")) alert("Configura el link de Power BI."); else window.open(POWER_BI_URL, '_blank'); }
-        
-        function generarReporteGrupal() { 
-            let month = document.getElementById('monthFilter').value;
-            let day = document.getElementById('dayFilter').value;
-            
-            let trips = allTrips.filter(t => {
-                let m = t.month ? t.month.trim().toUpperCase() : "MES";
-                let d = t.day ? t.day.toString().trim() : "";
-                return m === month && d === day && t.location === currentLoc && !JSON.parse(localStorage.getItem('joloda_cancelled') || '{}')[t.unit];
-            });
-            
-            if(trips.length === 0) { alert("No hay datos visibles."); return; }
-            let enRampa = trips.filter(t=>t.statusText==='EN RAMPA').length;
-            let enPatio = trips.filter(t=>t.statusText==='EN PATIO').length;
-            let transito = trips.filter(t=>t.statusText==='TRÁNSITO').length;
-            let conAlertas = trips.filter(t => (t.detail && (t.detail.includes("-") || t.detail.includes("Desv")))).length;
-            
-            let txt = `*REPORTE JOLODA - ${currentLoc}*\n📅 ${month} - DÍA ${day}\n\n*ESTATUS OPERATIVO:*\n🚛 En Tránsito: ${transito}\n🅿️ En Patio: ${enPatio}\n🏗️ En Rampa: ${enRampa}\n\n✅ Total Activos: ${trips.length}`;
-            if(conAlertas > 0) txt += `\n⚠️ *ATENCIÓN:* ${conAlertas} unidades con retraso.`;
-            let final = prompt("Texto del reporte:", txt);
-            if(final) { window.open("https://wa.me/?text="+encodeURIComponent(final), '_blank'); }
-        }
-
-        function abrirWhatsAppManual() { let n = prompt("Número:"); if(n) window.open("https://wa.me/502"+n.replace(/\D/g,''), '_blank'); }
-        function llamarPilotoDirecto(num) { if(!num) return; let cleanNum = num.replace(/\D/g,''); if(confirm(`¿Contactar a ${num}?`)) { window.open("https://wa.me/502"+cleanNum, '_blank'); } }
-
-        function initFilters() {
-            const monthSelect = document.getElementById('monthFilter');
-            let months = [...new Set(allTrips.map(t => (t.month ? t.month.trim().toUpperCase() : "MES")))];
-            months = months.filter(m => m !== "" && m !== "MES" && m !== "UNDEFINED");
-            if(months.length === 0) months = ["MES"];
-            
-            monthSelect.innerHTML = "";
-            months.forEach(m => {
-                let opt = document.createElement("option");
-                opt.value = m; opt.text = m;
-                monthSelect.appendChild(opt);
-            });
-            
-            let savedMonth = localStorage.getItem('joloda_v16_month');
-            if(savedMonth && months.includes(savedMonth)) monthSelect.value = savedMonth;
-            else monthSelect.value = months[months.length - 1]; 
-            
-            updateDaysAndRender(true); 
-        }
-
-        function updateDaysAndRender(isInit = false) {
-            const monthSelect = document.getElementById('monthFilter');
-            const daySelect = document.getElementById('dayFilter');
-            let selectedMonth = monthSelect.value;
-            localStorage.setItem('joloda_v16_month', selectedMonth);
-            
-            let daysForMonth = allTrips.filter(t => (t.month ? t.month.trim().toUpperCase() : "MES") === selectedMonth)
-                                       .map(t => parseInt(t.day))
-                                       .filter(d => !isNaN(d));
-            
-            let uniqueDays = [...new Set(daysForMonth)].sort((a,b)=>a-b);
-            
-            daySelect.innerHTML = "";
-            if(uniqueDays.length > 0) {
-                uniqueDays.forEach(d => {
-                    let opt = document.createElement("option");
-                    opt.value = d; opt.text = d;
-                    daySelect.appendChild(opt);
-                });
-                
-                if(isInit) {
-                    let savedDay = localStorage.getItem('joloda_v16_day');
-                    if(savedDay && uniqueDays.includes(parseInt(savedDay))) {
-                        daySelect.value = savedDay;
-                    } else {
-                        daySelect.value = uniqueDays[uniqueDays.length - 1]; 
-                    }
-                } else {
-                    daySelect.value = uniqueDays[uniqueDays.length - 1]; 
-                }
-            } else {
-                let opt = document.createElement("option");
-                opt.text = "Sin Datos";
-                daySelect.appendChild(opt);
+            if (!window.liveData || window.liveData.length === 0) {
+                container.innerHTML = '<div style="text-align:center; padding:50px; color:var(--red);"><i class="fas fa-exclamation-triangle fa-2x"></i><br><br>No se detectan datos de Excel. Verifica la conexión a datos_live.js</div>';
+                return;
             }
-            
-            saveDaySelection();
+
+            const normalizar = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+            let datosFiltrados = window.liveData.filter(cam => {
+                let matchMes = normalizar(cam.month) === normalizar(mesSeleccionado);
+                let matchDia = parseInt(cam.day) === parseInt(diaSeleccionado);
+                let matchNodo = normalizar(cam.location).includes(normalizar(currentLoc));
+                let matchSearch = normalizar(cam.unit).includes(search) || normalizar(cam.pilot).includes(search) || normalizar(cam.plate).includes(search) || normalizar(cam.detail).includes(search);
+                
+                return matchMes && matchDia && matchNodo && matchSearch;
+            });
+
+            document.getElementById('total-movs').innerText = `TOTAL MOVIMIENTOS: ${datosFiltrados.length}`;
+
+            if (datosFiltrados.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding:50px; color:#64748b; font-size:1.2rem;"><i class="fas fa-truck-loading fa-2x" style="margin-bottom:15px; opacity:0.5;"></i><br>No hay operaciones programadas para <strong>${currentLoc}</strong> el ${diaSeleccionado} de ${mesSeleccionado}.</div>`;
+                return;
+            }
+
+            datosFiltrados.forEach((camion, index) => {
+                
+                // Identificador único para anular (Usa unidad + hora como ID único)
+                let uid = `${camion.unit}_${camion.time}`.replace(/\s+/g, '');
+                let isCancelled = cancelledData[uid] !== undefined;
+
+                // Lógica de íconos Carga/Descarga
+                let esCarga = normalizar(camion.detail || "").includes("CARGA") || normalizar(camion.activity || "").includes("CARGA");
+                let badgeCls = esCarga ? "carga" : "descarga";
+                let badgeIco = esCarga ? "fas fa-box" : "fas fa-box-open";
+                let badgeTxt = esCarga ? "CARGA" : "OPERACIÓN";
+
+                // Consultar al Nuevo Cerebro
+                let pro = calcularProgresoInteligente(camion, isCancelled);
+
+                // Generar HTML de la Tarjeta
+                const card = document.createElement('div');
+                card.className = `trip-card ${isCancelled ? 'anulado' : ''}`;
+                
+                let botonAccionHTML = isCancelled 
+                    ? `<i class="fas fa-undo-alt btn-restore" onclick="restaurarViaje('${uid}')" title="Restaurar Viaje"></i>` 
+                    : `<i class="fas fa-trash-alt btn-trash" onclick="anularViaje('${uid}')" title="Anular Viaje"></i>`;
+
+                card.innerHTML = `
+                    <div class="col-meta">
+                        <h2>${camion.time}</h2>
+                        <small>Mov ${index + 1} de ${datosFiltrados.length}</small>
+                    </div>
+                    <div class="col-unidad">
+                        <h3>${camion.unit} <i class="fas fa-map-marker-alt" style="color:var(--orange); font-size:12px;"></i></h3>
+                        <p><i class="fas fa-user"></i> ${camion.pilot || "No Asignado"}</p>
+                        <p><i class="fas fa-truck"></i> <span class="plate-badge">${camion.plate || "S/D"}</span></p>
+                        ${camion.phone ? `<div class="btn-call-small" title="Llamar a ${camion.phone}"><i class="fas fa-phone-alt"></i></div>` : ''}
+                    </div>
+                    <div class="col-mision">
+                        <span class="mission-badge ${badgeCls}"><i class="${badgeIco}"></i> ${badgeTxt}</span>
+                        <p>${camion.detail || camion.activity || "Movimiento Joloda"}</p>
+                        ${isCancelled ? `<p style="color:var(--red); font-size:11px; margin-top:5px; font-style:italic;">Motivo: ${cancelledData[uid]}</p>` : ''}
+                    </div>
+                    <div class="col-ruta">
+                        <i class="fas fa-route" style="margin-right:8px; color:#64748b;"></i> ${camion.route || (currentLoc.includes("BARCENAS") ? "CD -> Z12" : "Z12 -> CD")}
+                    </div>
+                    <div class="col-estatus">
+                        <div class="status-box ${pro.boxClass}"><i class="${pro.boxIcon}"></i> ${pro.boxText}</div>
+                    </div>
+                    <div class="col-progreso">
+                        <div class="prog-header">
+                            <span style="color:${pro.color}; font-size:13px;">${pro.pct}%</span>
+                            <span style="color:#e2e8f0;">${pro.text}</span>
+                            ${botonAccionHTML}
+                        </div>
+                        <div class="prog-bar-bg">
+                            <div class="prog-bar-fill" style="width:${pro.pct}%; background:${pro.color};"></div>
+                        </div>
+                        ${pro.cycleTime}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
 
-        function init() {
-            initFilters();
-            setMetaTime(tiempoMetaRampa); 
-            updateTabStyles(); 
-            
-            setInterval(() => {
-                const now = new Date(); 
-                document.getElementById('clock').innerText = now.toLocaleTimeString('es-GT', { hour12: false }); 
-                document.getElementById('date-display').innerText = now.toLocaleDateString('es-GT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                if(document.querySelector('.timer-display')) renderBoard();
-            }, 1000);
+        // ================= INICIALIZACIÓN =================
+        function initApp() {
+            document.querySelectorAll('.meta-pills span').forEach(s => s.classList.remove('active-meta'));
+            let metaSpan = document.getElementById(`meta-${tiempoMetaRampa}`);
+            if(metaSpan) metaSpan.classList.add('active-meta');
+
+            document.querySelectorAll('.tab').forEach(t => {
+                t.classList.remove('active');
+                if(t.innerText.includes(currentLoc.replace("FABRICA ", ""))) t.classList.add('active');
+            });
+
+            renderBoard();
         }
-        init();
+
+        // Retraso de 600ms para asegurar que el archivo datos_live.js termine de cargar desde la red
+        setTimeout(initApp, 600);
+
     </script>
 </body>
 </html>

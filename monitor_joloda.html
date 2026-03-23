@@ -6,122 +6,317 @@
     <title>Torre de Control Joloda</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* ================= VARIABLES Y FONDOS ================= */
+        /* ================= VARIABLES Y FONDOS CIBERNÉTICOS ================= */
         :root {
-            --bg: #0b1116; --header-bg: #0f1721; --card-bg: #151d28;
-            --green: #00ff88; --blue: #00d4ff; --red: #ff4d4d; --orange: #ffaa00; --text: #e2e8f0;
+            --bg: #0b1116; 
+            --header-bg: #0f1721; 
+            --card-bg: #151d28;
+            --green: #00ff88; 
+            --blue: #00d4ff; 
+            --red: #ff4d4d; 
+            --orange: #ffaa00; 
+            --text: #e2e8f0;
             --border: #1e293b;
+            --purple: #a855f7;
+            --neon-glow: 0 0 15px rgba(0, 212, 255, 0.3);
         }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
         
-        /* ================= HEADER ================= */
-        header { display: flex; justify-content: space-between; align-items: center; background: var(--header-bg); padding: 15px 30px; border-bottom: 1px solid var(--blue); box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);}
+        /* ================= HEADER REDISEÑADO (COMPACTO) ================= */
+        header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--header-bg); 
+            padding: 10px 30px; 
+            border-bottom: 1px solid var(--blue); 
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+        }
         .header-title { display: flex; align-items: center; gap: 15px;}
-        .header-title img { height: 40px; margin-right: 5px;} /* LOGO RESTAURADO */
-        .header-title h1 { margin: 0; font-size: 1.5rem; color: var(--blue); letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,212,255,0.3);}
+        .header-title img { height: 35px; margin-right: 5px; filter: drop-shadow(0 0 5px rgba(0,212,255,0.4));} /* LOGO CON GLOW */
+        .header-title h1 { margin: 0; font-size: 1.3rem; color: #fff; letter-spacing: 2px;}
         
-        .header-info { display: flex; align-items: center; gap: 20px; }
+        .header-info { display: flex; align-items: center; gap: 15px; }
         .header-date-container { text-align: right; }
-        .header-date { color: #8892b0; font-size: 14px; text-transform: uppercase; margin-bottom: 5px; display: block; font-weight: bold;}
-        .header-totals { color: var(--orange); font-weight: bold; font-size: 14px;}
+        .header-date { color: #8892b0; font-size: 12px; text-transform: uppercase; margin-bottom: 3px; display: block;}
+        .header-totals { color: var(--orange); font-weight: bold; font-size: 13px;}
         
-        .btn-close-monitor { background: rgba(255, 77, 77, 0.1); color: var(--red); padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; border: 1px solid var(--red); transition: 0.2s; display: flex; align-items: center; gap: 8px;}
-        .btn-close-monitor:hover { background: var(--red); color: #000; box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);}
+        /* BOTÓN CERRAR REDUCIDO */
+        .btn-close-monitor { 
+            background: rgba(255, 77, 77, 0.1); 
+            color: var(--red); 
+            padding: 8px 15px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            border: 1px solid var(--red); 
+            transition: 0.2s; 
+            display: flex; 
+            align-items: center; 
+            gap: 5px; 
+            font-size: 12px;
+        }
+        .btn-close-monitor:hover { 
+            background: var(--red); 
+            color: #000; 
+            box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
+        }
 
-        /* ================= TABS Y FILTROS ================= */
-        .controls-bar { display: flex; justify-content: space-between; padding: 15px 30px; background: rgba(15, 23, 33, 0.7); border-bottom: 1px solid var(--border); align-items: center;}
-        .tabs { display: flex; gap: 10px; align-items: center;}
-        .tab { background: transparent; color: #64748b; border: 1px solid transparent; padding: 8px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: 0.3s;}
+        /* ================= CONTROLES Y FILTROS ================= */
+        .controls-bar { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 10px 30px; 
+            background: rgba(15, 23, 33, 0.7); 
+            border-bottom: 1px solid var(--border); 
+            align-items: center;
+        }
+        .tabs { display: flex; gap: 8px; align-items: center;}
+        .tab { 
+            background: transparent; 
+            color: #64748b; 
+            border: 1px solid transparent; 
+            padding: 6px 15px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-size: 12px;
+        }
         .tab:hover { color: #fff; }
-        .tab.active { background: rgba(0, 212, 255, 0.1); color: var(--blue); border: 1px solid var(--blue); box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);}
+        .tab.active { 
+            background: rgba(0, 212, 255, 0.1); 
+            color: var(--blue); 
+            border: 1px solid var(--blue); 
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+        }
         
-        .search-box { position: relative; margin-left: 15px; }
-        .search-box input { background: #0b1116; border: 1px solid #334155; padding: 8px 15px 8px 35px; border-radius: 20px; color: #fff; outline: none; width: 200px; transition: 0.3s;}
-        .search-box input:focus { border-color: var(--blue); width: 250px;}
-        .search-box i { position: absolute; left: 12px; top: 10px; color: #64748b; }
+        .search-box { position: relative; margin-left: 10px; }
+        .search-box input { 
+            background: #0b1116; 
+            border: 1px solid #334155; 
+            padding: 6px 10px 6px 30px; 
+            border-radius: 20px; 
+            color: #fff; 
+            outline: none; 
+            width: 180px; 
+            transition: 0.3s; 
+            font-size: 12px;
+        }
+        .search-box input:focus { border-color: var(--blue); width: 230px;}
+        .search-box i { position: absolute; left: 10px; top: 8px; color: #64748b; font-size: 12px;}
 
-        .action-filters { display: flex; gap: 10px; align-items: center;}
-        .meta-pills { display: flex; gap: 5px; align-items: center; margin-right: 10px; background: rgba(255,255,255,0.03); padding: 4px 8px; border-radius: 6px; border: 1px solid #334155;}
-        .meta-pills span { padding: 4px 10px; border-radius: 4px; font-size: 12px; cursor:pointer; color: #8892b0; font-weight: bold; transition: 0.2s;}
-        .meta-pills span.active-meta { background: var(--orange); color: #000; box-shadow: 0 0 10px rgba(255,170,0,0.4);}
+        .action-filters { display: flex; gap: 8px; align-items: center;}
+        .meta-pills { 
+            display: flex; 
+            gap: 5px; 
+            align-items: center; 
+            margin-right: 10px; 
+            background: rgba(255,255,255,0.03); 
+            padding: 3px 6px; 
+            border-radius: 6px; 
+            border: 1px solid #334155;
+        }
+        .meta-pills span { 
+            padding: 4px 8px; 
+            border-radius: 4px; 
+            font-size: 11px; 
+            cursor:pointer; 
+            color: #8892b0; 
+            font-weight: bold; 
+            transition: 0.2s;
+        }
+        .meta-pills span.active-meta { 
+            background: var(--orange); 
+            color: #000; 
+            box-shadow: 0 0 8px rgba(255,170,0,0.4);
+        }
         
-        .btn-action { padding: 8px 15px; border-radius: 4px; font-weight: bold; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; font-size: 12px;}
+        .btn-action { 
+            padding: 8px 15px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            border: none; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            transition: 0.3s; 
+            font-size: 12px;
+        }
         .btn-llamar { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid var(--green);}
         .btn-llamar:hover { background: var(--green); color: #000;}
-        .btn-reporte { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid #64748b;}
-        .btn-reporte:hover { background: #fff; color: #000;}
+        
+        /* BOTÓN DE REPORTE CON LOGO DE WHATSAPP MEJORADO */
+        .btn-reporte { 
+            background: rgba(0, 230, 118, 0.1); /* Color suave de WA */
+            color: #00e676; /* Color WA */
+            border: 1px solid #00e676;
+            transition: 0.3s;
+        }
+        .btn-reporte:hover { 
+            background: #00e676; /* Fondo WA */
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.6);
+        }
+        
         .btn-kpis { background: rgba(168, 85, 247, 0.1); color: var(--purple); border: 1px solid var(--purple);}
-        .btn-kpis:hover { background: var(--purple); color: #fff;}
+        .btn-kpis:hover { background: var(--purple); color: #fff; box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);}
+        
         .btn-icon { background: rgba(0, 212, 255, 0.1); color: var(--blue); border: 1px solid var(--blue); padding: 8px 12px;}
         .btn-icon:hover { background: var(--blue); color: #000;}
         
-        .select-date { background: #0b1116; color: #fff; border: 1px solid #334155; padding: 8px 10px; border-radius: 4px; outline: none; font-weight: bold;}
+        .select-date { 
+            background: #0b1116; 
+            color: #fff; 
+            border: 1px solid #334155; 
+            padding: 6px 8px; 
+            border-radius: 4px; 
+            outline: none; 
+            font-weight: bold; 
+            font-size: 12px;
+        }
         .select-date:focus { border-color: var(--blue);}
 
-        /* ================= COLUMNAS DE LA TABLA ================= */
-        .board-header { display: grid; grid-template-columns: 100px 220px 220px 200px 250px 1fr; padding: 15px 30px; font-size: 11px; font-weight: bold; color: var(--blue); text-transform: uppercase; border-bottom: 1px solid var(--border); letter-spacing: 1px;}
-        .board-container { padding: 15px 30px; display: flex; flex-direction: column; gap: 15px; height: calc(100vh - 260px); overflow-y: auto;}
+        /* ================= GRID DE TARJETAS REDISEÑADO (SIN LINEA LARGA) ================= */
+        .board-container { 
+            padding: 20px 30px; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Formato Tarjeta */
+            gap: 20px; 
+            height: calc(100vh - 160px); 
+            overflow-y: auto;
+            align-content: start;
+        }
 
-        /* ================= TARJETA DE VIAJE (ROW) ================= */
-        .trip-card { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); display: grid; grid-template-columns: 100px 220px 220px 200px 250px 1fr; align-items: center; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.3);}
-        .trip-card:hover { border-color: rgba(0, 212, 255, 0.4); background: #1a2230;}
-        .trip-card.anulado { opacity: 0.5; filter: grayscale(80%); border-color: #334155;}
+        /* ================= TARJETA INDIVIDUAL MAESTRA (REDISEÑADA) ================= */
+        .trip-card { 
+            background: var(--card-bg); 
+            border-radius: 12px; 
+            border: 1px solid var(--border); 
+            padding: 15px; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            position: relative;
+            min-height: 200px;
+        }
+        .trip-card:hover { 
+            border-color: var(--blue); 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.2);
+        }
+        .trip-card.anulado { 
+            opacity: 0.5; 
+            filter: grayscale(80%); 
+            border-color: #334155;
+        }
         
-        .col-meta { text-align: center; border-right: 1px solid rgba(255,255,255,0.05); padding: 15px 10px; display: flex; flex-direction: column; justify-content: center;}
-        .col-meta h2 { margin: 0; font-size: 1.6rem; color: #fff;}
-        .col-meta small { color: #64748b; font-size: 10px; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 10px; margin-top: 5px;}
+        /* Layout interno de la tarjeta */
+        .card-top-row { display: flex; justify-content: space-between; align-items: start;}
+        
+        /* Hora Meta a la izquierda */
+        .hora-meta-display { text-align: left; }
+        .hora-meta-display h2 { margin: 0; font-size: 1.8rem; color: #fff; text-shadow: var(--neon-glow); line-height: 1;}
+        .hora-meta-display small { color: #64748b; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
 
-        .col-unidad { padding: 15px; position: relative;}
-        .col-unidad h3 { margin: 0 0 5px 0; color: var(--orange); display: flex; align-items: center; gap: 5px; font-size: 15px;}
-        .col-unidad p { margin: 3px 0; font-size: 12px; color: #94a3b8; display: flex; align-items: center; gap: 8px;}
+        /* Iconos de Misión a la derecha */
+        .mision-icon-box { display: flex; align-items: center; gap: 8px;}
+        .mission-badge-icon { 
+            font-size: 1.2rem; padding: 8px; border-radius: 8px; background: rgba(15,23,33,0.5); 
+            border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
+        }
+        .mission-badge-icon.carga { color: var(--orange); border-color: rgba(255, 170, 0, 0.3); background: rgba(255, 170, 0, 0.1);}
+        .mission-badge-icon.descarga { color: var(--blue); border-color: rgba(0, 212, 255, 0.3); background: rgba(0, 212, 255, 0.1);}
+        
+        /* Info central de la tarjeta */
+        .card-center-row { display: flex; flex-direction: column; gap: 5px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;}
+        .unit-pilot-info { display: flex; justify-content: space-between; align-items: center;}
+        .unit-pilot-info h3 { margin: 0; color: var(--orange); font-size: 15px; display: flex; align-items: center; gap: 6px;}
         .plate-badge { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid var(--green); padding: 1px 6px; border-radius: 3px; font-family: monospace; font-size: 11px;}
-        .btn-call-small { position: absolute; right: 15px; top: 15px; width: 28px; height: 28px; background: rgba(0,255,136,0.1); color: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--green); cursor: pointer; transition: 0.3s;}
-        .btn-call-small:hover { background: var(--green); color: #000; transform: scale(1.1);}
+        
+        .pilot-contact-line { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #94a3b8; margin-top: 3px;}
+        .btn-call-small { 
+            color: var(--green); cursor: pointer; transition: 0.3s; font-size: 13px;
+        }
+        .btn-call-small:hover { transform: scale(1.2); color: #fff;}
 
-        .col-mision { padding: 15px; }
-        .mission-badge { background: #334155; color: #e2e8f0; font-size: 10px; padding: 3px 8px; border-radius: 3px; font-weight: bold; display: inline-block; margin-bottom: 8px; letter-spacing: 0.5px;}
-        .mission-badge.carga { background: rgba(255, 170, 0, 0.15); color: var(--orange); border: 1px solid var(--orange);}
-        .mission-badge.descarga { background: rgba(0, 212, 255, 0.15); color: var(--blue); border: 1px solid var(--blue);}
-        .col-mision p { margin: 0; font-size: 12px; color: #cbd5e1; line-height: 1.4;}
+        /* Ruta compacta */
+        .route-line { font-size: 12px; color: var(--blue); font-weight: bold; margin-top: 5px; display: flex; align-items: center; gap: 6px;}
+        
+        /* Detalle de Misión */
+        .mission-detail { font-size: 12px; color: #cbd5e1; margin-top: 3px; font-style: italic;}
 
-        .col-ruta { padding: 15px; color: var(--blue); font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 8px;}
-
-        .col-estatus { padding: 15px; }
-        .status-box { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 4px; font-weight: bold; font-size: 11px; letter-spacing: 0.5px;}
-        .status-box.a-tiempo { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid var(--green);}
-        .status-box.retraso { background: rgba(255, 77, 77, 0.1); color: var(--red); border: 1px solid var(--red);}
-        .status-box.pendiente { background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid #334155;}
+        /* ESTATUS Y PROGRESO GRUPAL (NUEVO LAYOUT COMPACTO) */
+        .card-status-progreso-group { 
+            display: flex; flex-direction: column; gap: 10px; 
+            border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px; margin-top: auto;
+        }
+        
+        .status-header { display: flex; justify-content: space-between; align-items: center;}
+        .status-box { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 4px; font-weight: bold; font-size: 10px; letter-spacing: 0.5px;}
+        
+        .status-box.a-tiempo { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid rgba(0, 255, 136, 0.2);}
+        .status-box.retraso { background: rgba(255, 77, 77, 0.1); color: var(--red); border: 1px solid rgba(255, 77, 77, 0.2);}
+        .status-box.pendiente { background: rgba(255, 255, 255, 0.03); color: #94a3b8; border: 1px solid rgba(255,255,255,0.05);}
         .status-box.anulado { background: rgba(255, 255, 255, 0.05); color: #64748b; border: 1px dashed #64748b;}
 
-        /* COLUMNA: CONTROL & PROGRESO */
-        .col-progreso { padding: 15px; display: flex; flex-direction: column; justify-content: center; gap: 8px; position: relative;}
-        .prog-header { display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: bold;}
-        .prog-bar-bg { width: 90%; height: 6px; background: #0b1116; border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);}
-        .prog-bar-fill { height: 100%; border-radius: 3px; transition: 1s ease-in-out;}
+        /* PROGRESS BAR COMPACTA */
+        .progreso-section-compact { display: flex; flex-direction: column; gap: 5px;}
+        .prog-header-compact { display: flex; justify-content: space-between; font-size: 11px; font-weight: bold;}
+        .prog-bar-bg-compact { width: 100%; height: 6px; background: #0b1116; border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);}
+        .prog-bar-fill-compact { height: 100%; border-radius: 3px; transition: 1s ease-in-out;}
         
-        .btn-trash { position: absolute; right: 15px; color: #64748b; cursor: pointer; transition: 0.2s; font-size: 14px;}
-        .btn-trash:hover { color: var(--red); transform: scale(1.2);}
-        .btn-restore { position: absolute; right: 15px; color: var(--blue); cursor: pointer; transition: 0.2s; font-size: 14px;}
+        /* Botones Basurero */
+        .trash-action-box { position: absolute; right: 10px; bottom: 10px; font-size: 14px;}
+        .btn-trash { color: #64748b; cursor: pointer; transition: 0.2s;}
+        .btn-trash:hover { color: var(--red); transform: scale(1.2) rotate(15deg);}
+        .btn-restore { color: var(--blue); cursor: pointer; transition: 0.2s;}
         .btn-restore:hover { color: #fff; transform: scale(1.2);}
         
-        .cycle-time-label { font-size: 11px; font-family: monospace; font-weight: bold; background: rgba(0,255,136,0.1); padding: 3px 8px; border-radius: 4px; text-align: left; border: 1px solid rgba(0,255,136,0.3); display: inline-block; margin-top: 5px; color: var(--green);}
+        /* Tiempo de Ciclo */
+        .cycle-time-tag { 
+            font-size: 10px; font-family: monospace; font-weight: bold; 
+            background: rgba(0,255,136,0.1); padding: 2px 6px; border-radius: 4px; 
+            color: var(--green); border: 1px solid rgba(0,255,136,0.2); margin-left: 5px;
+        }
 
         /* ================= FOOTER LEYENDA ================= */
-        footer { display: flex; justify-content: space-between; padding: 15px 30px; background: var(--header-bg); border-top: 1px solid var(--border); font-size: 12px; color: #8892b0;}
-        .legend { display: flex; gap: 15px;}
+        footer { 
+            display: flex; justify-content: space-between; padding: 10px 30px; 
+            background: var(--header-bg); border-top: 1px solid var(--border); 
+            font-size: 11px; color: #8892b0;
+        }
+        .legend { display: flex; gap: 12px;}
         .legend span { display: flex; align-items: center; gap: 5px;}
-        .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block;}
+        .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block;}
+        
+        /* ADAPTACIÓN MÓVIL */
+        @media (max-width: 900px) {
+            header { flex-direction: column; text-align: center; gap: 10px; padding: 10px;}
+            .header-title { flex-direction: column;}
+            .header-info { flex-direction: column;}
+            .controls-bar { flex-direction: column; gap: 10px; padding: 10px;}
+            .tabs { flex-wrap: wrap; justify-content: center;}
+            .action-filters { flex-wrap: wrap; justify-content: center;}
+            .board-container { grid-template-columns: 1fr; padding: 10px;}
+            footer { flex-direction: column; gap: 10px; text-align: center;}
+            .legend { justify-content: center; flex-wrap: wrap;}
+        }
+
     </style>
 </head>
 <body>
 
     <header>
         <div class="header-title">
-            <img src="logo.png" alt="Logo Joloda"> <h1>TORRE DE CONTROL JOLODA</h1>
+            <img src="logo.png" alt="Logo Nestle Joloda"> <h1>TORRE DE CONTROL JOLODA</h1>
         </div>
         <div class="header-info">
             <div class="header-date-container">
-                <span class="header-date" id="header-date">CARGANDO FECHA...</span>
+                <span class="header-date" id="header-date">LUNES, 23 DE MARZO DE 2026</span>
                 <span class="header-totals" id="total-movs">TOTAL MOVIMIENTOS: 0</span>
             </div>
             <div class="btn-close-monitor" onclick="cerrarTorre()">
@@ -137,7 +332,7 @@
             <button class="tab" onclick="setLoc('FABRICA ANTIGUA', this)">ANTIGUA</button>
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Buscar Unidad..." onkeyup="renderBoard()">
+                <input type="text" id="searchInput" placeholder="Buscar Unidad o Piloto..." onkeyup="renderBoard()">
             </div>
         </div>
         <div class="action-filters">
@@ -148,15 +343,17 @@
                 <span id="meta-60" class="active-meta" onclick="setMeta(60)">60m</span>
             </div>
             <button class="btn-action btn-llamar"><i class="fas fa-phone-alt"></i> LLAMAR</button>
-            <button class="btn-action btn-reporte" onclick="generarReporteWA()"><i class="fas fa-paper-plane"></i> REPORTE</button>
+            
+            <button class="btn-action btn-reporte" onclick="generarReporteWA()">
+                <i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> REPORTE
+            </button>
+            
             <button class="btn-action btn-kpis" onclick="abrirPowerBI()"><i class="fas fa-chart-pie"></i> KPIs</button>
             <button class="btn-action btn-icon" onclick="window.location.reload()" title="Refrescar Nube"><i class="fas fa-sync-alt"></i></button>
             
             <select id="select-mes" class="select-date" onchange="renderBoard()">
                 <option value="Marzo" selected>MARZO</option>
                 <option value="Abril">ABRIL</option>
-                <option value="Mayo">MAYO</option>
-                <option value="Junio">JUNIO</option>
                 <option value="Febrero">FEBRERO</option>
             </select>
             <select id="select-dia" class="select-date" onchange="renderBoard()">
@@ -164,17 +361,8 @@
         </div>
     </div>
 
-    <div class="board-header">
-        <div>HORA META</div>
-        <div>UNIDAD / PILOTO</div>
-        <div>MISIÓN / MOVIMIENTO</div>
-        <div>RUTA</div>
-        <div>INTELIGENCIA / ESTATUS</div>
-        <div>CONTROL & PROGRESO</div>
-    </div>
-
     <div class="board-container" id="board-container">
-        <div style="text-align:center; padding:50px; color:#64748b;">
+        <div style="text-align:center; padding:50px; color:#64748b; grid-column: 1 / -1;">
             <i class="fas fa-spinner fa-spin fa-2x" style="margin-bottom: 15px; color: var(--blue);"></i><br>
             Esperando sincronización con Data Cloud Joloda...
         </div>
@@ -216,32 +404,40 @@
             window.open(POWER_BI_URL, "_blank");
         }
 
-        // --- RESTAURADO: REPORTE DE WHATSAPP ---
+        // --- RESTAURADO: REPORTE DE WHATSAPP MEJORADO (SIN LINEAS LARGAS) ---
         function generarReporteWA() {
             const mes = document.getElementById('select-mes').value.toUpperCase();
             const dia = document.getElementById('select-dia').value;
             const total = document.getElementById('total-movs').innerText;
             
-            let reporte = `*TORRE DE CONTROL JOLODA* 🏭\n*Nodo:* ${currentLoc}\n*Fecha:* ${dia} de ${mes}\n*${total}*\n\n`;
+            let reporte = `*TORRE DE CONTROL JOLODA* 🛰️\n*Nodo:* ${currentLoc}\n*Fecha:* ${dia} de ${mes}\n*${total}*\n\n`;
             
             const tarjetas = document.querySelectorAll('.trip-card');
             if(tarjetas.length === 0) {
-                alert("No hay datos para generar el reporte.");
+                alert("No hay datos visibles en la torre para generar el reporte.");
                 return;
             }
             
+            let viajesContados = 0;
             tarjetas.forEach((card) => {
-                if(card.classList.contains('anulado')) return; // Omite los viajes anulados
+                if(card.classList.contains('anulado')) return; // Omite anulados
                 
+                viajesContados++;
                 let hora = card.querySelector('h2').innerText;
-                let unidad = card.querySelector('.col-unidad h3').innerText.trim();
-                let mision = card.querySelector('.col-mision p').innerText;
-                let progreso = card.querySelector('.prog-header span:nth-child(2)').innerText;
-                let estatusBox = card.querySelector('.status-box').innerText.trim();
+                let unidad = card.querySelector('.unit-pilot-info h3').innerText.trim();
+                let mision = card.querySelector('.mission-detail').innerText;
+                let pct = card.querySelector('.prog-header-compact span:nth-child(1)').innerText;
+                let estatus = card.querySelector('.status-box').innerText.trim();
                 
-                reporte += `🚛 *${unidad}* | Meta: ${hora}\n   ↳ Misión: ${mision}\n   ↳ Estatus: ${estatusBox} (${progreso})\n\n`;
+                reporte += `🚛 *${unidad}* | Meta: ${hora}\n  » Misión: ${mision}\n  » Estatus: ${estatus} (${pct})\n\n`;
             });
+
+            if(viajesContados === 0) {
+                alert("Todos los viajes visibles están anulados. No hay nada que reportar.");
+                return;
+            }
             
+            // Link de WhatsApp API
             let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(reporte)}`;
             window.open(url, '_blank');
         }
@@ -284,7 +480,7 @@
             }
         }
 
-        // ================= EL CEREBRO: PROGRESO Y TIEMPO DE CICLO =================
+        // ================= EL CEREBRO BLINDADO (SOLUCIÓN ZONA 12 Y ANTIGUA) =================
         function calcularProgresoInteligente(camion, isCancelled) {
             if (isCancelled) {
                 return { pct: 0, text: "ANULADO", color: "#64748b", cycleTime: "", boxClass: "anulado", boxIcon: "fas fa-ban", boxText: "VIAJE ANULADO" };
@@ -292,54 +488,71 @@
 
             let prog = { pct: 10, text: "PROGRAMADO", color: "#00d4ff", cycleTime: "", boxClass: "a-tiempo", boxIcon: "fas fa-check", boxText: "A TIEMPO" };
 
-            let estatus = (camion.statusText || "").toUpperCase();
-            let tiempoCiclo = camion.cycleTime || camion.tiempo_ciclo || camion.tiempo_total || ""; 
+            // Normalizar textos para evitar errores de tildes o mayúsculas
+            const normalizarStr = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+
+            let estatusRaw = camion.statusText || ""; // Tomado directamente del snippet de Aroldo
+            let estatusExcel = normalizarStr(estatusRaw);
+            
+            let tiempoCicloExcel = camion.cycleTime || camion.tiempo_ciclo || ""; 
             let rampaFinExcel = camion.rampaEnd || camion.tiempo_fin || "";
 
-            if (estatus.includes("TERMINA") || estatus.includes("COMPLET") || tiempoCiclo !== "" || rampaFinExcel !== "") {
+            // --- PASO 1: PRIORIDAD ABSOLUTA AL EXCEL (ARREGLA ZONA 12) ---
+            // Si el Excel dice TERMINA, COMPLET, o trae tiempos de fin o ciclo, está AL 100%
+            if (estatusExcel.includes("TERMINA") || estatusExcel.includes("COMPLET") || estatusExcel.includes("CONCLU") || 
+                tiempoCicloExcel !== "" || rampaFinExcel !== "") {
+                
                 prog.pct = 100;
                 prog.text = "TERMINADO";
                 prog.color = "var(--green)";
                 prog.boxClass = "a-tiempo";
                 prog.boxIcon = "fas fa-check-double";
                 prog.boxText = "VIAJE CUMPLIDO";
-                prog.cycleTime = tiempoCiclo ? `<div class="cycle-time-label"><i class="fas fa-stopwatch"></i> Ciclo Real: ${tiempoCiclo}</div>` : `<div class="cycle-time-label"><i class="fas fa-stopwatch"></i> Ciclo Cerrado</div>`;
-                return prog;
+                
+                // Mostrar el ciclo real si existe
+                prog.cycleTime = tiempoCicloExcel ? `(${tiempoCicloExcel})` : "";
+                return prog; // Salimos de la función, no simulamos nada
             }
 
+            // --- PASO 2: SIMULACIÓN INTELIGENTE (SOLO SI NO ESTÁ TERMINADO EN EXCEL) ---
             if (camion.time && camion.time !== "00:00") {
                 const ahora = new Date();
                 let [horaMetaStr, minMetaStr] = camion.time.split(':');
                 
+                // Creamos fecha de hoy a la hora meta para comparar
                 let fechaMeta = new Date();
                 fechaMeta.setHours(parseInt(horaMetaStr, 10), parseInt(minMetaStr, 10), 0, 0);
 
                 let difMinutos = (ahora - fechaMeta) / (1000 * 60);
 
                 if (difMinutos > tiempoMetaRampa) { 
+                    // Ya pasó el tiempo meta configurado: Asume Terminado por visualización
                     prog.pct = 100; prog.text = "TERMINADO"; prog.color = "var(--green)";
                     prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check-double"; prog.boxText = "VIAJE CUMPLIDO";
-                    prog.cycleTime = `<div class="cycle-time-label" style="color:var(--orange); border-color:var(--orange); background:rgba(255,170,0,0.1);"><i class="fas fa-magic"></i> Ciclo Est.: 1h 15m</div>`;
+                    prog.cycleTime = `(1h 15m Est.)`;
                 } else if (difMinutos > (tiempoMetaRampa / 3)) { 
+                    // En proceso de rampa
                     prog.pct = 75; prog.text = "EN RAMPA"; prog.color = "var(--orange)";
-                    prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check"; prog.boxText = "EN PROCESO";
+                    prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check"; prog.boxText = "OPERANDO";
                 } else if (difMinutos > -30) {
+                    // Cerca de la hora o en patio
                     prog.pct = 40; prog.text = "EN PATIO"; prog.color = "var(--blue)";
                     prog.boxClass = "a-tiempo"; prog.boxIcon = "fas fa-check"; prog.boxText = "A TIEMPO";
                 }
                 
-                if (estatus.includes("RETRASO")) {
-                     prog.boxClass = "retraso"; prog.boxIcon = "fas fa-exclamation-triangle"; prog.boxText = "RETRASO CONFIRMADO";
+                // Sobreescribir color si Excel detecta Retraso antes de terminar
+                if (estatusExcel.includes("RETRASO")) {
+                     prog.boxClass = "retraso"; prog.boxIcon = "fas fa-exclamation-triangle"; prog.boxText = "RETRASO";
                      prog.color = "var(--red)"; 
                 }
             }
             return prog;
         }
 
-        // ================= MOTOR PRINCIPAL DE RENDERIZADO =================
+        // ================= MOTOR DE RENDERIZADO (FORMATO TARJETAimage_775b89.png) =================
         function renderBoard() {
             const container = document.getElementById('board-container');
-            container.innerHTML = ''; 
+            container.innerHTML = ''; // Limpiar tablero
             
             const mesSeleccionado = document.getElementById('select-mes').value.toUpperCase();
             const diaSeleccionado = document.getElementById('select-dia').value;
@@ -348,98 +561,117 @@
             let cancelledData = JSON.parse(localStorage.getItem('joloda_cancelled')) || {};
 
             if (!window.liveData || window.liveData.length === 0) {
-                container.innerHTML = '<div style="text-align:center; padding:50px; color:var(--red);"><i class="fas fa-exclamation-triangle fa-2x"></i><br><br>No se detectan datos de Excel. Verifica la conexión a datos_live.js</div>';
+                container.innerHTML = '<div style="text-align:center; padding:50px; color:var(--red); grid-column: 1 / -1;"><i class="fas fa-exclamation-triangle fa-2x"></i><br><br>No se detectan datos de Excel. Verifica la conexión a datos_live.js</div>';
                 return;
             }
 
-            const normalizar = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const normalizar = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 
-            // --- FILTRO INTELIGENTE PARA ZONA 12 Y ANTIGUA ---
+            // --- FILTRO INTELIGENTE CON SOLUCIÓN PARA ZONA 12 Y ANTIGUA ---
             let datosFiltrados = window.liveData.filter(cam => {
+                // PASO 1: Limpieza de seguridad (No mostrar viajes vacíos o 00:00 - Arregla Antigua)
+                if(!cam.time || cam.time === "00:00" || !cam.unit) return false;
+
+                // PASO 2: Filtros básicos de fecha
                 let matchMes = normalizar(cam.month) === normalizar(mesSeleccionado);
                 let matchDia = parseInt(cam.day) === parseInt(diaSeleccionado);
-                
-                let locNorm = normalizar(cam.location);
+                if(!matchMes || !matchDia) return false;
+
+                // PASO 3: Mapeo inteligente de nodos (A prueba de espacios/tildes)
+                let locExcel = normalizar(cam.location);
                 let matchNodo = false;
                 
-                // Mapeo seguro contra el nombre de las pestañas de Excel
                 if (currentLoc === "CD BÁRCENAS") {
-                    matchNodo = locNorm.includes("BARCENAS") || locNorm.includes("CD");
+                    matchNodo = locExcel.includes("BARCENAS") || locExcel.includes("CD");
                 } else if (currentLoc === "FABRICA ZONA12") {
-                    matchNodo = locNorm.includes("ZONA") && locNorm.includes("12");
+                    matchNodo = (locExcel.includes("ZONA") && locExcel.includes("12"));
                 } else if (currentLoc === "FABRICA ANTIGUA") {
-                    matchNodo = locNorm.includes("ANTIGUA");
+                    matchNodo = locExcel.includes("ANTIGUA");
                 } else {
-                    matchNodo = locNorm.includes(normalizar(currentLoc));
+                    matchNodo = locExcel.includes(normalizar(currentLoc));
                 }
+                if(!matchNodo) return false;
 
-                let matchSearch = normalizar(cam.unit).includes(search) || 
-                                  normalizar(cam.pilot).includes(search) || 
-                                  normalizar(cam.plate).includes(search) || 
-                                  normalizar(cam.detail).includes(search);
+                // PASO 4: Buscador
+                let matchSearch = normalizar(cam.unit).includes(search) || normalizar(cam.pilot).includes(search);
                 
-                return matchMes && matchDia && matchNodo && matchSearch;
+                return matchSearch;
             });
 
             document.getElementById('total-movs').innerText = `TOTAL MOVIMIENTOS: ${datosFiltrados.length}`;
 
             if (datosFiltrados.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:50px; color:#64748b; font-size:1.2rem;"><i class="fas fa-truck-loading fa-2x" style="margin-bottom:15px; opacity:0.5;"></i><br>No hay operaciones programadas para <strong>${currentLoc}</strong> el ${diaSeleccionado} de ${mesSeleccionado}.</div>`;
+                container.innerHTML = `<div style="text-align:center; padding:50px; color:#64748b; font-size:1.1rem; grid-column: 1 / -1;"><i class="fas fa-truck-loading fa-2x" style="margin-bottom:15px; opacity:0.5;"></i><br>No hay operaciones programadas para <strong>${currentLoc}</strong> el ${diaSeleccionado} de ${mesSeleccionado}.</div>`;
                 return;
             }
 
+            // Ordenar por hora meta
+            datosFiltrados.sort((a,b) => a.time.localeCompare(b.time));
+
+            // --- GENERAR TARJETAS INDIVIDUALES (REDISEÑOimage_775b89.png) ---
             datosFiltrados.forEach((camion, index) => {
                 
                 let uid = `${camion.unit}_${camion.time}`.replace(/\s+/g, '');
                 let isCancelled = cancelledData[uid] !== undefined;
 
-                let esCarga = normalizar(camion.detail || "").includes("CARGA") || normalizar(camion.activity || "").includes("CARGA");
+                // Identificar Carga o Descarga
+                let esCarga = normalizar(camion.detail || camion.activity || "").includes("CARGA");
                 let badgeCls = esCarga ? "carga" : "descarga";
                 let badgeIco = esCarga ? "fas fa-box" : "fas fa-box-open";
-                let badgeTxt = esCarga ? "CARGA" : "OPERACIÓN";
-
+                
+                // Consultar al Cerebro Blindado
                 let pro = calcularProgresoInteligente(camion, isCancelled);
 
                 const card = document.createElement('div');
                 card.className = `trip-card ${isCancelled ? 'anulado' : ''}`;
                 
                 let botonAccionHTML = isCancelled 
-                    ? `<i class="fas fa-undo-alt btn-restore" onclick="restaurarViaje('${uid}')" title="Restaurar Viaje"></i>` 
-                    : `<i class="fas fa-trash-alt btn-trash" onclick="anularViaje('${uid}')" title="Anular Viaje"></i>`;
+                    ? `<div class="trash-action-box"><i class="fas fa-undo-alt btn-restore" onclick="restaurarViaje('${uid}')" title="Restaurar Viaje"></i></div>` 
+                    : `<div class="trash-action-box"><i class="fas fa-trash-alt btn-trash" onclick="anularViaje('${uid}')" title="Anular Viaje"></i></div>`;
 
+                // --- NUEVO HTML DE TARJETA COMPACTA ---
                 card.innerHTML = `
-                    <div class="col-meta">
-                        <h2>${camion.time}</h2>
-                        <small>Mov ${index + 1} de ${datosFiltrados.length}</small>
-                    </div>
-                    <div class="col-unidad">
-                        <h3>${camion.unit} <i class="fas fa-map-marker-alt" style="color:var(--orange); font-size:12px;"></i></h3>
-                        <p><i class="fas fa-user"></i> ${camion.pilot || "No Asignado"}</p>
-                        <p><i class="fas fa-truck"></i> <span class="plate-badge">${camion.plate || "S/D"}</span></p>
-                        ${camion.phone ? `<div class="btn-call-small" title="Llamar a ${camion.phone}"><i class="fas fa-phone-alt"></i></div>` : ''}
-                    </div>
-                    <div class="col-mision">
-                        <span class="mission-badge ${badgeCls}"><i class="${badgeIco}"></i> ${badgeTxt}</span>
-                        <p>${camion.detail || camion.activity || "Movimiento Joloda"}</p>
-                        ${isCancelled ? `<p style="color:var(--red); font-size:11px; margin-top:5px; font-style:italic;">Motivo: ${cancelledData[uid]}</p>` : ''}
-                    </div>
-                    <div class="col-ruta">
-                        <i class="fas fa-route" style="margin-right:8px; color:#64748b;"></i> ${camion.route || (currentLoc.includes("BARCENAS") ? "CD -> Z12" : "Z12 -> CD")}
-                    </div>
-                    <div class="col-estatus">
-                        <div class="status-box ${pro.boxClass}"><i class="${pro.boxIcon}"></i> ${pro.boxText}</div>
-                    </div>
-                    <div class="col-progreso">
-                        <div class="prog-header">
-                            <span style="color:${pro.color}; font-size:13px;">${pro.pct}%</span>
-                            <span style="color:#e2e8f0;">${pro.text}</span>
-                            ${botonAccionHTML}
+                    <div class="card-top-row">
+                        <div class="hora-meta-display">
+                            <h2>${camion.time}</h2>
+                            <small>Meta de Arribo</small>
                         </div>
-                        <div class="prog-bar-bg">
-                            <div class="prog-bar-fill" style="width:${pro.pct}%; background:${pro.color};"></div>
+                        <div class="mision-icon-box">
+                            <i class="${badgeIco} mission-badge-icon ${badgeCls}"></i>
                         </div>
-                        ${pro.cycleTime}
                     </div>
+
+                    <div class="card-center-row">
+                        <div class="unit-pilot-info">
+                            <h3><i class="fas fa-truck" style="color:#8892b0; font-size:12px;"></i> ${camion.unit}</h3>
+                            <span class="plate-badge">${camion.plate || "S/D"}</span>
+                        </div>
+                        <div class="pilot-contact-line">
+                            <span><i class="fas fa-user-circle"></i> ${camion.pilot || "No Asignado"}</span>
+                            ${camion.phone ? `<i class="fas fa-phone-alt btn-call-small" title="Llamar: ${camion.phone}"></i>` : ''}
+                        </div>
+                        <div class="route-line">
+                            <i class="fas fa-map-signs"></i> ${camion.route || (currentLoc.includes("BARCENAS") ? "CD Bárcenas ➔ Z12" : "Zona 12 ➔ CD Bárcenas")}
+                        </div>
+                        <div class="mission-detail">${camion.detail || camion.activity || "Movimiento Joloda"}</div>
+                    </div>
+
+                    <div class="card-status-progreso-group">
+                        <div class="status-header">
+                            <div class="status-box ${pro.boxClass}"><i class="${pro.boxIcon}"></i> ${pro.boxText}</div>
+                        </div>
+                        <div class="progreso-section-compact">
+                            <div class="prog-header-compact">
+                                <span style="color:${pro.color};">${pro.pct}%</span>
+                                <span style="color:#e2e8f0;">${pro.text} <span class="cycle-time-tag">${pro.cycleTime}</span></span>
+                            </div>
+                            <div class="prog-bar-bg-compact">
+                                <div class="prog-bar-fill-compact" style="width:${pro.pct}%; background:${pro.color}; ${pro.pct > 0 ? 'box-shadow: 0 0 10px '+pro.color : ''}"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    ${botonAccionHTML}
                 `;
                 container.appendChild(card);
             });
@@ -447,13 +679,11 @@
 
         // ================= INICIALIZACIÓN =================
         function initApp() {
-            // Llenar los días dinámicamente del 1 al 31 para no hacerlo manual
+            // Llenar los días dinámicamente
             const selectDia = document.getElementById('select-dia');
-            const hoy = new Date().getDate();
             selectDia.innerHTML = '';
             for(let i=1; i<=31; i++) {
-                // Pre-seleccionar el día de hoy o el que tú tenías fijo (ej: 23)
-                let selected = (i === 23) ? 'selected' : ''; // Dejé el 23 por defecto como lo tenías
+                let selected = (i === 23) ? 'selected' : ''; // Dejé el 23 por defecto
                 selectDia.innerHTML += `<option value="${i}" ${selected}>${i}</option>`;
             }
 
@@ -463,13 +693,14 @@
 
             document.querySelectorAll('.tab').forEach(t => {
                 t.classList.remove('active');
-                if(t.innerText.includes(currentLoc.replace("FABRICA ", ""))) t.classList.add('active');
+                // Ajuste para tildes en el selector visual
+                if(currentLoc.normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(t.innerText.replace("FABRICA ", "").normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) t.classList.add('active');
             });
 
             renderBoard();
         }
 
-        // Retraso para que descargue 'datos_live.js' desde la red sin chocar con el caché
+        // Espera de seguridad para cargar 'datos_live.js'
         setTimeout(initApp, 600);
 
     </script>

@@ -354,13 +354,11 @@
             if (!val) return "";
             let strVal = val.toString().trim();
             
-            // Si el texto trae la T de formato Date (ej: 1899-12-31T00:15:00Z)
             if (strVal.includes("T")) {
                 let parts = strVal.split("T")[1].split(":");
                 return `${parts[0]}:${parts[1]}`;
             }
             
-            // Si es un decimal puro de Excel
             if (!strVal.includes(":") && !isNaN(parseFloat(strVal))) {
                 let num = parseFloat(strVal);
                 if (num > 0 && num < 1) {
@@ -373,7 +371,6 @@
                 }
             }
             
-            // Si viene normal "00:15:00"
             if (strVal.includes(":")) {
                 let parts = strVal.split(":");
                 return `${parts[0]}:${parts[1]}`;
@@ -381,7 +378,7 @@
             return strVal;
         }
 
-        // ================= EL CEREBRO BLINDADO: PRIORIDAD A COLUMNA M =================
+        // ================= EL CEREBRO BLINDADO =================
         function calcularProgresoInteligente(camion, isCancelled) {
             if (isCancelled) {
                 return { pct: 0, text: "ANULADO", color: "#64748b", cycleTime: "", boxClass: "anulado", boxIcon: "fas fa-ban", boxText: "VIAJE ANULADO" };
@@ -392,7 +389,6 @@
             const normalizarStr = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
             let estatusExcel = normalizarStr(camion.statusText || camion.estatus || "");
             
-            // PRIORIDAD 1: EXTRAER COLUMNA M CON EL TRADUCTOR DE DECIMALES
             let tiempoRampaRaw = camion.tiempo_rampa || camion.tiempo_en_rampa || camion.rampa || camion.cycleTime || "";
             let rampaLimpio = formatExcelTime(tiempoRampaRaw);
             
@@ -401,7 +397,6 @@
             let rampaBadge = tieneRampaReal 
                 ? `<span class="cycle-time-tag" style="color:var(--orange); border-color:var(--orange);"><i class="fas fa-stopwatch"></i> Rampa: ${rampaLimpio}</span>` : "";
 
-            // SI TIENE TIEMPO EN RAMPA O EL ESTATUS ES TERMINADO, SE MATA EL VIAJE A 100%
             if (tieneRampaReal || estatusExcel.includes("TERMINA") || estatusExcel.includes("COMPLET") || estatusExcel.includes("CONCLU")) {
                 prog.pct = 100;
                 prog.text = "TERMINADO";
@@ -416,7 +411,6 @@
                 return prog;
             }
 
-            // 2. SIMULACIÓN INTELIGENTE
             if (camion.time && camion.time !== "00:00") {
                 const ahora = new Date();
                 let [horaMetaStr, minMetaStr] = camion.time.split(':');
@@ -484,37 +478,25 @@
                 let matchDia = parseInt(cam.day) === parseInt(diaSeleccionado);
                 if(!matchMes || !matchDia) return false;
 
-                // --- AISLAMIENTO PURO POR RUTAS (BLINDAJE TOTAL) ---
-                let rutaExcel = normalizar(cam.route || "");
+                // --- AISLAMIENTO PURO Y ESTRICTO POR UBICACIÓN ---
+                let locExcel = normalizar(cam.location || "");
                 let matchNodo = false;
                 
                 if (currentLoc === "CD BÁRCENAS") {
-                    // Bárcenas ve todo lo que entra o sale de CD
-                    matchNodo = rutaExcel.includes("CD");
+                    matchNodo = locExcel === "CD BARCENAS"; // Coincidencia exacta
                 } else if (currentLoc === "FABRICA ZONA12") {
-                    // Z12 SOLO ve lo que tiene Z12 en la ruta
-                    matchNodo = rutaExcel.includes("Z12");
+                    matchNodo = locExcel === "FABRICA ZONA12"; // Coincidencia exacta
                 } else if (currentLoc === "FABRICA ANTIGUA") {
-                    // Antigua SOLO ve lo que tiene ANT en la ruta
-                    matchNodo = rutaExcel.includes("ANT");
+                    matchNodo = locExcel === "FABRICA ANTIGUA"; // Coincidencia exacta
+                } else {
+                    matchNodo = locExcel === normalizar(currentLoc);
                 }
+                
                 if(!matchNodo) return false;
 
                 let matchSearch = normalizar(cam.unit).includes(search) || normalizar(cam.pilot).includes(search);
                 return matchSearch;
             });
-
-            // ESCUDO ANTI-CLONES
-            let unicos = [];
-            let seenIds = new Set();
-            datosFiltrados.forEach(cam => {
-                let uniqueKey = `${cam.unit}_${cam.time}_${cam.route}`;
-                if (!seenIds.has(uniqueKey)) {
-                    seenIds.add(uniqueKey);
-                    unicos.push(cam);
-                }
-            });
-            datosFiltrados = unicos; 
 
             document.getElementById('total-movs').innerText = `TOTAL MOVIMIENTOS: ${datosFiltrados.length}`;
 

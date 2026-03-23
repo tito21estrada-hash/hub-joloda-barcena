@@ -6,202 +6,66 @@
     <title>Torre de Control Joloda</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* ================= VARIABLES ================= */
+        /* ================= VARIABLES Y FONDOS ================= */
         :root {
-            --bg: #0b1116; 
-            --header-bg: #0f1721; 
-            --card-bg: #151d28;
-            --green: #00ff88; 
-            --blue: #00d4ff; 
-            --red: #ff4d4d; 
-            --orange: #ffaa00; 
-            --text: #e2e8f0;
+            --bg: #0b1116; --header-bg: #0f1721; --card-bg: #151d28;
+            --green: #00ff88; --blue: #00d4ff; --red: #ff4d4d; --orange: #ffaa00; --text: #e2e8f0;
             --border: #1e293b;
         }
-
-        /* ================= ESTILOS BASE ================= */
-        body { 
-            background: var(--bg); 
-            color: var(--text); 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            overflow-x: hidden; 
-        }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
         
         /* ================= HEADER ================= */
-        header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: var(--header-bg); 
-            padding: 15px 30px; 
-            border-bottom: 1px solid var(--blue); 
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
-        }
+        header { display: flex; justify-content: space-between; align-items: center; background: var(--header-bg); padding: 15px 30px; border-bottom: 1px solid var(--blue); box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);}
         .header-title { display: flex; align-items: center; gap: 15px;}
-        .header-title h1 { margin: 0; font-size: 1.5rem; color: #fff; letter-spacing: 2px;}
+        .header-title img { height: 40px; margin-right: 5px;} /* LOGO RESTAURADO */
+        .header-title h1 { margin: 0; font-size: 1.5rem; color: var(--blue); letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,212,255,0.3);}
         
         .header-info { display: flex; align-items: center; gap: 20px; }
         .header-date-container { text-align: right; }
-        .header-date { color: #8892b0; font-size: 14px; text-transform: uppercase; margin-bottom: 5px; display: block;}
+        .header-date { color: #8892b0; font-size: 14px; text-transform: uppercase; margin-bottom: 5px; display: block; font-weight: bold;}
         .header-totals { color: var(--orange); font-weight: bold; font-size: 14px;}
         
-        /* BOTÓN CERRAR (Se comunica con el Hub Padre) */
-        .btn-close-monitor { 
-            background: rgba(255, 77, 77, 0.1); 
-            color: var(--red); 
-            padding: 10px 20px; 
-            border-radius: 5px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            border: 1px solid var(--red); 
-            transition: 0.2s; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px;
-        }
-        .btn-close-monitor:hover { 
-            background: var(--red); 
-            color: #000; 
-            box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
-        }
+        .btn-close-monitor { background: rgba(255, 77, 77, 0.1); color: var(--red); padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; border: 1px solid var(--red); transition: 0.2s; display: flex; align-items: center; gap: 8px;}
+        .btn-close-monitor:hover { background: var(--red); color: #000; box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);}
 
         /* ================= TABS Y FILTROS ================= */
-        .controls-bar { 
-            display: flex; 
-            justify-content: space-between; 
-            padding: 15px 30px; 
-            background: rgba(15, 23, 33, 0.7); 
-            border-bottom: 1px solid var(--border); 
-            align-items: center;
-        }
+        .controls-bar { display: flex; justify-content: space-between; padding: 15px 30px; background: rgba(15, 23, 33, 0.7); border-bottom: 1px solid var(--border); align-items: center;}
         .tabs { display: flex; gap: 10px; align-items: center;}
-        .tab { 
-            background: transparent; 
-            color: #64748b; 
-            border: 1px solid transparent; 
-            padding: 8px 20px; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            transition: 0.3s;
-        }
+        .tab { background: transparent; color: #64748b; border: 1px solid transparent; padding: 8px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: 0.3s;}
         .tab:hover { color: #fff; }
-        .tab.active { 
-            background: rgba(0, 212, 255, 0.1); 
-            color: var(--blue); 
-            border: 1px solid var(--blue); 
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
-        }
+        .tab.active { background: rgba(0, 212, 255, 0.1); color: var(--blue); border: 1px solid var(--blue); box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);}
         
-        .search-box { position: relative; margin-left: 20px; }
-        .search-box input { 
-            background: #0b1116; 
-            border: 1px solid #334155; 
-            padding: 8px 15px 8px 35px; 
-            border-radius: 20px; 
-            color: #fff; 
-            outline: none; 
-            width: 250px;
-        }
+        .search-box { position: relative; margin-left: 15px; }
+        .search-box input { background: #0b1116; border: 1px solid #334155; padding: 8px 15px 8px 35px; border-radius: 20px; color: #fff; outline: none; width: 200px; transition: 0.3s;}
+        .search-box input:focus { border-color: var(--blue); width: 250px;}
         .search-box i { position: absolute; left: 12px; top: 10px; color: #64748b; }
 
         .action-filters { display: flex; gap: 10px; align-items: center;}
-        .meta-pills { 
-            display: flex; 
-            gap: 5px; 
-            align-items: center; 
-            margin-right: 15px; 
-            background: rgba(255,255,255,0.03); 
-            padding: 4px 8px; 
-            border-radius: 6px; 
-            border: 1px solid #334155;
-        }
-        .meta-pills span { 
-            padding: 4px 10px; 
-            border-radius: 4px; 
-            font-size: 12px; 
-            cursor:pointer; 
-            color: #8892b0; 
-            font-weight: bold; 
-            transition: 0.2s;
-        }
-        .meta-pills span.active-meta { 
-            background: var(--orange); 
-            color: #000; 
-            box-shadow: 0 0 10px rgba(255,170,0,0.4);
-        }
-
-        .btn-action { 
-            padding: 8px 15px; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            border: none; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            transition: 0.3s;
-            font-size: 12px;
-        }
+        .meta-pills { display: flex; gap: 5px; align-items: center; margin-right: 10px; background: rgba(255,255,255,0.03); padding: 4px 8px; border-radius: 6px; border: 1px solid #334155;}
+        .meta-pills span { padding: 4px 10px; border-radius: 4px; font-size: 12px; cursor:pointer; color: #8892b0; font-weight: bold; transition: 0.2s;}
+        .meta-pills span.active-meta { background: var(--orange); color: #000; box-shadow: 0 0 10px rgba(255,170,0,0.4);}
+        
+        .btn-action { padding: 8px 15px; border-radius: 4px; font-weight: bold; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; font-size: 12px;}
         .btn-llamar { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid var(--green);}
         .btn-llamar:hover { background: var(--green); color: #000;}
         .btn-reporte { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid #64748b;}
+        .btn-reporte:hover { background: #fff; color: #000;}
         .btn-kpis { background: rgba(168, 85, 247, 0.1); color: var(--purple); border: 1px solid var(--purple);}
+        .btn-kpis:hover { background: var(--purple); color: #fff;}
         .btn-icon { background: rgba(0, 212, 255, 0.1); color: var(--blue); border: 1px solid var(--blue); padding: 8px 12px;}
         .btn-icon:hover { background: var(--blue); color: #000;}
         
-        .select-date { 
-            background: #0b1116; 
-            color: #fff; 
-            border: 1px solid #334155; 
-            padding: 8px 10px; 
-            border-radius: 4px; 
-            outline: none; 
-            font-weight: bold;
-        }
+        .select-date { background: #0b1116; color: #fff; border: 1px solid #334155; padding: 8px 10px; border-radius: 4px; outline: none; font-weight: bold;}
+        .select-date:focus { border-color: var(--blue);}
 
         /* ================= COLUMNAS DE LA TABLA ================= */
-        .board-header { 
-            display: grid; 
-            grid-template-columns: 100px 250px 250px 200px 250px 1fr; 
-            padding: 15px 30px; 
-            font-size: 11px; 
-            font-weight: bold; 
-            color: var(--blue); 
-            text-transform: uppercase; 
-            border-bottom: 1px solid var(--border); 
-            letter-spacing: 1px;
-        }
-        .board-container { 
-            padding: 15px 30px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
-            height: calc(100vh - 250px); 
-            overflow-y: auto;
-        }
+        .board-header { display: grid; grid-template-columns: 100px 220px 220px 200px 250px 1fr; padding: 15px 30px; font-size: 11px; font-weight: bold; color: var(--blue); text-transform: uppercase; border-bottom: 1px solid var(--border); letter-spacing: 1px;}
+        .board-container { padding: 15px 30px; display: flex; flex-direction: column; gap: 15px; height: calc(100vh - 260px); overflow-y: auto;}
 
         /* ================= TARJETA DE VIAJE (ROW) ================= */
-        .trip-card { 
-            background: var(--card-bg); 
-            border-radius: 8px; 
-            border: 1px solid var(--border); 
-            display: grid; 
-            grid-template-columns: 100px 250px 250px 200px 250px 1fr; 
-            align-items: center; 
-            transition: 0.3s; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
+        .trip-card { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); display: grid; grid-template-columns: 100px 220px 220px 200px 250px 1fr; align-items: center; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.3);}
         .trip-card:hover { border-color: rgba(0, 212, 255, 0.4); background: #1a2230;}
-        
-        /* Estilo para tarjetas anuladas (basurero) */
-        .trip-card.anulado { 
-            opacity: 0.5; 
-            filter: grayscale(80%); 
-            border-color: #334155;
-        }
+        .trip-card.anulado { opacity: 0.5; filter: grayscale(80%); border-color: #334155;}
         
         .col-meta { text-align: center; border-right: 1px solid rgba(255,255,255,0.05); padding: 15px 10px; display: flex; flex-direction: column; justify-content: center;}
         .col-meta h2 { margin: 0; font-size: 1.6rem; color: #fff;}
@@ -211,37 +75,21 @@
         .col-unidad h3 { margin: 0 0 5px 0; color: var(--orange); display: flex; align-items: center; gap: 5px; font-size: 15px;}
         .col-unidad p { margin: 3px 0; font-size: 12px; color: #94a3b8; display: flex; align-items: center; gap: 8px;}
         .plate-badge { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid var(--green); padding: 1px 6px; border-radius: 3px; font-family: monospace; font-size: 11px;}
-        
-        .btn-call-small { 
-            position: absolute; 
-            right: 15px; 
-            top: 15px; 
-            width: 30px; 
-            height: 30px; 
-            background: rgba(0,255,136,0.1); 
-            color: var(--green); 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            border: 1px solid var(--green); 
-            cursor: pointer; 
-            transition: 0.3s;
-        }
+        .btn-call-small { position: absolute; right: 15px; top: 15px; width: 28px; height: 28px; background: rgba(0,255,136,0.1); color: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--green); cursor: pointer; transition: 0.3s;}
         .btn-call-small:hover { background: var(--green); color: #000; transform: scale(1.1);}
 
         .col-mision { padding: 15px; }
-        .mission-badge { background: #334155; color: #e2e8f0; font-size: 10px; padding: 3px 8px; border-radius: 3px; font-weight: bold; display: inline-block; margin-bottom: 8px;}
+        .mission-badge { background: #334155; color: #e2e8f0; font-size: 10px; padding: 3px 8px; border-radius: 3px; font-weight: bold; display: inline-block; margin-bottom: 8px; letter-spacing: 0.5px;}
         .mission-badge.carga { background: rgba(255, 170, 0, 0.15); color: var(--orange); border: 1px solid var(--orange);}
         .mission-badge.descarga { background: rgba(0, 212, 255, 0.15); color: var(--blue); border: 1px solid var(--blue);}
-        .col-mision p { margin: 0; font-size: 13px; color: #cbd5e1; line-height: 1.4;}
+        .col-mision p { margin: 0; font-size: 12px; color: #cbd5e1; line-height: 1.4;}
 
         .col-ruta { padding: 15px; color: var(--blue); font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 8px;}
 
         .col-estatus { padding: 15px; }
-        .status-box { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 4px; font-weight: bold; font-size: 12px; letter-spacing: 0.5px;}
-        .status-box.a-tiempo { background: rgba(0, 255, 136, 0.15); color: var(--green); border: 1px solid var(--green);}
-        .status-box.retraso { background: rgba(255, 77, 77, 0.15); color: var(--red); border: 1px solid var(--red);}
+        .status-box { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 4px; font-weight: bold; font-size: 11px; letter-spacing: 0.5px;}
+        .status-box.a-tiempo { background: rgba(0, 255, 136, 0.1); color: var(--green); border: 1px solid var(--green);}
+        .status-box.retraso { background: rgba(255, 77, 77, 0.1); color: var(--red); border: 1px solid var(--red);}
         .status-box.pendiente { background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid #334155;}
         .status-box.anulado { background: rgba(255, 255, 255, 0.05); color: #64748b; border: 1px dashed #64748b;}
 
@@ -256,34 +104,20 @@
         .btn-restore { position: absolute; right: 15px; color: var(--blue); cursor: pointer; transition: 0.2s; font-size: 14px;}
         .btn-restore:hover { color: #fff; transform: scale(1.2);}
         
-        .cycle-time-label { 
-            font-size: 11px; 
-            font-family: monospace; 
-            font-weight: bold; 
-            background: rgba(0,255,136,0.1); 
-            padding: 3px 8px; 
-            border-radius: 4px; 
-            text-align: left; 
-            border: 1px solid rgba(0,255,136,0.3); 
-            display: inline-block; 
-            margin-top: 5px; 
-            color: var(--green);
-        }
+        .cycle-time-label { font-size: 11px; font-family: monospace; font-weight: bold; background: rgba(0,255,136,0.1); padding: 3px 8px; border-radius: 4px; text-align: left; border: 1px solid rgba(0,255,136,0.3); display: inline-block; margin-top: 5px; color: var(--green);}
 
-        /* ================= FOOTER ================= */
+        /* ================= FOOTER LEYENDA ================= */
         footer { display: flex; justify-content: space-between; padding: 15px 30px; background: var(--header-bg); border-top: 1px solid var(--border); font-size: 12px; color: #8892b0;}
         .legend { display: flex; gap: 15px;}
         .legend span { display: flex; align-items: center; gap: 5px;}
         .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block;}
-
     </style>
 </head>
 <body>
 
     <header>
         <div class="header-title">
-            <i class="fas fa-satellite-dish" style="font-size: 1.8rem; color: var(--blue);"></i>
-            <h1>TORRE DE CONTROL JOLODA</h1>
+            <img src="logo.png" alt="Logo Joloda"> <h1>TORRE DE CONTROL JOLODA</h1>
         </div>
         <div class="header-info">
             <div class="header-date-container">
@@ -314,21 +148,19 @@
                 <span id="meta-60" class="active-meta" onclick="setMeta(60)">60m</span>
             </div>
             <button class="btn-action btn-llamar"><i class="fas fa-phone-alt"></i> LLAMAR</button>
-            <button class="btn-action btn-reporte" onclick="abrirPowerBI()"><i class="fas fa-chart-pie"></i> REPORTE</button>
-            <button class="btn-action btn-kpis"><i class="fas fa-chart-bar"></i> KPIs</button>
+            <button class="btn-action btn-reporte" onclick="generarReporteWA()"><i class="fas fa-paper-plane"></i> REPORTE</button>
+            <button class="btn-action btn-kpis" onclick="abrirPowerBI()"><i class="fas fa-chart-pie"></i> KPIs</button>
             <button class="btn-action btn-icon" onclick="window.location.reload()" title="Refrescar Nube"><i class="fas fa-sync-alt"></i></button>
             
             <select id="select-mes" class="select-date" onchange="renderBoard()">
                 <option value="Marzo" selected>MARZO</option>
-                <option value="Febrero">FEBRERO</option>
                 <option value="Abril">ABRIL</option>
+                <option value="Mayo">MAYO</option>
+                <option value="Junio">JUNIO</option>
+                <option value="Febrero">FEBRERO</option>
             </select>
             <select id="select-dia" class="select-date" onchange="renderBoard()">
-                <option value="23" selected>23</option>
-                <option value="21">21</option>
-                <option value="20">20</option>
-                <option value="15">15</option>
-            </select>
+                </select>
         </div>
     </div>
 
@@ -364,7 +196,7 @@
     </script>
 
     <script>
-        // ================= VARIABLES ORIGINALES Y CONFIGURACIÓN =================
+        // ================= CONFIGURACIÓN Y ESTADO =================
         const POWER_BI_URL = "https://app.powerbi.com/groups/me/reports/9c8cf0e6-9c0d-4322-965a-2e6b742d32e2/775a8d9db97de015d1a6?experience=power-bi";
         
         let currentLoc = localStorage.getItem('joloda_v14_loc') || "CD BÁRCENAS";
@@ -382,6 +214,36 @@
 
         function abrirPowerBI() {
             window.open(POWER_BI_URL, "_blank");
+        }
+
+        // --- RESTAURADO: REPORTE DE WHATSAPP ---
+        function generarReporteWA() {
+            const mes = document.getElementById('select-mes').value.toUpperCase();
+            const dia = document.getElementById('select-dia').value;
+            const total = document.getElementById('total-movs').innerText;
+            
+            let reporte = `*TORRE DE CONTROL JOLODA* 🏭\n*Nodo:* ${currentLoc}\n*Fecha:* ${dia} de ${mes}\n*${total}*\n\n`;
+            
+            const tarjetas = document.querySelectorAll('.trip-card');
+            if(tarjetas.length === 0) {
+                alert("No hay datos para generar el reporte.");
+                return;
+            }
+            
+            tarjetas.forEach((card) => {
+                if(card.classList.contains('anulado')) return; // Omite los viajes anulados
+                
+                let hora = card.querySelector('h2').innerText;
+                let unidad = card.querySelector('.col-unidad h3').innerText.trim();
+                let mision = card.querySelector('.col-mision p').innerText;
+                let progreso = card.querySelector('.prog-header span:nth-child(2)').innerText;
+                let estatusBox = card.querySelector('.status-box').innerText.trim();
+                
+                reporte += `🚛 *${unidad}* | Meta: ${hora}\n   ↳ Misión: ${mision}\n   ↳ Estatus: ${estatusBox} (${progreso})\n\n`;
+            });
+            
+            let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(reporte)}`;
+            window.open(url, '_blank');
         }
 
         function setLoc(loc, btnElement) {
@@ -422,9 +284,8 @@
             }
         }
 
-        // ================= EL NUEVO CEREBRO: PROGRESO Y TIEMPO DE CICLO =================
+        // ================= EL CEREBRO: PROGRESO Y TIEMPO DE CICLO =================
         function calcularProgresoInteligente(camion, isCancelled) {
-            // Si está anulado en Local Storage, sobreescribe todo
             if (isCancelled) {
                 return { pct: 0, text: "ANULADO", color: "#64748b", cycleTime: "", boxClass: "anulado", boxIcon: "fas fa-ban", boxText: "VIAJE ANULADO" };
             }
@@ -435,7 +296,6 @@
             let tiempoCiclo = camion.cycleTime || camion.tiempo_ciclo || camion.tiempo_total || ""; 
             let rampaFinExcel = camion.rampaEnd || camion.tiempo_fin || "";
 
-            // 1. Terminado Real (Basado en datos de Excel)
             if (estatus.includes("TERMINA") || estatus.includes("COMPLET") || tiempoCiclo !== "" || rampaFinExcel !== "") {
                 prog.pct = 100;
                 prog.text = "TERMINADO";
@@ -447,7 +307,6 @@
                 return prog;
             }
 
-            // 2. Simulación Inteligente (Basado en el Reloj actual vs Hora Meta)
             if (camion.time && camion.time !== "00:00") {
                 const ahora = new Date();
                 let [horaMetaStr, minMetaStr] = camion.time.split(':');
@@ -495,11 +354,29 @@
 
             const normalizar = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
+            // --- FILTRO INTELIGENTE PARA ZONA 12 Y ANTIGUA ---
             let datosFiltrados = window.liveData.filter(cam => {
                 let matchMes = normalizar(cam.month) === normalizar(mesSeleccionado);
                 let matchDia = parseInt(cam.day) === parseInt(diaSeleccionado);
-                let matchNodo = normalizar(cam.location).includes(normalizar(currentLoc));
-                let matchSearch = normalizar(cam.unit).includes(search) || normalizar(cam.pilot).includes(search) || normalizar(cam.plate).includes(search) || normalizar(cam.detail).includes(search);
+                
+                let locNorm = normalizar(cam.location);
+                let matchNodo = false;
+                
+                // Mapeo seguro contra el nombre de las pestañas de Excel
+                if (currentLoc === "CD BÁRCENAS") {
+                    matchNodo = locNorm.includes("BARCENAS") || locNorm.includes("CD");
+                } else if (currentLoc === "FABRICA ZONA12") {
+                    matchNodo = locNorm.includes("ZONA") && locNorm.includes("12");
+                } else if (currentLoc === "FABRICA ANTIGUA") {
+                    matchNodo = locNorm.includes("ANTIGUA");
+                } else {
+                    matchNodo = locNorm.includes(normalizar(currentLoc));
+                }
+
+                let matchSearch = normalizar(cam.unit).includes(search) || 
+                                  normalizar(cam.pilot).includes(search) || 
+                                  normalizar(cam.plate).includes(search) || 
+                                  normalizar(cam.detail).includes(search);
                 
                 return matchMes && matchDia && matchNodo && matchSearch;
             });
@@ -513,20 +390,16 @@
 
             datosFiltrados.forEach((camion, index) => {
                 
-                // Identificador único para anular (Usa unidad + hora como ID único)
                 let uid = `${camion.unit}_${camion.time}`.replace(/\s+/g, '');
                 let isCancelled = cancelledData[uid] !== undefined;
 
-                // Lógica de íconos Carga/Descarga
                 let esCarga = normalizar(camion.detail || "").includes("CARGA") || normalizar(camion.activity || "").includes("CARGA");
                 let badgeCls = esCarga ? "carga" : "descarga";
                 let badgeIco = esCarga ? "fas fa-box" : "fas fa-box-open";
                 let badgeTxt = esCarga ? "CARGA" : "OPERACIÓN";
 
-                // Consultar al Nuevo Cerebro
                 let pro = calcularProgresoInteligente(camion, isCancelled);
 
-                // Generar HTML de la Tarjeta
                 const card = document.createElement('div');
                 card.className = `trip-card ${isCancelled ? 'anulado' : ''}`;
                 
@@ -574,6 +447,16 @@
 
         // ================= INICIALIZACIÓN =================
         function initApp() {
+            // Llenar los días dinámicamente del 1 al 31 para no hacerlo manual
+            const selectDia = document.getElementById('select-dia');
+            const hoy = new Date().getDate();
+            selectDia.innerHTML = '';
+            for(let i=1; i<=31; i++) {
+                // Pre-seleccionar el día de hoy o el que tú tenías fijo (ej: 23)
+                let selected = (i === 23) ? 'selected' : ''; // Dejé el 23 por defecto como lo tenías
+                selectDia.innerHTML += `<option value="${i}" ${selected}>${i}</option>`;
+            }
+
             document.querySelectorAll('.meta-pills span').forEach(s => s.classList.remove('active-meta'));
             let metaSpan = document.getElementById(`meta-${tiempoMetaRampa}`);
             if(metaSpan) metaSpan.classList.add('active-meta');
@@ -586,7 +469,7 @@
             renderBoard();
         }
 
-        // Retraso de 600ms para asegurar que el archivo datos_live.js termine de cargar desde la red
+        // Retraso para que descargue 'datos_live.js' desde la red sin chocar con el caché
         setTimeout(initApp, 600);
 
     </script>

@@ -6,7 +6,7 @@
     <title>Torre de Control Joloda</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* ================= VARIABLES ================= */
+        /* ================= VARIABLES Y FONDOS ================= */
         :root {
             --bg: #0b1116; --header-bg: #0f1721; --card-bg: #151d28;
             --green: #00ff88; --blue: #00d4ff; --red: #ff4d4d; --orange: #ffaa00; --text: #e2e8f0;
@@ -164,7 +164,7 @@
         .btn-restore { color: var(--blue); cursor: pointer; transition: 0.2s;}
         .btn-restore:hover { color: #fff; transform: scale(1.2);}
         
-        /* TIEMPO EN RAMPA (COLUMNA M) */
+        /* TIEMPO EN RAMPA */
         .cycle-time-tag { 
             font-size: 10px; font-family: monospace; font-weight: bold; 
             background: rgba(0,255,136,0.1); padding: 3px 6px; border-radius: 4px; 
@@ -294,9 +294,11 @@
             const tarjetas = document.querySelectorAll('.trip-card');
             if(tarjetas.length === 0) { alert("No hay datos visibles en la torre para generar el reporte."); return; }
             
+            let viajesContados = 0;
             tarjetas.forEach((card) => {
                 if(card.classList.contains('anulado')) return; 
                 
+                viajesContados++;
                 let hora = card.querySelector('h2').innerText;
                 let unidad = card.querySelector('.unit-pilot-info h3').innerText.trim();
                 let mision = card.querySelector('.mission-detail').innerText;
@@ -305,6 +307,8 @@
                 
                 reporte += `🚛 *${unidad}* | Meta: ${hora}\n  » Misión: ${mision}\n  » Estatus: ${estatus} (${pct})\n\n`;
             });
+
+            if(viajesContados === 0) { alert("Todos los viajes visibles están anulados."); return; }
             
             let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(reporte)}`;
             window.open(url, '_blank');
@@ -470,6 +474,7 @@
             const normalizar = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 
             let datosFiltrados = window.liveData.filter(cam => {
+                // Filtro para ignorar camiones nulos o con la hora 00:00
                 if(!cam.time || cam.time === "00:00" || !cam.unit) return false;
 
                 let matchMes = normalizar(cam.month) === normalizar(mesSeleccionado);
@@ -479,14 +484,15 @@
                 let locExcel = normalizar(cam.location || "");
                 let matchNodo = false;
                 
+                // Mapeo seguro contra el nombre exacto de las pestañas
                 if (currentLoc === "CD BÁRCENAS") {
-                    matchNodo = locExcel.includes("BARCENAS") || locExcel.includes("CD");
+                    matchNodo = locExcel === "CD BARCENAS"; 
                 } else if (currentLoc === "FABRICA ZONA12") {
-                    matchNodo = locExcel.includes("ZONA") && locExcel.includes("12");
+                    matchNodo = locExcel === "FABRICA ZONA12"; 
                 } else if (currentLoc === "FABRICA ANTIGUA") {
-                    matchNodo = locExcel.includes("ANTIGUA");
+                    matchNodo = locExcel === "FABRICA ANTIGUA"; 
                 } else {
-                    matchNodo = locExcel.includes(normalizar(currentLoc));
+                    matchNodo = locExcel === normalizar(currentLoc);
                 }
                 
                 if(!matchNodo) return false;

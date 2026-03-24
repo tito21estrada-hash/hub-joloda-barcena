@@ -349,20 +349,21 @@
             }
         }
 
-        // --- TRADUCTOR DE TIEMPOS DE EXCEL A HORAS ---
+        // --- TRADUCTOR ULTRA-AGRESIVO DE TIEMPOS DE EXCEL ---
         function formatExcelTime(val) {
-            if (!val || val === "00:00:00" || val === "00:00" || val === "0") return "";
+            if (val === undefined || val === null) return "";
             let strVal = val.toString().trim();
+            if (strVal === "") return "";
             
             if (strVal.includes("T")) {
                 let parts = strVal.split("T")[1].split(":");
                 return `${parts[0]}:${parts[1]}`;
             }
             
-            // Si es un decimal puro de Excel
+            // Decodifica números decimales crudos de Excel a HH:MM
             if (!strVal.includes(":") && !isNaN(parseFloat(strVal))) {
                 let num = parseFloat(strVal);
-                if (num > 0 && num < 1) {
+                if (num >= 0 && num < 1) { // >= 0 para atrapar también las 00:00 exactas
                     let totalMinutes = Math.round(num * 24 * 60);
                     let h = Math.floor(totalMinutes / 60);
                     let m = totalMinutes % 60;
@@ -370,6 +371,7 @@
                 }
             }
             
+            // Formatea texto "00:15:00" a "00:15"
             if (strVal.includes(":")) {
                 let parts = strVal.split(":");
                 return `${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}`;
@@ -377,7 +379,7 @@
             return strVal;
         }
 
-        // ================= EL CEREBRO BLINDADO =================
+        // ================= EL CEREBRO BLINDADO HTML =================
         function calcularProgresoInteligente(camion, isCancelled) {
             if (isCancelled) {
                 return { pct: 0, text: "ANULADO", color: "#64748b", cycleTime: "", boxClass: "anulado", boxIcon: "fas fa-ban", boxText: "VIAJE ANULADO" };
@@ -388,11 +390,11 @@
             const normalizarStr = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
             let estatusExcel = normalizarStr(camion.statusText || camion.estatus || "");
             
-            // PRIORIDAD 1: EXTRAER COLUMNA M 
+            // LECTURA DE COLUMNA M
             let tiempoRampaRaw = camion.tiempo_rampa || camion.tiempo_en_rampa || camion.rampa || camion.cycleTime || camion["TIEMPO EN RAMPA (Inicio - Fin)"] || camion["TIEMPO EN RAMPA \n(Inicio - Fin)"] || "";
             let rampaLimpio = formatExcelTime(tiempoRampaRaw);
             
-            // BYPASS MATEMÁTICO: Si la columna M falló en Automate pero sí hay Inicio y Fin
+            // BYPASS MATEMÁTICO POR SI FALLA M
             if (rampaLimpio === "" && camion.rampa_in && camion.rampa_out) {
                 let start = formatExcelTime(camion.rampa_in);
                 let end = formatExcelTime(camion.rampa_out);
@@ -407,12 +409,12 @@
                 }
             }
             
-            let tieneRampaReal = (rampaLimpio !== "");
+            let tieneRampaReal = (rampaLimpio !== "" && rampaLimpio !== "00:00");
 
+            // ===== PASTILLA DE TIEMPO EN RAMPA (NUEVO DISEÑO MÁS GRANDE Y RESALTADO) =====
             let rampaBadge = tieneRampaReal 
-                ? `<span class="cycle-time-tag" style="color:var(--orange); border-color:var(--orange);"><i class="fas fa-stopwatch"></i> Rampa: ${rampaLimpio}</span>` : "";
+                ? `<span class="cycle-time-tag" style="color:var(--orange); border-color:var(--orange); background: rgba(255, 170, 0, 0.15); font-size: 14px; padding: 4px 10px; box-shadow: 0 0 12px rgba(255, 170, 0, 0.5);"><i class="fas fa-stopwatch" style="font-size: 1.1rem; margin-right: 4px;"></i> Rampa: ${rampaLimpio}</span>` : "";
 
-            // SI TIENE TIEMPO EN RAMPA O EL ESTATUS ES TERMINADO, SE MATA EL VIAJE A 100%
             if (tieneRampaReal || estatusExcel.includes("TERMINA") || estatusExcel.includes("COMPLET") || estatusExcel.includes("CONCLU")) {
                 prog.pct = 100;
                 prog.text = "TERMINADO";
@@ -427,7 +429,6 @@
                 return prog;
             }
 
-            // 2. SIMULACIÓN INTELIGENTE
             if (camion.time && camion.time !== "00:00") {
                 const ahora = new Date();
                 let [horaMetaStr, minMetaStr] = camion.time.split(':');
@@ -488,6 +489,12 @@
 
             const normalizar = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 
+            // PASO 1: Formatear y traducir todas las horas crudas de Excel a texto bonito ("04:05")
+            window.liveData.forEach(cam => {
+                cam.time = formatExcelTime(cam.time);
+            });
+
+            // PASO 2: Filtrar los datos
             let datosFiltrados = window.liveData.filter(cam => {
                 if(!cam.time || cam.time === "00:00" || !cam.unit) return false;
 
@@ -495,7 +502,7 @@
                 let matchDia = parseInt(cam.day) === parseInt(diaSeleccionado);
                 if(!matchMes || !matchDia) return false;
 
-                // --- CORTAFUEGOS ABSOLUTO ---
+                // --- CORTAFUEGOS ABSOLUTO DE PESTAÑAS ---
                 let locExcel = normalizar(cam.location || "");
                 let rutaExcel = normalizar(cam.route || "");
                 let matchNodo = false;
@@ -518,7 +525,7 @@
                 return matchSearch;
             });
 
-            // ESCUDO ANTI-CLONES
+            // PASO 3: ESCUDO ANTI-CLONES
             let unicos = [];
             let seenIds = new Set();
             datosFiltrados.forEach(cam => {
@@ -537,8 +544,10 @@
                 return;
             }
 
+            // PASO 4: ORDENAR POR HORA
             datosFiltrados.sort((a,b) => a.time.localeCompare(b.time));
 
+            // PASO 5: DIBUJAR TARJETAS
             datosFiltrados.forEach((camion, index) => {
                 let uid = `${camion.unit}_${camion.time}`.replace(/\s+/g, '');
                 let isCancelled = cancelledData[uid] !== undefined;

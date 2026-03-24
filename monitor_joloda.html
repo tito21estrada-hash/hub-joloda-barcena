@@ -349,7 +349,7 @@
             }
         }
 
-        // --- TRADUCTOR ULTRA-AGRESIVO DE TIEMPOS DE EXCEL ---
+        // --- TRADUCTOR DE TIEMPOS DE EXCEL A HORAS ---
         function formatExcelTime(val) {
             if (!val || val === "00:00:00" || val === "00:00" || val === "0") return "";
             let strVal = val.toString().trim();
@@ -359,7 +359,7 @@
                 return `${parts[0]}:${parts[1]}`;
             }
             
-            // Decodifica números decimales crudos de Excel
+            // Si es un decimal puro de Excel
             if (!strVal.includes(":") && !isNaN(parseFloat(strVal))) {
                 let num = parseFloat(strVal);
                 if (num > 0 && num < 1) {
@@ -370,7 +370,6 @@
                 }
             }
             
-            // Formatea texto "00:15:00" a "00:15"
             if (strVal.includes(":")) {
                 let parts = strVal.split(":");
                 return `${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}`;
@@ -378,7 +377,7 @@
             return strVal;
         }
 
-        // ================= EL CEREBRO BLINDADO HTML =================
+        // ================= EL CEREBRO BLINDADO =================
         function calcularProgresoInteligente(camion, isCancelled) {
             if (isCancelled) {
                 return { pct: 0, text: "ANULADO", color: "#64748b", cycleTime: "", boxClass: "anulado", boxIcon: "fas fa-ban", boxText: "VIAJE ANULADO" };
@@ -389,15 +388,31 @@
             const normalizarStr = str => (str || "").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
             let estatusExcel = normalizarStr(camion.statusText || camion.estatus || "");
             
-            // LECTURA AGRESIVA DE COLUMNA M (Cualquier variante de nombre que mande Automate)
+            // PRIORIDAD 1: EXTRAER COLUMNA M 
             let tiempoRampaRaw = camion.tiempo_rampa || camion.tiempo_en_rampa || camion.rampa || camion.cycleTime || camion["TIEMPO EN RAMPA (Inicio - Fin)"] || camion["TIEMPO EN RAMPA \n(Inicio - Fin)"] || "";
             let rampaLimpio = formatExcelTime(tiempoRampaRaw);
+            
+            // BYPASS MATEMÁTICO: Si la columna M falló en Automate pero sí hay Inicio y Fin
+            if (rampaLimpio === "" && camion.rampa_in && camion.rampa_out) {
+                let start = formatExcelTime(camion.rampa_in);
+                let end = formatExcelTime(camion.rampa_out);
+                if (start && end && start.includes(":") && end.includes(":")) {
+                    let sMins = parseInt(start.split(":")[0])*60 + parseInt(start.split(":")[1]);
+                    let eMins = parseInt(end.split(":")[0])*60 + parseInt(end.split(":")[1]);
+                    let diff = eMins - sMins;
+                    if (diff < 0) diff += 24*60;
+                    let h = Math.floor(diff/60);
+                    let m = diff%60;
+                    rampaLimpio = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
+                }
+            }
             
             let tieneRampaReal = (rampaLimpio !== "");
 
             let rampaBadge = tieneRampaReal 
                 ? `<span class="cycle-time-tag" style="color:var(--orange); border-color:var(--orange);"><i class="fas fa-stopwatch"></i> Rampa: ${rampaLimpio}</span>` : "";
 
+            // SI TIENE TIEMPO EN RAMPA O EL ESTATUS ES TERMINADO, SE MATA EL VIAJE A 100%
             if (tieneRampaReal || estatusExcel.includes("TERMINA") || estatusExcel.includes("COMPLET") || estatusExcel.includes("CONCLU")) {
                 prog.pct = 100;
                 prog.text = "TERMINADO";
@@ -412,6 +427,7 @@
                 return prog;
             }
 
+            // 2. SIMULACIÓN INTELIGENTE
             if (camion.time && camion.time !== "00:00") {
                 const ahora = new Date();
                 let [horaMetaStr, minMetaStr] = camion.time.split(':');
@@ -479,21 +495,19 @@
                 let matchDia = parseInt(cam.day) === parseInt(diaSeleccionado);
                 if(!matchMes || !matchDia) return false;
 
-                // --- CORTAFUEGOS ABSOLUTO DE PESTAÑAS (HTML FIREWALL) ---
+                // --- CORTAFUEGOS ABSOLUTO ---
                 let locExcel = normalizar(cam.location || "");
                 let rutaExcel = normalizar(cam.route || "");
                 let matchNodo = false;
                 
                 if (currentLoc === "CD BÁRCENAS") {
                     matchNodo = locExcel.includes("BARCENAS") || locExcel.includes("CD");
-                    if(locExcel === "FABRICA ZONA12") matchNodo = false; // Bloqueo extra
+                    if(locExcel === "FABRICA ZONA12") matchNodo = false; 
                 } else if (currentLoc === "FABRICA ZONA12") {
                     matchNodo = locExcel.includes("ZONA") && locExcel.includes("12");
-                    // FIREWALL Z12: Si Automate mandó ruta de Antigua, se destruye el viaje.
                     if (rutaExcel.includes("ANT")) matchNodo = false; 
                 } else if (currentLoc === "FABRICA ANTIGUA") {
                     matchNodo = locExcel.includes("ANTIGUA");
-                    // FIREWALL ANTIGUA: Si Automate mandó ruta de Z12, se destruye el viaje.
                     if (rutaExcel.includes("Z12")) matchNodo = false; 
                 } else {
                     matchNodo = locExcel.includes(normalizar(currentLoc));
@@ -504,7 +518,7 @@
                 return matchSearch;
             });
 
-            // ESCUDO ANTI-CLONES (Evita viajes duplicados de Automate)
+            // ESCUDO ANTI-CLONES
             let unicos = [];
             let seenIds = new Set();
             datosFiltrados.forEach(cam => {
